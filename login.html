@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - InventarisLab</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="h-screen flex">
+
+  <!-- LEFT SIDE -->
+  <div class="w-1/3 bg-blue-500 flex items-center justify-center">
+    <img src="../InventarisLabWeb/logo_kampus.png" alt="Logo Kampus" class="w-72">
+  </div>
+
+  <!-- RIGHT SIDE -->
+  <div class="w-2/3 flex items-center justify-center bg-gray-100">
+    <div class="w-96">
+
+      <h1 class="text-2xl font-bold mb-6 flex items-center gap-2 justify-center">
+        👤 Inventaris<span class="font-light">Lab</span>
+      </h1>
+
+      <form id="loginForm" class="space-y-4">
+
+        <div>
+          <label class="text-sm">NIM</label>
+          <input 
+            type="text" 
+            id="nim"
+            placeholder="Masukkan NIM"
+            class="w-full p-3 rounded-lg border mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+        </div>
+
+        <div>
+          <label class="text-sm">Password</label>
+          <input 
+            type="password" 
+            id="password"
+            placeholder="********"
+            class="w-full p-3 rounded-lg border mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+        </div>
+
+        <button 
+          type="submit"
+          class="w-full bg-blue-700 text-white py-3 rounded-lg hover:bg-blue-800 transition"
+        >
+          Log In
+        </button>
+
+      </form>
+
+      <p id="error" class="text-red-500 text-sm mt-3 hidden">Login gagal</p>
+
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script>
+    const form = document.getElementById("loginForm");
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const nim = document.getElementById("nim").value;
+      const password = document.getElementById("password").value;
+
+      // simulasi login dulu
+      if(nim === "123" && password === "123") {
+        alert("Login berhasil!");
+        window.location.href = "dashboard.html";
+      } else {
+        document.getElementById("error").classList.remove("hidden");
+      }
+    });
+  </script>
+
+</body>
+</html>
