@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Login - InventarisLab</title>
@@ -25,29 +26,20 @@
 
         <div>
           <label class="text-sm">NIM</label>
-          <input 
-            type="text" 
-            id="nim"
-            placeholder="Masukkan NIM"
-            class="w-full p-3 rounded-lg border mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
+          <input type="text" id="nim" placeholder="Masukkan NIM"
+            class="w-full p-3 rounded-lg border mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500">
         </div>
 
         <div>
           <label class="text-sm">Password</label>
-          <input 
-            type="password" 
-            id="password"
-            placeholder="********"
-            class="w-full p-3 rounded-lg border mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
+          <input type="password" id="password" placeholder="********"
+            class="w-full p-3 rounded-lg border mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500">
         </div>
 
-        <button 
-          type="submit"
-          class="w-full bg-blue-700 text-white py-3 rounded-lg hover:bg-blue-800 transition"
-        >
-          Log In
+        <button type="submit" class="w-full bg-blue-700 text-white py-3 rounded-lg hover:bg-blue-800 transition">
+          <a href="">
+            Log In
+          </a>
         </button>
 
       </form>
@@ -61,14 +53,14 @@
   <script>
     const form = document.getElementById("loginForm");
 
-    form.addEventListener("submit", function(e) {
+    form.addEventListener("submit", function (e) {
       e.preventDefault();
 
       const nim = document.getElementById("nim").value;
       const password = document.getElementById("password").value;
 
       // simulasi login dulu
-      if(nim === "123" && password === "123") {
+      if (nim === "123" && password === "123") {
         alert("Login berhasil!");
         window.location.href = "dashboard.html";
       } else {
@@ -78,4 +70,5 @@
   </script>
 
 </body>
+
 </html>

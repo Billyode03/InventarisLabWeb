@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard InventarisLab</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 flex">
+
+  <!-- SIDEBAR -->
+  <aside class="w-64 bg-gray-900 text-white min-h-screen p-5">
+    <h2 class="text-xl font-bold mb-8">InventarisLab</h2>
+
+    <ul class="space-y-4">
+      <li class="hover:text-blue-400 cursor-pointer">Dashboard</li>
+      <li class="hover:text-blue-400 cursor-pointer">Data Barang</li>
+      <li class="hover:text-blue-400 cursor-pointer">Peminjaman</li>
+      <li class="hover:text-blue-400 cursor-pointer">Laporan</li>
+    </ul>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="flex-1 p-6">
+
+    <!-- CARD -->
+    <div class="grid grid-cols-4 gap-4 mb-6">
+      <div class="bg-green-500 text-white p-5 rounded-lg">Total Pinjam: 12</div>
+      <div class="bg-yellow-500 text-white p-5 rounded-lg">Mendekati DL: 3</div>
+      <div class="bg-red-500 text-white p-5 rounded-lg">Terlambat: 2</div>
+      <div class="bg-blue-500 text-white p-5 rounded-lg">Barang: 20</div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="bg-white p-5 rounded-lg shadow">
+      <div class="flex justify-between mb-4">
+        <h2 class="font-bold">Data Peminjaman</h2>
+        <button onclick="openModal()" class="bg-blue-600 text-white px-4 py-2 rounded">
+          + Tambah
+        </button>
+      </div>
+
+      <table class="w-full text-left border">
+        <thead class="bg-gray-200">
+          <tr>
+            <th class="p-2">Nama</th>
+            <th class="p-2">Barang</th>
+            <th class="p-2">Deadline</th>
+            <th class="p-2">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-t">
+            <td class="p-2">Faiz</td>
+            <td class="p-2">Proyektor</td>
+            <td class="p-2">10 Apr</td>
+            <td class="p-2 text-red-500">Terlambat</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <!-- MODAL -->
+  <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+    <div class="bg-white p-6 rounded-lg w-96">
+      <h2 class="font-bold mb-4">Tambah Peminjaman</h2>
+
+      <input type="text" placeholder="Nama" class="w-full border p-2 mb-3 rounded">
+      <input type="text" placeholder="Barang" class="w-full border p-2 mb-3 rounded">
+
+      <div class="flex gap-2">
+        <button onclick="closeModal()" class="bg-gray-400 text-white px-4 py-2 rounded">
+          Batal
+        </button>
+        <button class="bg-blue-600 text-white px-4 py-2 rounded">
+          Simpan
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script>
+    function openModal() {
+      document.getElementById("modal").classList.remove("hidden");
+      document.getElementById("modal").classList.add("flex");
+    }
+
+    function closeModal() {
+      document.getElementById("modal").classList.add("hidden");
+    }
+  </script>
+
+</body>
+</html>
