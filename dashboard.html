@@ -1,97 +1,379 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
+
 <head>
   <meta charset="UTF-8">
   <title>Dashboard InventarisLab</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .card {
+      transition: all 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    }
+
+    .more-info-btn {
+      background-color: rgba(255, 255, 255, 0.25);
+      transition: all 0.2s;
+    }
+
+    .more-info-btn:hover {
+      background-color: rgba(255, 255, 255, 0.35);
+      transform: translateY(-1px);
+    }
+  </style>
 </head>
 
-<body class="bg-gray-100 flex">
+<body class="bg-gray-100 flex min-h-screen">
 
   <!-- SIDEBAR -->
-  <aside class="w-64 bg-gray-900 text-white min-h-screen p-5">
-    <h2 class="text-xl font-bold mb-8">InventarisLab</h2>
+  <aside class="w-72 bg-gray-900 text-white flex flex-col">
+    <div class="p-6 border-b border-gray-800">
+      <h1 class="text-2xl font-bold">InventarisLab</h1>
+    </div>
 
-    <ul class="space-y-4">
-      <li class="hover:text-blue-400 cursor-pointer">Dashboard</li>
-      <li class="hover:text-blue-400 cursor-pointer">Data Barang</li>
-      <li class="hover:text-blue-400 cursor-pointer">Peminjaman</li>
-      <li class="hover:text-blue-400 cursor-pointer">Laporan</li>
-    </ul>
+    <div class="p-6 flex items-center gap-3 border-b border-gray-800">
+      <img src="https://i.pravatar.cc/48?u=alex" alt="Alex" class="w-10 h-10 rounded-full">
+      <div>
+        <p class="font-medium">Alex</p>
+        <p class="text-green-400 text-sm flex items-center gap-1">
+          <span class="w-2 h-2 bg-green-400 rounded-full inline-block"></span> Online
+        </p>
+      </div>
+    </div>
+
+    <nav class="flex-1 p-4">
+      <p class="text-xs text-gray-400 px-4 mb-2">MAIN NAVIGATION</p>
+      <ul class="space-y-1">
+        <li class="flex items-center gap-3 px-4 py-3 bg-gray-800 rounded-lg text-blue-400">
+          <i class="fas fa-tachometer-alt"></i> DASHBOARD
+        </li>
+        <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+          <i class="fas fa-box"></i>
+          <a href="../InventarisLabWeb/barang.html">
+            DATA BARANG
+          </a>
+        </li>
+        <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+          <i class="fas fa-handshake"></i> PEMINJAMAN
+        </li>
+        <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+          <i class="fas fa-arrow-down"></i> BARANG MASUK
+        </li>
+        <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+          <i class="fas fa-arrow-up"></i> BARANG KELUAR
+        </li>
+        <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+          <i class="fas fa-chart-bar"></i> LAPORAN
+        </li>
+      </ul>
+    </nav>
+    
+
+    <div class="p-4 border-t border-gray-800 mt-auto">
+      <ul class="space-y-1">
+        <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+          <i class="fas fa-key"></i> GANTI PASSWORD
+        </li>
+        <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+          <i class="fas fa-sign-out-alt"></i> LOGOUT
+        </li>
+      </ul>
+    </div>
   </aside>
 
-  <!-- MAIN -->
-  <main class="flex-1 p-6">
-
-    <!-- CARD -->
-    <div class="grid grid-cols-4 gap-4 mb-6">
-      <div class="bg-green-500 text-white p-5 rounded-lg">Total Pinjam: 12</div>
-      <div class="bg-yellow-500 text-white p-5 rounded-lg">Mendekati DL: 3</div>
-      <div class="bg-red-500 text-white p-5 rounded-lg">Terlambat: 2</div>
-      <div class="bg-blue-500 text-white p-5 rounded-lg">Barang: 20</div>
-    </div>
-
-    <!-- TABLE -->
-    <div class="bg-white p-5 rounded-lg shadow">
-      <div class="flex justify-between mb-4">
-        <h2 class="font-bold">Data Peminjaman</h2>
-        <button onclick="openModal()" class="bg-blue-600 text-white px-4 py-2 rounded">
-          + Tambah
+  <!-- MAIN CONTENT -->
+  <div class="flex-1">
+    <!-- HEADER -->
+    <header class="bg-blue-600 text-white px-8 py-4 flex justify-between items-center">
+      <div class="flex items-center gap-8">
+        <h1 class="text-2xl font-semibold">Dashboard</h1>
+        <span class="text-blue-200">Control panel</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <div class="flex items-center gap-2">
+          <img src="https://i.pravatar.cc/32?u=alex" alt="Alex" class="w-8 h-8 rounded-full">
+          <div>
+            <p class="font-medium text-sm">Alex</p>
+            <p class="text-xs text-blue-200">Admin</p>
+          </div>
+        </div>
+        <button onclick="alert('Logout berhasil')"
+          class="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-sm">
+          <i class="fas fa-sign-out-alt"></i> LOGOUT
         </button>
       </div>
+    </header>
 
-      <table class="w-full text-left border">
-        <thead class="bg-gray-200">
-          <tr>
-            <th class="p-2">Nama</th>
-            <th class="p-2">Barang</th>
-            <th class="p-2">Deadline</th>
-            <th class="p-2">Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="border-t">
-            <td class="p-2">Faiz</td>
-            <td class="p-2">Proyektor</td>
-            <td class="p-2">10 Apr</td>
-            <td class="p-2 text-red-500">Terlambat</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <main class="p-8">
+      <!-- CARDS GRID -->
+      <div class="grid grid-cols-4 gap-6">
 
-  </main>
+        <!-- Card 1: Model Barang -->
+        <div class="bg-green-500 text-white p-6 rounded-2xl card flex flex-col h-full">
+          <div class="flex justify-between flex-1">
+            <div>
+              <p class="text-6xl font-bold">4</p>
+              <p class="text-lg mt-2">Model Barang</p>
+            </div>
+            <div class="w-16 h-16 opacity-30">
+              <!-- Heroicon Chart Bar -->
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
+              </svg>
 
-  <!-- MODAL -->
-  <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
-    <div class="bg-white p-6 rounded-lg w-96">
-      <h2 class="font-bold mb-4">Tambah Peminjaman</h2>
+            </div>
+          </div>
+          <div class="mt-auto pt-6">
+            <button onclick="alert('Detail Model Barang')"
+              class="more-info-btn w-full text-white text-sm font-medium py-3 px-6 rounded-xl flex items-center justify-center gap-2 hover:shadow-md">
+              More info
+              <span class="text-lg leading-none">→</span>
+            </button>
+          </div>
+        </div>
 
-      <input type="text" placeholder="Nama" class="w-full border p-2 mb-3 rounded">
-      <input type="text" placeholder="Barang" class="w-full border p-2 mb-3 rounded">
+        <!-- Card 2: Pengguna -->
+        <div class="bg-orange-500 text-white p-6 rounded-2xl card flex flex-col h-full">
+          <div class="flex justify-between flex-1">
+            <div>
+              <p class="text-6xl font-bold">3</p>
+              <p class="text-lg mt-2">Pengguna</p>
+            </div>
+            <!-- SVG Phosphor User (siap pakai) -->
+            <div class="w-16 h-16 opacity-30 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 256 256">
+                <path
+                  d="M256,136a8,8,0,0,1-8,8H232v16a8,8,0,0,1-16,0V144H200a8,8,0,0,1,0-16h16V112a8,8,0,0,1,16,0v16h16A8,8,0,0,1,256,136Zm-57.87,58.85a8,8,0,0,1-12.26,10.3C165.75,181.19,138.09,168,108,168s-57.75,13.19-77.87,37.15a8,8,0,0,1-12.25-10.3c14.94-17.78,33.52-30.41,54.17-37.17a68,68,0,1,1,71.9,0C164.6,164.44,183.18,177.07,198.13,194.85ZM108,152a52,52,0,1,0-52-52A52.06,52.06,0,0,0,108,152Z">
+                </path>
+              </svg>
+            </div>
+          </div>
+          <div class="mt-auto pt-6">
+            <button onclick="alert('Detail Pengguna')"
+              class="more-info-btn w-full text-white text-sm font-medium py-3 px-6 rounded-xl flex items-center justify-center gap-2 hover:shadow-md">
+              More info
+              <span class="text-lg leading-none">→</span>
+            </button>
+          </div>
+        </div>
 
-      <div class="flex gap-2">
-        <button onclick="closeModal()" class="bg-gray-400 text-white px-4 py-2 rounded">
-          Batal
-        </button>
-        <button class="bg-blue-600 text-white px-4 py-2 rounded">
-          Simpan
-        </button>
+        <!-- Card 3: Suplier -->
+        <div class="bg-red-500 text-white p-6 rounded-2xl card flex flex-col h-full">
+          <div class="flex justify-between flex-1">
+            <div>
+              <p class="text-6xl font-bold">5</p>
+              <p class="text-lg mt-2">Suplier</p>
+            </div>
+            <!-- SVG Phosphor Pie Chart - Siap Pakai -->
+            <div class="w-16 h-16 opacity-30 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 256 256">
+                <path
+                  d="M100,116.43a8,8,0,0,0,4-6.93v-72A8,8,0,0,0,93.34,30,104.06,104.06,0,0,0,25.73,147a8,8,0,0,0,4.52,5.81,7.86,7.86,0,0,0,3.35.74,8,8,0,0,0,4-1.07ZM88,49.62v55.26L40.12,132.51C40,131,40,129.48,40,128A88.12,88.12,0,0,1,88,49.62ZM128,24a8,8,0,0,0-8,8v91.82L41.19,169.73a8,8,0,0,0-2.87,11A104,104,0,1,0,128,24Zm0,192a88.47,88.47,0,0,1-71.49-36.68l75.52-44a8,8,0,0,0,4-6.92V40.36A88,88,0,0,1,128,216Z">
+                </path>
+              </svg>
+            </div>
+          </div>
+          <div class="mt-auto pt-6">
+            <button onclick="alert('Detail Suplier')"
+              class="more-info-btn w-full text-white text-sm font-medium py-3 px-6 rounded-xl flex items-center justify-center gap-2 hover:shadow-md">
+              More info
+              <span class="text-lg leading-none">→</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 4 & sisanya menggunakan icon serupa (list/document) -->
+        <!-- Saya gunakan Heroicon "Clipboard Document List" atau "Bars 3" untuk yang list -->
+
+        <div class="bg-sky-500 text-white p-6 rounded-2xl card flex flex-col h-full">
+          <div class="flex justify-between flex-1">
+            <div>
+              <p class="text-6xl font-bold">2</p>
+              <p class="text-lg mt-2">Transaksi Peminjaman</p>
+            </div>
+            <!-- SVG Phosphor List - Optimized -->
+            <div class="w-16 h-16 opacity-30 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 256 256">
+                <path
+                  d="M80,64a8,8,0,0,1,8-8H216a8,8,0,0,1,0,16H88A8,8,0,0,1,80,64Zm136,56H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Zm0,64H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16ZM44,52A12,12,0,1,0,56,64,12,12,0,0,0,44,52Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,116Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,180Z">
+                </path>
+              </svg>
+            </div>
+          </div>
+          <div class="mt-auto pt-6">
+            <button onclick="alert('Detail Transaksi Peminjaman')"
+              class="more-info-btn w-full text-white text-sm font-medium py-3 px-6 rounded-xl flex items-center justify-center gap-2 hover:shadow-md">
+              More info
+              <span class="text-lg leading-none">→</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card Baris 2 & 3 (saya gunakan icon yang sama untuk singkat, kamu bisa ganti sesuai kebutuhan) -->
+        <!-- Total Barang Masuk -->
+        <div class="bg-blue-600 text-white p-6 rounded-2xl card flex flex-col h-full">
+          <div class="flex justify-between flex-1">
+            <div>
+              <p class="text-6xl font-bold">286</p>
+              <p class="text-lg mt-2">Total Barang Masuk</p>
+            </div>
+            <!-- SVG Phosphor List - Optimized -->
+            <div class="w-16 h-16 opacity-30 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 256 256">
+                <path
+                  d="M80,64a8,8,0,0,1,8-8H216a8,8,0,0,1,0,16H88A8,8,0,0,1,80,64Zm136,56H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Zm0,64H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16ZM44,52A12,12,0,1,0,56,64,12,12,0,0,0,44,52Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,116Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,180Z">
+                </path>
+              </svg>
+            </div>
+          </div>
+          <div class="mt-auto pt-6">
+            <button onclick="alert('Detail Barang Masuk')"
+              class="more-info-btn w-full text-white text-sm font-medium py-3 px-6 rounded-xl flex items-center justify-center gap-2 hover:shadow-md">
+              More info
+              <span class="text-lg leading-none">→</span>
+            </button>
+          </div>
+        </div>
+
+
+        <!-- Total Barang Keluar -->
+        <div class="bg-purple-600 text-white p-6 rounded-2xl card flex flex-col h-full">
+          <div class="flex justify-between flex-1">
+            <div>
+              <p class="text-6xl font-bold">2</p>
+              <p class="text-lg mt-2">Total Barang Keluar</p>
+            </div>
+            <!-- SVG Phosphor List - Optimized -->
+            <div class="w-16 h-16 opacity-30 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 256 256">
+                <path
+                  d="M80,64a8,8,0,0,1,8-8H216a8,8,0,0,1,0,16H88A8,8,0,0,1,80,64Zm136,56H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Zm0,64H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16ZM44,52A12,12,0,1,0,56,64,12,12,0,0,0,44,52Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,116Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,180Z">
+                </path>
+              </svg>
+            </div>
+          </div>
+          <div class="mt-auto pt-6">
+            <button onclick="alert('Detail Barang Masuk')"
+              class="more-info-btn w-full text-white text-sm font-medium py-3 px-6 rounded-xl flex items-center justify-center gap-2 hover:shadow-md">
+              More info
+              <span class="text-lg leading-none">→</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Total Transaksi Barang Masuk -->
+        <div class="bg-orange-600 text-white p-6 rounded-2xl card flex flex-col h-full">
+          <div class="flex justify-between flex-1">
+            <div>
+              <p class="text-6xl font-bold">4</p>
+              <p class="text-lg mt-2">Total Transaksi Barang Masuk</p>
+            </div>
+            <!-- SVG Phosphor List - Optimized -->
+            <div class="w-16 h-16 opacity-30 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 256 256">
+                <path
+                  d="M80,64a8,8,0,0,1,8-8H216a8,8,0,0,1,0,16H88A8,8,0,0,1,80,64Zm136,56H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Zm0,64H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16ZM44,52A12,12,0,1,0,56,64,12,12,0,0,0,44,52Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,116Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,180Z">
+                </path>
+              </svg>
+            </div>
+          </div>
+          <div class="mt-auto pt-6">
+            <button onclick="alert('Detail Barang Masuk')"
+              class="more-info-btn w-full text-white text-sm font-medium py-3 px-6 rounded-xl flex items-center justify-center gap-2 hover:shadow-md">
+              More info
+              <span class="text-lg leading-none">→</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Total Transaksi Barang Keluar -->
+        <div class="bg-blue-600 text-white p-6 rounded-2xl card flex flex-col h-full">
+          <div class="flex justify-between flex-1">
+            <div>
+              <p class="text-6xl font-bold">2</p>
+              <p class="text-lg mt-2">Total Transaksi Barang Keluar</p>
+            </div>
+            <!-- SVG Phosphor List - Optimized -->
+            <div class="w-16 h-16 opacity-30 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 256 256">
+                <path
+                  d="M80,64a8,8,0,0,1,8-8H216a8,8,0,0,1,0,16H88A8,8,0,0,1,80,64Zm136,56H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Zm0,64H88a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16ZM44,52A12,12,0,1,0,56,64,12,12,0,0,0,44,52Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,116Zm0,64a12,12,0,1,0,12,12A12,12,0,0,0,44,180Z">
+                </path>
+              </svg>
+            </div>
+          </div>
+          <div class="mt-auto pt-6">
+            <button onclick="alert('Detail Barang Masuk')"
+              class="more-info-btn w-full text-white text-sm font-medium py-3 px-6 rounded-xl flex items-center justify-center gap-2 hover:shadow-md">
+              More info
+              <span class="text-lg leading-none">→</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Sisanya (Total Barang Keluar, Transaksi, dll) saya pakai icon serupa. Kamu bisa copy-paste dan ganti SVG sesuai keinginan dari https://heroicons.com -->
+
+        <!-- Untuk card lainnya, saya pakai icon yang sama dulu supaya kode tidak terlalu panjang. -->
+
+        <!-- Dua card terakhir -->
+        <div class="bg-green-600 text-white p-6 rounded-2xl card flex flex-col h-full">
+          <div class="flex-1">
+            <p class="text-6xl font-bold">1</p>
+            <p class="text-lg mt-2">Peminjaman Dikembalikan</p>
+          </div>
+          <div class="mt-auto pt-6">
+            <button onclick="alert('Detail Peminjaman Dikembalikan')"
+              class="more-info-btn w-full text-white text-sm font-medium py-3 px-6 rounded-xl flex items-center justify-center gap-2 hover:shadow-md">
+              More info
+              <span class="text-lg leading-none">→</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="bg-red-600 text-white p-6 rounded-2xl card flex flex-col h-full">
+          <div class="flex-1">
+            <p class="text-6xl font-bold">1</p>
+            <p class="text-lg mt-2">Peminjaman Belum Dikembalikan</p>
+          </div>
+          <div class="mt-auto pt-6">
+            <button onclick="alert('Detail Peminjaman Belum Dikembalikan')"
+              class="more-info-btn w-full text-white text-sm font-medium py-3 px-6 rounded-xl flex items-center justify-center gap-2 hover:shadow-md">
+              More info
+              <span class="text-lg leading-none">→</span>
+            </button>
+          </div>
+        </div>
+
       </div>
-    </div>
+
+      <!-- DETAIL LOGIN -->
+      <div class="mt-10 bg-white rounded-2xl shadow p-8">
+        <h2 class="text-xl font-bold text-blue-600 border-b pb-3">Detail Login</h2>
+        <div class="grid grid-cols-2 gap-x-12 gap-y-6 mt-6">
+          <div>
+            <p class="text-sm text-gray-600">Nama</p>
+            <p class="font-medium text-lg">Alex</p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-600">Nim</p>
+            <p class="font-medium text-lg">42622000</p>
+          </div>
+          <div>
+            <p class="text-sm text-gray-600">Hak Akses</p>
+            <button class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg text-sm font-medium mt-2">
+              MANAJEMEN
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
   </div>
-
-  <!-- JS -->
-  <script>
-    function openModal() {
-      document.getElementById("modal").classList.remove("hidden");
-      document.getElementById("modal").classList.add("flex");
-    }
-
-    function closeModal() {
-      document.getElementById("modal").classList.add("hidden");
-    }
-  </script>
-
 </body>
+
 </html>
