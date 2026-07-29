@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>EDTI DATA BARANG - InventarisLab</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .table-row:hover {
+            background-color: #f8fafc;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 flex min-h-screen">
+
+    <!-- SIDEBAR -->
+    <aside class="w-72 bg-gray-900 text-white flex flex-col">
+        <div class="p-6 border-b border-gray-800">
+            <h1 class="text-2xl font-bold">InventarisLab</h1>
+        </div>
+
+        <div class="p-6 flex items-center gap-3 border-b border-gray-800">
+            <img src="https://i.pravatar.cc/48?u=raply" alt="Raply" class="w-10 h-10 rounded-full">
+            <div>
+                <p class="font-medium">Raply</p>
+                <p class="text-green-400 text-sm flex items-center gap-1">
+                    <span class="w-2 h-2 bg-green-400 rounded-full inline-block"></span> Online
+                </p>
+            </div>
+        </div>
+
+        <nav class="flex-1 p-4">
+            <p class="text-xs text-gray-400 px-4 mb-2">MAIN NAVIGATION</p>
+            <ul class="space-y-1">
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <a href="../InventarisLabWeb/dashboard.html">
+                        DASHBOARD
+                    </a>
+                </li>
+                <li class="flex items-center gap-3 px-4 py-3 bg-gray-800 rounded-lg text-blue-400">
+                    <i class="fas fa-box"></i>
+                    <a href="../InventarisLabWeb/barang.html">
+                        DATA BARANG
+                    </a>
+                </li>
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+                    <i class="fas fa-handshake"></i>
+                    <a href="../InventarisLabWeb/peminjaman.html">PEMINJAMAN</a>
+                </li>
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+                    <i class="fas fa-arrow-down"></i>
+                    <a href="../InventarisLabWeb/barang_masuk.html">BARANG MASUK</a>
+                </li>
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+                    <i class="fas fa-arrow-up"></i>
+                    <a href="../InventarisLabWeb/barang_keluar.html">BARANG KELUAR</a>
+                </li>
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+                    <i class="fas fa-chart-bar"></i>
+                    <a href="../InventarisLabWeb/laporan.html">LAPORAN</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="p-4 border-t border-gray-800 mt-auto">
+            <ul class="space-y-1">
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+                    <i class="fas fa-key"></i>
+                    <a href="../InventarisLabWeb/ganti_password.html">GANTI PASSWORD</a>
+                </li>
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <a href="../InventarisLabWeb/logout.html">LOGOUT</a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="flex-1">
+        <!-- HEADER -->
+        <header class="bg-blue-600 text-white px-8 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <h1 class="text-2xl font-semibold">Edit Barang</h1>
+                <span class="text-blue-200">Data Barang</span>
+            </div>
+            <div class="flex items-center gap-6">
+                <div class="flex items-center gap-2">
+                    <img src="https://i.pravatar.cc/32?u=raply" alt="Raply" class="w-8 h-8 rounded-full">
+                    <div>
+                        <p class="font-medium text-sm">Raply</p>
+                        <p class="text-xs text-blue-200">Admin</p>
+                    </div>
+                </div>
+                <button onclick="alert('Logout berhasil')"
+                    class="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-sm">
+                    <i class="fas fa-sign-out-alt"></i> LOGOUT
+                </button>
+            </div>
+        </header>
+
+        <main class="p-8">
+
+            <!-- Breadcrumb -->
+            <div class="mb-8">
+
+                <h1 class="text-3xl font-bold text-gray-800">
+                    Tambah Barang
+                </h1>
+
+                <p class="text-gray-500 mt-2">
+                    Dashboard /
+                    <span class="text-blue-600">Data Barang</span>
+                    /
+                    Tambah Barang
+                </p>
+
+            </div>
+
+            <!-- Card -->
+            <div class="bg-white rounded-2xl shadow-lg">
+
+                <!-- Header Card -->
+                <div class="border-b px-8 py-6">
+
+                    <h2 class="text-xl font-semibold text-gray-800">
+                        Form Data Barang
+                    </h2>
+
+                    <p class="text-gray-500 text-sm mt-1">
+                        Lengkapi seluruh data barang sebelum disimpan.
+                    </p>
+
+                </div>
+
+                <!-- FORM -->
+                <form id="formBarang" class="p-8">
+
+                    <div class="grid grid-cols-2 gap-8">
+
+                        <!-- Nama -->
+                        <div>
+
+                            <label class="font-semibold text-gray-700">
+                                Nama Barang
+                            </label>
+
+                            <div class="relative mt-2">
+
+                                <i class="fas fa-box absolute left-4 top-4 text-gray-400"></i>
+
+                                <input id="nama" type="text" placeholder="Contoh : Laptop Lenovo"
+                                    class="w-full border rounded-xl pl-12 pr-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none">
+
+                            </div>
+
+                        </div>
+
+                        <!-- Spesifikasi -->
+
+                        <div>
+
+                            <label class="font-semibold text-gray-700">
+                                Spesifikasi
+                            </label>
+
+                            <div class="relative mt-2">
+
+                                <i class="fas fa-microchip absolute left-4 top-4 text-gray-400"></i>
+
+                                <input id="spesifikasi" type="text" placeholder="Core i5 Gen 11"
+                                    class="w-full border rounded-xl pl-12 pr-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none">
+
+                            </div>
+
+                        </div>
+
+                        <!-- Lokasi -->
+
+                        <div>
+
+                            <label class="font-semibold text-gray-700">
+                                Lokasi
+                            </label>
+
+                            <div class="relative mt-2">
+
+                                <i class="fas fa-location-dot absolute left-4 top-4 text-gray-400"></i>
+
+                                <input id="lokasi" type="text" placeholder="Laboratorium Komputer"
+                                    class="w-full border rounded-xl pl-12 pr-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none">
+
+                            </div>
+
+                        </div>
+
+                        <!-- Jumlah -->
+
+                        <div>
+
+                            <label class="font-semibold text-gray-700">
+                                Jumlah
+                            </label>
+
+                            <div class="relative mt-2">
+
+                                <i class="fas fa-sort-numeric-up absolute left-4 top-4 text-gray-400"></i>
+
+                                <input id="jumlah" type="number" min="1" placeholder="0"
+                                    class="w-full border rounded-xl pl-12 pr-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none">
+
+                            </div>
+
+                        </div>
+
+                        <!-- Kondisi -->
+
+                        <div>
+
+                            <label class="font-semibold text-gray-700">
+                                Kondisi
+                            </label>
+
+                            <select id="kondisi"
+                                class="w-full border rounded-xl mt-2 px-4 py-3 focus:ring-2 focus:ring-blue-500">
+
+                                <option value="">Pilih Kondisi</option>
+                                <option>Baru</option>
+                                <option>Bagus</option>
+                                <option>Rusak Ringan</option>
+                                <option>Rusak Berat</option>
+
+                            </select>
+
+                        </div>
+
+                        <!-- Jenis -->
+
+                        <div>
+
+                            <label class="font-semibold text-gray-700">
+                                Jenis
+                            </label>
+
+                            <select id="jenis"
+                                class="w-full border rounded-xl mt-2 px-4 py-3 focus:ring-2 focus:ring-blue-500">
+
+                                <option value="">Pilih Jenis</option>
+                                <option>Sarana</option>
+                                <option>Prasarana</option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Keterangan -->
+
+                    <div class="mt-8">
+
+                        <label class="font-semibold text-gray-700">
+                            Keterangan
+                        </label>
+
+                        <textarea id="keterangan" rows="5" placeholder="Tambahkan keterangan jika diperlukan..."
+                            class="w-full border rounded-xl mt-2 px-4 py-3 resize-none focus:ring-2 focus:ring-blue-500"></textarea>
+
+                    </div>
+
+                    <!-- Button -->
+
+                    <div class="flex justify-end gap-4 mt-10">
+
+                        <a href="../pages/barang.html" class="px-6 py-3 rounded-xl border font-medium hover:bg-gray-100">
+
+                            Kembali
+
+                        </a>
+
+                        <button id="btnSimpan" type="submit"
+                            class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold">
+
+                            <i class="fas fa-floppy-disk mr-2"></i>
+
+                            Simpan Barang
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../assets/supabase.js"></script>
+    <script src="../assets/edit_barang.js"></script>
+    <script src="../assets/logout.js"></script>
+
+
+</body>
+
+</html>

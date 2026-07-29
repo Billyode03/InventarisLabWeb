@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Data Barang - InventarisLab</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .table-row:hover {
+            background-color: #f8fafc;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 flex min-h-screen">
+
+    <!-- SIDEBAR -->
+    <aside class="w-72 bg-gray-900 text-white flex flex-col">
+        <div class="p-6 border-b border-gray-800">
+            <h1 class="text-2xl font-bold">InventarisLab</h1>
+        </div>
+
+        <div class="p-6 flex items-center gap-3 border-b border-gray-800">
+            <img src="https://i.pravatar.cc/48?u=raply" alt="Raply" class="w-10 h-10 rounded-full">
+            <div>
+                <p class="font-medium">Raply</p>
+                <p class="text-green-400 text-sm flex items-center gap-1">
+                    <span class="w-2 h-2 bg-green-400 rounded-full inline-block"></span> Online
+                </p>
+            </div>
+        </div>
+
+        <nav class="flex-1 p-4">
+            <p class="text-xs text-gray-400 px-4 mb-2">MAIN NAVIGATION</p>
+            <ul class="space-y-1">
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <a href="../dashboard.html">
+                        DASHBOARD
+                    </a>
+                </li>
+                <li class="flex items-center gap-3 px-4 py-3 bg-gray-800 rounded-lg text-blue-400">
+                    <i class="fas fa-box"></i>
+                    <a href="../pages/barang.html">
+                        DATA BARANG
+                    </a>
+                </li>
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+                    <i class="fas fa-handshake"></i>
+                    <a href="../peminjaman.html">PEMINJAMAN</a>
+                </li>
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+                    <i class="fas fa-arrow-down"></i>
+                    <a href="../pages/barang_masuk.html">BARANG MASUK</a>
+                </li>
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+                    <i class="fas fa-arrow-up"></i>
+                    <a href="../pages/barang_keluar.html">BARANG KELUAR</a>
+                </li>
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+                    <i class="fas fa-chart-bar"></i>
+                    <a href="../laporan.html">LAPORAN</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="p-4 border-t border-gray-800 mt-auto">
+            <ul class="space-y-1">
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+                    <i class="fas fa-key"></i>
+                    <a href="../ganti_password.html">GANTI PASSWORD</a>
+                </li>
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <!-- <a href="../login.html">LOGOUT</a> -->
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="flex-1">
+        <!-- HEADER -->
+        <header class="bg-blue-600 text-white px-8 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <h1 class="text-2xl font-semibold">Barang</h1>
+                <span class="text-blue-200">Data Barang</span>
+            </div>
+            <div class="flex items-center gap-6">
+                <div class="flex items-center gap-2">
+                    <img src="https://i.pravatar.cc/32?u=raply" alt="Raply" class="w-8 h-8 rounded-full">
+                    <div>
+                        <p class="font-medium text-sm">Raply</p>
+                        <p class="text-xs text-blue-200">Admin</p>
+                    </div>
+                </div>
+                <button onclick="alert('Logout berhasil')"
+                    class="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-sm">
+                    <i class="fas fa-sign-out-alt"></i> LOGOUT
+                </button>
+            </div>
+        </header>
+
+        <main class="p-8">
+            <!-- Title + Button -->
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Barang</h2>
+                <a href="../pages/tambah_barang.html"
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl flex items-center gap-2 font-medium">
+
+                    <i class="fas fa-plus"></i>
+                    Tambah Barang
+
+                </a>
+            </div>
+
+            <!-- Search -->
+            <div class="flex justify-end mb-4">
+                <div class="relative w-80">
+                    <input type="text" id="searchInput" placeholder="Search..."
+                        class="w-full border border-gray-300 rounded-xl py-3 px-5 pl-10 focus:outline-none focus:border-blue-500"
+                        onkeyup="searchTable()">
+                    <i class="fas fa-search absolute left-4 top-3.5 text-gray-400"></i>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="bg-white rounded-2xl shadow overflow-hidden">
+
+                <table class="w-full">
+
+                    <thead class="bg-gray-50">
+
+                        <tr>
+                            <th class="px-6 py-4">NO</th>
+                            <th class="px-6 py-4">NAMA</th>
+                            <th class="px-6 py-4">SPESIFIKASI</th>
+                            <th class="px-6 py-4">LOKASI</th>
+                            <th class="px-6 py-4">KONDISI</th>
+                            <th class="px-6 py-4">JUMLAH</th>
+                            <th class="px-6 py-4">JENIS</th>
+                            <th class="px-6 py-4">KETERANGAN</th>
+                            <th class="px-6 py-4 text-center">OPSI</th>
+                        </tr>
+
+                    </thead>
+
+                    <!-- INI YANG DIISI JS -->
+                    <tbody id="dataTable" class="divide-y">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../assets/supabase.js"></script>
+    <script src="../assets/barang.js"></script>
+    <script src="../assets/logout.js"></script>
+
+
+</body>
+
+</html>

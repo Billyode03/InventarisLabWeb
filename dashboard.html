@@ -39,7 +39,7 @@
     <div class="p-6 flex items-center gap-3 border-b border-gray-800">
       <img src="https://i.pravatar.cc/48?u=raply" alt="Raply" class="w-10 h-10 rounded-full">
       <div>
-        <p class="font-medium">Raply</p>
+        <p class="font-medium" id="headerNama"></p>
         <p class="text-green-400 text-sm flex items-center gap-1">
           <span class="w-2 h-2 bg-green-400 rounded-full inline-block"></span> Online
         </p>
@@ -51,29 +51,31 @@
       <ul class="space-y-1">
         <li class="flex items-center gap-3 px-4 py-3 bg-gray-800 rounded-lg text-blue-400">
           <i class="fas fa-tachometer-alt"></i>
-          DASHBOARD
+          <a href="../InventarisLabWeb/dashboard.html">
+            DASHBOARD
+          </a>
         </li>
         <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
           <i class="fas fa-box"></i>
-          <a href="../InventarisLabWeb/barang.html">
+          <a href="../InventarisLabWeb/pages/barang.html">
             DATA BARANG
           </a>
         </li>
         <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
           <i class="fas fa-handshake"></i>
-          <a href="peminjaman.html">PEMINJAMAN</a>
+          <a href="../InventarisLabWeb/peminjaman.html">PEMINJAMAN</a>
         </li>
         <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
           <i class="fas fa-arrow-down"></i>
-          <a href="barang.html">BARANG MASUK</a>
+          <a href="../InventarisLabWeb/barang_masuk.html">BARANG MASUK</a>
         </li>
         <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
           <i class="fas fa-arrow-up"></i>
-          <a href="barang.html">BARANG KELUAR</a>
+          <a href="../InventarisLabWeb/barang_keluar.html">BARANG KELUAR</a>
         </li>
         <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
           <i class="fas fa-chart-bar"></i>
-          <a href="laporan.html">LAPORAN</a>
+          <a href="../InventarisLabWeb/laporan.html">LAPORAN</a>
         </li>
       </ul>
     </nav>
@@ -82,7 +84,7 @@
       <ul class="space-y-1">
         <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
           <i class="fas fa-key"></i>
-          <a href="ganti_password.html">GANTI PASSWORD</a>
+          <a href="../InventarisLabWeb/ganti_password.html">GANTI PASSWORD</a>
         </li>
         <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
           <i class="fas fa-sign-out-alt"></i> LOGOUT
@@ -103,11 +105,11 @@
         <div class="flex items-center gap-2">
           <img src="https://i.pravatar.cc/32?u=raply" alt="Raply" class="w-8 h-8 rounded-full">
           <div>
-            <p class="font-medium text-sm">Raply</p>
-            <p class="text-xs text-blue-200">Admin</p>
+            <p class="font-medium text-sm" id="sidebarNama">/p>
+            <p class="text-xs text-blue-200" id="headerRole"></p>
           </div>
         </div>
-        <button onclick="alert('Logout berhasil')"
+        <button onclick="logout()"
           class="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-sm">
           <i class="fas fa-sign-out-alt"></i> LOGOUT
         </button>
@@ -364,22 +366,26 @@
         <div class="grid grid-cols-2 gap-x-12 gap-y-6 mt-6">
           <div>
             <p class="text-sm text-gray-600">Nama</p>
-            <p class="font-medium text-lg">Alex</p>
+            <p class="font-medium text-lg" id="detailNama"></p>
           </div>
           <div>
             <p class="text-sm text-gray-600">Nim</p>
-            <p class="font-medium text-lg">42622000</p>
+            <p class="font-medium text-lg" id="detailNim"></p>
           </div>
           <div>
             <p class="text-sm text-gray-600">Hak Akses</p>
-            <button class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg text-sm font-medium mt-2">
-              MANAJEMEN
+            <button class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg text-sm font-medium mt-2"
+              id="detailRole">
             </button>
           </div>
         </div>
       </div>
     </main>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../assets/supabase.js"></script>
+  <script src="../assets/dashboard.js"></script>
+  <script src="../assets/logout.js"></script>
 </body>
 
 </html>

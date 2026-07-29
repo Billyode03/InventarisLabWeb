@@ -23,7 +23,7 @@
       </h1>
 
       <form id="loginForm" class="space-y-4">
-      <!-- <form id="" class="space-y-4"> -->
+        <!-- <form id="" class="space-y-4"> -->
 
         <div>
           <label class="text-sm">NIM</label>
@@ -44,15 +44,19 @@
       </form>
 
       <p id="error" class="text-red-500 text-sm mt-3 hidden">Login gagal</p>
-
+ 
     </div>
   </div>
 
   <!-- JS -->
-  <script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../InventarisLabWeb/assets/supabase.js"></script>
+  <script src="../InventarisLabWeb/assets/login.js"></script>
+
+  <!-- <script>
     const form = document.getElementById("loginForm");
 
-    form.addEventListener("submit", function (e) {  
+    form.addEventListener("submit", function (e) {
       e.preventDefault();
 
       const nim = document.getElementById("nim").value;
@@ -66,7 +70,8 @@
         document.getElementById("error").classList.remove("hidden");
       }
     });
-  </script>
+  </script> -->
+
 
 </body>
 
