@@ -1,15 +1,13 @@
 const tbody = document.getElementById("dataTable");
 
-
 loadBarang();
 
 // ==============================
 // LOAD DATA
 // ==============================
 async function loadBarang() {
-
-    // Loading
-    tbody.innerHTML = `
+  // Loading
+  tbody.innerHTML = `
         <tr>
             <td colspan="9" class="py-16 text-center text-gray-500">
                 <i class="fas fa-spinner fa-spin text-4xl mb-3"></i>
@@ -18,24 +16,21 @@ async function loadBarang() {
         </tr>
     `;
 
+  const { data, error } = await supabaseClient
+    .from("barang")
+    .select("*")
+    .order("id", { ascending: true });
 
+  console.log(data);
+  console.log(error);
 
-    const { data, error } = await supabaseClient
-        .from("barang")
-        .select("*")
-        .order("id", { ascending: true });
+  // ==============================
+  // ERROR
+  // ==============================
+  if (error) {
+    console.error(error);
 
-    console.log(data);
-    console.log(error);
-
-    // ==============================
-    // ERROR
-    // ==============================
-    if (error) {
-
-        console.error(error);
-
-        tbody.innerHTML = `
+    tbody.innerHTML = `
             <tr>
                 <td colspan="9">
 
@@ -63,15 +58,14 @@ async function loadBarang() {
             </tr>
         `;
 
-        return;
-    }
+    return;
+  }
 
-    // ==============================
-    // DATA KOSONG
-    // ==============================
-    if (data.length === 0) {
-
-        tbody.innerHTML = `
+  // ==============================
+  // DATA KOSONG
+  // ==============================
+  if (data.length === 0) {
+    tbody.innerHTML = `
             <tr>
                 <td colspan="9">
 
@@ -93,54 +87,52 @@ async function loadBarang() {
             </tr>
         `;
 
-        return;
-    }
+    return;
+  }
 
-    // ==============================
-    // RENDER DATA
-    // ==============================
+  // ==============================
+  // RENDER DATA
+  // ==============================
 
-    tbody.innerHTML = "";
+  tbody.innerHTML = "";
 
-    data.forEach((item, index) => {
+  data.forEach((item, index) => {
+    let badge = "";
 
-        let badge = "";
-
-        switch (item.kondisi) {
-
-            case "Baru":
-                badge = `
+    switch (item.kondisi) {
+      case "Baru":
+        badge = `
                     <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs">
                         BARU
                     </span>
                 `;
-                break;
+        break;
 
-            case "Bagus":
-                badge = `
+      case "Bagus":
+        badge = `
                     <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs">
                         BAGUS
                     </span>
                 `;
-                break;
+        break;
 
-            case "Rusak Ringan":
-                badge = `
+      case "Rusak Ringan":
+        badge = `
                     <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs">
                         RUSAK RINGAN
                     </span>
                 `;
-                break;
+        break;
 
-            default:
-                badge = `
+      default:
+        badge = `
                     <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs">
                         RUSAK BERAT
                     </span>
                 `;
-        }
+    }
 
-        tbody.innerHTML += `
+    tbody.innerHTML += `
 <tr>
 
     <td class="px-6 py-4">
@@ -186,17 +178,18 @@ async function loadBarang() {
             </button>
 
             <button
-    onclick="editBarang(${item.id})"
-    class="text-blue-500 hover:text-blue-700"
-    title="Edit">
-    <i class="fas fa-edit"></i>
-</button>
+                onclick="editBarang(${item.id})"
+                class="text-blue-500 hover:text-blue-700"
+                title="Edit">
+                <i class="fas fa-edit"></i>
+            </button>
 
-            <button
+           <button
+                onclick="hapusBarang(${item.id})"
                 class="text-red-500 hover:text-red-700"
                 title="Hapus">
                 <i class="fas fa-trash"></i>
-            </button>
+        </button>
 
         </div>
 
@@ -204,8 +197,7 @@ async function loadBarang() {
 
 </tr>
 `;
-    });
-
+  });
 }
 
 // ==============================
@@ -213,21 +205,72 @@ async function loadBarang() {
 // ==============================
 
 function searchTable() {
+  const keyword = document.getElementById("searchInput").value.toLowerCase();
 
-    const keyword = document
-        .getElementById("searchInput")
-        .value
-        .toLowerCase();
+  const rows = tbody.querySelectorAll("tr");
 
-    const rows = tbody.querySelectorAll("tr");
+  rows.forEach((row) => {
+    row.style.display = row.innerText.toLowerCase().includes(keyword)
+      ? ""
+      : "none";
+  });
+}
 
-    rows.forEach(row => {
+function editBarang(id) {
+  window.location.href = `edit_barang.html?id=${id}`;
+}
 
-        row.style.display =
-            row.innerText.toLowerCase().includes(keyword)
-                ? ""
-                : "none";
+
+async function hapusBarang(id) {
+
+    const result = await Swal.fire({
+
+        title: "Hapus Barang?",
+        text: "Data yang dihapus tidak dapat dikembalikan.",
+        icon: "warning",
+
+        showCancelButton: true,
+
+        confirmButtonColor: "#dc2626",
+        cancelButtonColor: "#6b7280",
+
+        confirmButtonText: "Ya, Hapus",
+        cancelButtonText: "Batal"
 
     });
+
+    if (!result.isConfirmed) return;
+
+    const { error } = await supabaseClient
+        .from("barang")
+        .delete()
+        .eq("id", id);
+
+    if (error) {
+
+        console.error(error);
+
+        Swal.fire({
+            icon: "error",
+            title: "Gagal",
+            text: "Data gagal dihapus."
+        });
+
+        return;
+    }
+
+    Swal.fire({
+
+        icon: "success",
+        title: "Berhasil",
+        text: "Data berhasil dihapus.",
+        timer: 1500,
+        showConfirmButton: false
+
+    });
+
+    tbody.innerHTML = "";
+
+    loadBarang();
 
 }

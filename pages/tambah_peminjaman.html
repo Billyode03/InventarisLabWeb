@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>EDTI DATA BARANG - InventarisLab</title>
+    <title>Tambah Peminjaman - InventarisLab</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
@@ -84,8 +84,8 @@
         <!-- HEADER -->
         <header class="bg-blue-600 text-white px-8 py-4 flex justify-between items-center">
             <div class="flex items-center gap-4">
-                <h1 class="text-2xl font-semibold">Edit Barang</h1>
-                <span class="text-blue-200">Data Barang</span>
+                <h1 class="text-2xl font-semibold">Tambah Peminjaman</h1>
+                <span class="text-blue-200">Peminjaman</span>
             </div>
             <div class="flex items-center gap-6">
                 <div class="flex items-center gap-2">
@@ -127,170 +127,181 @@
                 <div class="border-b px-8 py-6">
 
                     <h2 class="text-xl font-semibold text-gray-800">
-                        Form Data Barang
+                        Form Data Peminjaman
                     </h2>
 
                     <p class="text-gray-500 text-sm mt-1">
-                        Lengkapi seluruh data barang sebelum disimpan.
+                        Lengkapi seluruh data peminjaman sebelum disimpan.
                     </p>
 
                 </div>
 
                 <!-- FORM -->
-                <form id="formBarang" class="p-8">
+                <form id="formPeminjaman" class="p-8">
 
                     <div class="grid grid-cols-2 gap-8">
 
-                        <!-- Nama -->
+                        <h3 class="col-span-2 text-lg font-semibold text-blue-600">
+                            Data Peminjam
+                        </h3>
+
                         <div>
 
                             <label class="font-semibold text-gray-700">
-                                Nama Barang
+                                NIM
                             </label>
 
-                            <div class="relative mt-2">
-
-                                <i class="fas fa-box absolute left-4 top-4 text-gray-400"></i>
-
-                                <input id="nama" type="text" placeholder="Contoh : Laptop Lenovo"
-                                    class="w-full border rounded-xl pl-12 pr-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none">
-
-                            </div>
+                            <input id="nim" type="text" class="w-full border rounded-xl mt-2 px-4 py-3">
 
                         </div>
 
-                        <!-- Spesifikasi -->
-
                         <div>
 
                             <label class="font-semibold text-gray-700">
-                                Spesifikasi
+                                Nama Mahasiswa
                             </label>
 
-                            <div class="relative mt-2">
-
-                                <i class="fas fa-microchip absolute left-4 top-4 text-gray-400"></i>
-
-                                <input id="spesifikasi" type="text" placeholder="Core i5 Gen 11"
-                                    class="w-full border rounded-xl pl-12 pr-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none">
-
-                            </div>
+                            <input id="nama_peminjam" type="text" class="w-full border rounded-xl mt-2 px-4 py-3">
 
                         </div>
 
-                        <!-- Lokasi -->
+                        <div>
+
+                            <label class="font-semibold text-gray-700">
+                                No HP
+                            </label>
+
+                            <input id="no_hp" type="text" class="w-full border rounded-xl mt-2 px-4 py-3">
+
+                        </div>
 
                         <div>
 
                             <label class="font-semibold text-gray-700">
+                                Keperluan
+                            </label>
+
+                            <input id="keperluan" type="text" class="w-full border rounded-xl mt-2 px-4 py-3">
+
+                        </div>
+
+                        <h3 class="col-span-2 text-lg font-semibold text-blue-600 mt-6">
+                            Data Barang
+                        </h3>
+
+                        <div class="col-span-2">
+
+                            <label class="font-semibold">
+                                Pilih Barang
+                            </label>
+
+                            <select id="barang" class="w-full border rounded-xl mt-2 px-4 py-3">
+
+                                <option value="">
+                                    Pilih Barang
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <div>
+
+                            <label class="font-semibold">
+                                Kode Barang
+                            </label>
+
+                            <input id="kode_barang" readonly
+                                class="w-full bg-gray-100 border rounded-xl mt-2 px-4 py-3">
+
+                        </div>
+
+                        <div>
+
+                            <label class="font-semibold">
                                 Lokasi
                             </label>
 
-                            <div class="relative mt-2">
+                            <input id="lokasi" readonly class="w-full bg-gray-100 border rounded-xl mt-2 px-4 py-3">
 
-                                <i class="fas fa-location-dot absolute left-4 top-4 text-gray-400"></i>
+                        </div>
 
-                                <input id="lokasi" type="text" placeholder="Laboratorium Komputer"
-                                    class="w-full border rounded-xl pl-12 pr-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none">
+                        <div>
 
+                            <label class="font-semibold">
+                                Stok Tersedia
+                            </label>
+
+                            <input id="stok" readonly class="w-full bg-gray-100 border rounded-xl mt-2 px-4 py-3">
+
+                        </div>
+
+                        <div class="col-span-2">
+
+                            <label class="font-semibold">
+                                Jumlah Pinjam
+                            </label>
+
+                            <input id="jumlah_pinjam" type="number" min="1"
+                                class="w-full border rounded-xl mt-2 px-4 py-3">
+
+                        </div>
+
+                        <h3 class="col-span-2 text-lg font-semibold text-blue-600 mt-6">
+                            Tanggal Peminjaman
+                        </h3>
+
+                        <div>
+
+                            <label class="font-semibold">
+                                Tanggal Pinjam
+                            </label>
+
+                            <input id="tanggal_pinjam" type="date" class="w-full border rounded-xl mt-2 px-4 py-3">
+
+                        </div>
+
+                        <div>
+
+                            <label class="font-semibold">
+                                Tanggal Kembali
+                            </label>
+
+                            <input id="tanggal_kembali" type="date" class="w-full border rounded-xl mt-2 px-4 py-3">
+
+                        </div>
+
+                        <div class="col-span-2">
+
+                            <!-- Keterangan -->
+                            <div class="mt-8"> <label class="font-semibold text-gray-700"> Catatan </label> <textarea
+                                    id="Catatan" rows="5" placeholder="Tambahkan Catatan jika diperlukan..."
+                                    class="w-full border rounded-xl mt-2 px-4 py-3 resize-none focus:ring-2 focus:ring-blue-500"></textarea>
                             </div>
 
                         </div>
 
-                        <!-- Jumlah -->
+                        <!-- Button -->
 
-                        <div>
+                        <div class="flex justify-end gap-4 mt-10">
 
-                            <label class="font-semibold text-gray-700">
-                                Jumlah
-                            </label>
+                            <a href="../pages/barang.html"
+                                class="px-6 py-3 rounded-xl border font-medium hover:bg-gray-100">
 
-                            <div class="relative mt-2">
+                                Kembali
 
-                                <i class="fas fa-sort-numeric-up absolute left-4 top-4 text-gray-400"></i>
+                            </a>
 
-                                <input id="jumlah" type="number" min="1" placeholder="0"
-                                    class="w-full border rounded-xl pl-12 pr-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none">
+                            <button id="btnSimpan" type="submit"
+                                class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold">
 
-                            </div>
+                                <i class="fas fa-floppy-disk mr-2"></i>
 
-                        </div>
+                                Simpan Peminjaman
 
-                        <!-- Kondisi -->
-
-                        <div>
-
-                            <label class="font-semibold text-gray-700">
-                                Kondisi
-                            </label>
-
-                            <select id="kondisi"
-                                class="w-full border rounded-xl mt-2 px-4 py-3 focus:ring-2 focus:ring-blue-500">
-
-                                <option value="">Pilih Kondisi</option>
-                                <option>Baru</option>
-                                <option>Bagus</option>
-                                <option>Rusak Ringan</option>
-                                <option>Rusak Berat</option>
-
-                            </select>
+                            </button>
 
                         </div>
-
-                        <!-- Jenis -->
-
-                        <div>
-
-                            <label class="font-semibold text-gray-700">
-                                Jenis
-                            </label>
-
-                            <select id="jenis"
-                                class="w-full border rounded-xl mt-2 px-4 py-3 focus:ring-2 focus:ring-blue-500">
-
-                                <option value="">Pilih Jenis</option>
-                                <option>Sarana</option>
-                                <option>Prasarana</option>
-
-                            </select>
-
-                        </div>
-
-                    </div>
-
-                    <!-- Keterangan -->
-
-                    <div class="mt-8">
-
-                        <label class="font-semibold text-gray-700">
-                            Keterangan
-                        </label>
-
-                        <textarea id="keterangan" rows="5" placeholder="Tambahkan keterangan jika diperlukan..."
-                            class="w-full border rounded-xl mt-2 px-4 py-3 resize-none focus:ring-2 focus:ring-blue-500"></textarea>
-
-                    </div>
-
-                    <!-- Button -->
-
-                    <div class="flex justify-end gap-4 mt-10">
-
-                        <a href="../pages/barang.html" class="px-6 py-3 rounded-xl border font-medium hover:bg-gray-100">
-
-                            Kembali
-
-                        </a>
-
-                        <button id="btnSimpan" type="submit"
-                            class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold">
-
-                            <i class="fas fa-floppy-disk mr-2"></i>
-
-                            Simpan Barang
-
-                        </button>
-
-                    </div>
 
                 </form>
 
@@ -300,7 +311,7 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../assets/supabase.js"></script>
-    <script src="../assets/edit_barang.js"></script>
+    <script src="../assets/tambah_barang.js"></script>
     <script src="../assets/logout.js"></script>
 
 
