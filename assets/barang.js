@@ -269,7 +269,7 @@ async function hapusBarang(id) {
 
     });
 
-    tbody.innerHTML = "";
+    // tbody.innerHTML = "";
 
     loadBarang();
 

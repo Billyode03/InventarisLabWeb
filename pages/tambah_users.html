@@ -75,11 +75,11 @@
             <ul class="space-y-1">
                 <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
                     <i class="fas fa-key"></i>
-                    <a href="../InventarisLabWeb/ganti_password.html">GANTI PASSWORD</a>
+                    <a href="../ganti_password.html">GANTI PASSWORD</a>
                 </li>
                 <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
                     <i class="fas fa-sign-out-alt"></i>
-                    <a href="../InventarisLabWeb/logout.html">LOGOUT</a>
+                    <!-- <a href="../login.html">LOGOUT</a> -->
                 </li>
             </ul>
         </div>
@@ -129,186 +129,205 @@
             <!-- Card -->
             <div class="bg-white rounded-2xl shadow-lg">
 
-                <!-- Header Card -->
                 <div class="border-b px-8 py-6">
 
                     <h2 class="text-xl font-semibold text-gray-800">
-                        Form Data Barang
+                        Form Data User
                     </h2>
 
                     <p class="text-gray-500 text-sm mt-1">
-                        Lengkapi seluruh data barang sebelum disimpan.
+                        Lengkapi data pengguna sistem InventarisLab.
                     </p>
 
                 </div>
 
-                <!-- FORM -->
-                <form id="formBarang" class="p-8">
+
+                <form id="formUser" class="p-8">
+
 
                     <div class="grid grid-cols-2 gap-8">
 
+
                         <!-- Nama -->
+
                         <div>
 
                             <label class="font-semibold text-gray-700">
-                                Nama Barang
+                                Nama Lengkap
                             </label>
+
 
                             <div class="relative mt-2">
 
-                                <i class="fas fa-box absolute left-4 top-4 text-gray-400"></i>
+                                <i class="fas fa-user absolute left-4 top-4 text-gray-400"></i>
 
-                                <input id="nama" type="text" placeholder="Contoh : Laptop Lenovo"
-                                    class="w-full border rounded-xl pl-12 pr-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none">
+
+                                <input id="nama" type="text" placeholder="Masukkan nama lengkap"
+                                    class="w-full border rounded-xl pl-12 pr-4 py-3">
+
+
+                            </div>
+
+
+                        </div>
+
+
+
+
+                        <!-- NIM -->
+
+                        <div>
+
+                            <label class="font-semibold text-gray-700">
+                                NIM/ NIDN
+                            </label>
+
+
+                            <div class="relative mt-2">
+
+                                <i class="fas fa-id-card absolute left-4 top-4 text-gray-400"></i>
+
+
+                                <input id="nim" type="text" placeholder="Masukkan NIM/ NIDN"
+                                    class="w-full border rounded-xl pl-12 pr-4 py-3">
+
 
                             </div>
 
                         </div>
 
-                        <!-- Spesifikasi -->
+
+
+
+                        <!-- Email -->
 
                         <div>
 
                             <label class="font-semibold text-gray-700">
-                                Spesifikasi
+                                Email
                             </label>
+
 
                             <div class="relative mt-2">
 
-                                <i class="fas fa-microchip absolute left-4 top-4 text-gray-400"></i>
+                                <i class="fas fa-envelope absolute left-4 top-4 text-gray-400"></i>
 
-                                <input id="spesifikasi" type="text" placeholder="Core i5 Gen 11"
-                                    class="w-full border rounded-xl pl-12 pr-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none">
+
+                                <input id="email" type="email" placeholder="Email pengguna"
+                                    class="w-full border rounded-xl pl-12 pr-4 py-3">
+
 
                             </div>
 
+
                         </div>
 
-                        <!-- Lokasi -->
+
+
+
+                        <!-- Password -->
 
                         <div>
 
                             <label class="font-semibold text-gray-700">
-                                Lokasi
+                                Password
                             </label>
+
 
                             <div class="relative mt-2">
 
-                                <i class="fas fa-location-dot absolute left-4 top-4 text-gray-400"></i>
 
-                                <input id="lokasi" type="text" placeholder="Laboratorium Komputer"
-                                    class="w-full border rounded-xl pl-12 pr-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none">
+                                <i class="fas fa-lock absolute left-4 top-4 text-gray-400"></i>
 
-                            </div>
 
-                        </div>
+                                <input id="password" type="password" placeholder="Password"
+                                    class="w-full border rounded-xl pl-12 pr-4 py-3">
 
-                        <!-- Jumlah -->
-
-                        <div>
-
-                            <label class="font-semibold text-gray-700">
-                                Jumlah
-                            </label>
-
-                            <div class="relative mt-2">
-
-                                <i class="fas fa-sort-numeric-up absolute left-4 top-4 text-gray-400"></i>
-
-                                <input id="jumlah" type="number" min="1" placeholder="0"
-                                    class="w-full border rounded-xl pl-12 pr-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none">
 
                             </div>
 
+
                         </div>
 
-                        <!-- Kondisi -->
+
+
+
+                        <!-- Role -->
 
                         <div>
 
+
                             <label class="font-semibold text-gray-700">
-                                Kondisi
+                                Role
                             </label>
 
-                            <select id="kondisi"
-                                class="w-full border rounded-xl mt-2 px-4 py-3 focus:ring-2 focus:ring-blue-500">
 
-                                <option value="">Pilih Kondisi</option>
-                                <option>Baru</option>
-                                <option>Bagus</option>
-                                <option>Rusak Ringan</option>
-                                <option>Rusak Berat</option>
+                            <select id="role" class="w-full border rounded-xl mt-2 px-4 py-3">
+
+
+                                <option value="">
+                                    Pilih Role
+                                </option>
+
+                                <option value="Kajur">
+                                    Kajur
+                                </option>
+
+
+                                <option value="Mahasiswa">
+                                    Mahasiswa
+                                </option>
+
 
                             </select>
 
-                        </div>
-
-                        <!-- Jenis -->
-
-                        <div>
-
-                            <label class="font-semibold text-gray-700">
-                                Jenis
-                            </label>
-
-                            <select id="jenis"
-                                class="w-full border rounded-xl mt-2 px-4 py-3 focus:ring-2 focus:ring-blue-500">
-
-                                <option value="">Pilih Jenis</option>
-                                <option>Sarana</option>
-                                <option>Prasarana</option>
-
-                            </select>
 
                         </div>
 
-                    </div>
-
-                    <!-- Keterangan -->
-
-                    <div class="mt-8">
-
-                        <label class="font-semibold text-gray-700">
-                            Keterangan
-                        </label>
-
-                        <textarea id="keterangan" rows="5" placeholder="Tambahkan keterangan jika diperlukan..."
-                            class="w-full border rounded-xl mt-2 px-4 py-3 resize-none focus:ring-2 focus:ring-blue-500"></textarea>
 
                     </div>
+
 
                     <!-- Button -->
 
                     <div class="flex justify-end gap-4 mt-10">
 
-                        <a href="../pages/barang.html"
-                            class="px-6 py-3 rounded-xl border font-medium hover:bg-gray-100">
+
+                        <a href="users.html" class="px-6 py-3 rounded-xl border font-medium hover:bg-gray-100">
 
                             Kembali
 
                         </a>
 
-                        <button id="btnSimpan" type="submit"
+
+                        <button type="submit"
                             class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold">
+
 
                             <i class="fas fa-floppy-disk mr-2"></i>
 
-                            Simpan Barang
+                            Simpan User
+
 
                         </button>
 
+
                     </div>
 
+
                 </form>
+
 
             </div>
 
         </main>
+
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../assets/supabase.js"></script>
-    <script src="../assets/tambah_barang.js"></script>
+    <script src="../assets/tambah_user.js"></script>
     <script src="../assets/logout.js"></script>
 
 
