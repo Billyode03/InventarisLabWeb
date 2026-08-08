@@ -24,51 +24,110 @@
         <div class="p-6 flex items-center gap-3 border-b border-gray-800">
             <img src="https://i.pravatar.cc/48?u=raply" alt="Raply" class="w-10 h-10 rounded-full">
             <div>
-                <p class="font-medium">Raply</p>
+                <p class="font-medium" id="sidebarNama">Loading...</p>
                 <p class="text-green-400 text-sm flex items-center gap-1">
                     <span class="w-2 h-2 bg-green-400 rounded-full inline-block"></span> Online
                 </p>
             </div>
         </div>
 
-    <nav class="flex-1 p-4">
-            <p class="text-xs text-gray-400 px-4 mb-2">MAIN NAVIGATION</p>
+        <nav class="flex-1 p-4">
+
+            <p class="text-xs text-gray-400 px-4 mb-2">
+                MAIN NAVIGATION
+            </p>
+
             <ul class="space-y-1">
+
+                <!-- DASHBOARD -->
                 <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
                     <i class="fas fa-tachometer-alt"></i>
+
                     <a href="../dashboard.html">
                         DASHBOARD
                     </a>
+
                 </li>
+
+
+                <!-- DATA BARANG -->
                 <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
                     <i class="fas fa-box"></i>
+
                     <a href="../pages/barang.html">
                         DATA BARANG
                     </a>
+
                 </li>
-                <li class="flex items-center gap-3 px-4 py-3 bg-gray-800 rounded-lg text-blue-400">
+
+
+                <!-- DATA USER -->
+                <li id="menuUsers"
+                    class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
                     <i class="fas fa-users"></i>
+
                     <a href="../pages/users.html">
                         DATA USER
                     </a>
+
                 </li>
+
+
+                <!-- PEMINJAMAN -->
                 <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
                     <i class="fas fa-handshake"></i>
-                    <a href="../pages/peminjaman.html">PEMINJAMAN</a>
+
+                    <a href="../pages/peminjaman.html">
+                        PEMINJAMAN
+                    </a>
+
                 </li>
-                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+
+                <!-- BARANG MASUK -->
+                <li id="menuBarangMasuk"
+                    class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
                     <i class="fas fa-arrow-down"></i>
-                    <a href="../pages/barang_masuk.html">BARANG MASUK</a>
+
+                    <a href="../pages/barang_masuk.html">
+                        BARANG MASUK
+                    </a>
+
                 </li>
-                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+
+                <!-- BARANG KELUAR -->
+                <li id="menuBarangKeluar"
+                    class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
                     <i class="fas fa-arrow-up"></i>
-                    <a href="../pages/barang_keluar.html">BARANG KELUAR</a>
+
+                    <a href="../pages/barang_keluar.html">
+                        BARANG KELUAR
+                    </a>
+
                 </li>
-                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+
+                <!-- LAPORAN -->
+                <li id="menuLaporan"
+                    class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
                     <i class="fas fa-chart-bar"></i>
-                    <a href="../laporan.html">LAPORAN</a>
+
+                    <a href="../laporan.html">
+                        LAPORAN
+                    </a>
+
                 </li>
+
             </ul>
+
         </nav>
 
         <div class="p-4 border-t border-gray-800 mt-auto">
@@ -98,8 +157,8 @@
                 <div class="flex items-center gap-2">
                     <img src="https://i.pravatar.cc/32?u=raply" alt="Raply" class="w-8 h-8 rounded-full">
                     <div>
-                        <p class="font-medium text-sm">Raply</p>
-                        <p class="text-xs text-blue-200">Admin</p>
+                        <p class="font-medium text-sm" id="headerNama">Loading...</p>
+                        <p class="text-xs text-blue-200" id="headerRole">Loading...</p>
                     </div>
                 </div>
                 <button onclick="alert('Logout berhasil')"
@@ -113,7 +172,7 @@
             <!-- Title + Button -->
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-bold text-gray-800">Barang</h2>
-                <a href="../pages/tambah_barang.html"
+                <a id="btnTambahBarang" href="../pages/tambah_barang.html"
                     class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl flex items-center gap-2 font-medium">
 
                     <i class="fas fa-plus"></i>
@@ -170,6 +229,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../assets/supabase.js"></script>
+    <script src="../assets/sidebar.js"></script>
     <script src="../assets/barang.js"></script>
     <script src="../assets/logout.js"></script>
 

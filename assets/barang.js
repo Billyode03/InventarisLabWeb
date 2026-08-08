@@ -1,37 +1,204 @@
+// ==============================
+// BARANG.JS
+// ==============================
+
 const tbody = document.getElementById("dataTable");
 
-loadBarang();
+// ==============================
+// USER / ROLE
+// ==============================
+
+function getCurrentUser() {
+
+    try {
+
+        return JSON.parse(
+            localStorage.getItem("user")
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Gagal membaca user:",
+            error
+        );
+
+        return null;
+
+    }
+
+}
+
+
+// ==============================
+// ROLE LOGIN
+// ==============================
+
+const currentUser = getCurrentUser();
+
+const currentRole =
+    String(currentUser?.role || "")
+        .trim()
+        .toLowerCase();
+
+        // ==============================
+// ATUR HAK AKSES HALAMAN
+// ==============================
+
+function aturHakAkses() {
+
+    const btnTambah =
+        document.getElementById("btnTambahBarang");
+
+
+    // ==========================
+    // ADMIN
+    // ==========================
+
+    if (currentRole === "admin") {
+
+        if (btnTambah) {
+            btnTambah.classList.remove("hidden");
+        }
+
+    }
+
+
+    // ==========================
+    // KAJUR
+    // ==========================
+
+    if (
+        currentRole === "kajur" ||
+        currentRole === "ketua jurusan"
+    ) {
+
+        // Sembunyikan tombol tambah
+
+        if (btnTambah) {
+            btnTambah.classList.add("hidden");
+        }
+
+    }
+
+
+    // ==========================
+    // NAMA USER
+    // ==========================
+
+    const sidebarNama =
+        document.getElementById("sidebarNama");
+
+    const headerNama =
+        document.getElementById("headerNama");
+
+    const headerRole =
+        document.getElementById("headerRole");
+
+
+    if (sidebarNama) {
+
+        sidebarNama.textContent =
+            currentUser?.nama || "-";
+
+    }
+
+
+    if (headerNama) {
+
+        headerNama.textContent =
+            currentUser?.nama || "-";
+
+    }
+
+
+    if (headerRole) {
+
+        if (currentRole === "admin") {
+
+            headerRole.textContent = "Admin";
+
+        } else if (
+            currentRole === "kajur" ||
+            currentRole === "ketua jurusan"
+        ) {
+
+            headerRole.textContent = "Ketua Jurusan";
+
+        } else {
+
+            headerRole.textContent =
+                currentUser?.role || "-";
+
+        }
+
+    }
+
+}
+
+
+
+console.log("USER LOGIN :", currentUser);
+console.log("ROLE LOGIN :", currentRole);
+
 
 // ==============================
 // LOAD DATA
 // ==============================
+
+aturHakAkses();
+loadBarang();
+
+
+// ==============================
+// LOAD BARANG
+// ==============================
+
 async function loadBarang() {
-  // Loading
-  tbody.innerHTML = `
+
+    tbody.innerHTML = `
         <tr>
             <td colspan="9" class="py-16 text-center text-gray-500">
+
                 <i class="fas fa-spinner fa-spin text-4xl mb-3"></i>
-                <p>Memuat data barang...</p>
+
+                <p>
+                    Memuat data barang...
+                </p>
+
             </td>
         </tr>
     `;
 
-  const { data, error } = await supabaseClient
-    .from("barang")
-    .select("*")
-    .order("id", { ascending: true });
 
-  console.log(data);
-  console.log(error);
+    const { data, error } =
+        await supabaseClient
 
-  // ==============================
-  // ERROR
-  // ==============================
-  if (error) {
-    console.error(error);
+            .from("barang")
 
-    tbody.innerHTML = `
+            .select("*")
+
+            .order("id", {
+                ascending: true
+            });
+
+
+    console.log("DATA BARANG :", data);
+    console.log("ERROR BARANG :", error);
+
+
+    // ==============================
+    // ERROR
+    // ==============================
+
+    if (error) {
+
+        console.error(error);
+
+
+        tbody.innerHTML = `
             <tr>
+
                 <td colspan="9">
 
                     <div class="flex flex-col items-center py-16">
@@ -49,24 +216,32 @@ async function loadBarang() {
                         <button
                             onclick="loadBarang()"
                             class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg">
+
                             Coba Lagi
+
                         </button>
 
                     </div>
 
                 </td>
+
             </tr>
         `;
 
-    return;
-  }
+        return;
 
-  // ==============================
-  // DATA KOSONG
-  // ==============================
-  if (data.length === 0) {
-    tbody.innerHTML = `
+    }
+
+
+    // ==============================
+    // DATA KOSONG
+    // ==============================
+
+    if (!data || data.length === 0) {
+
+        tbody.innerHTML = `
             <tr>
+
                 <td colspan="9">
 
                     <div class="flex flex-col items-center py-20">
@@ -78,198 +253,401 @@ async function loadBarang() {
                         </h2>
 
                         <p class="text-gray-500 mt-2">
-                            Silakan tambahkan data barang terlebih dahulu.
+                            Belum ada data barang.
                         </p>
 
                     </div>
 
                 </td>
+
             </tr>
         `;
 
-    return;
-  }
+        return;
 
-  // ==============================
-  // RENDER DATA
-  // ==============================
+    }
 
-  tbody.innerHTML = "";
 
-  data.forEach((item, index) => {
-    let badge = "";
+    // ==============================
+    // RENDER
+    // ==============================
 
-    switch (item.kondisi) {
-      case "Baru":
-        badge = `
+    tbody.innerHTML = "";
+
+
+    data.forEach((item, index) => {
+
+        let badge = "";
+
+
+        // ==========================
+        // KONDISI
+        // ==========================
+
+        switch (item.kondisi) {
+
+            case "Baru":
+
+                badge = `
                     <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs">
                         BARU
                     </span>
                 `;
-        break;
 
-      case "Bagus":
-        badge = `
+                break;
+
+
+            case "Bagus":
+
+                badge = `
                     <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs">
                         BAGUS
                     </span>
                 `;
-        break;
 
-      case "Rusak Ringan":
-        badge = `
+                break;
+
+
+            case "Rusak Ringan":
+
+                badge = `
                     <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs">
                         RUSAK RINGAN
                     </span>
                 `;
-        break;
 
-      default:
-        badge = `
+                break;
+
+
+            default:
+
+                badge = `
                     <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs">
                         RUSAK BERAT
                     </span>
                 `;
-    }
 
-    tbody.innerHTML += `
-<tr>
+        }
 
-    <td class="px-6 py-4">
-        ${index + 1}
-    </td>
 
-    <td class="px-6 py-4 font-medium">
-        ${item.nama}
-    </td>
+        // ==========================
+        // TOMBOL AKSI
+        // ==========================
 
-    <td class="px-6 py-4">
-        ${item.spesifikasi}
-    </td>
+        let tombolAksi = `
 
-    <td class="px-6 py-4">
-        ${item.lokasi}
-    </td>
-
-    <td class="px-6 py-4">
-        ${badge}
-    </td>
-
-    <td class="px-6 py-4">
-        ${item.jumlah}
-    </td>
-
-    <td class="px-6 py-4">
-        ${item.jenis}
-    </td>
-
-    <td class="px-6 py-4">
-        ${item.keterangan || "-"}
-    </td>
-
-    <td class="px-6 py-4">
-
-        <div class="flex justify-center gap-2">
+            <!-- DETAIL -->
 
             <button
+                onclick="detailBarang(${item.id})"
                 class="text-amber-500 hover:text-amber-700"
                 title="Detail">
+
                 <i class="fas fa-eye"></i>
+
             </button>
 
-            <button
-                onclick="editBarang(${item.id})"
-                class="text-blue-500 hover:text-blue-700"
-                title="Edit">
-                <i class="fas fa-edit"></i>
-            </button>
+        `;
 
-           <button
-                onclick="hapusBarang(${item.id})"
-                class="text-red-500 hover:text-red-700"
-                title="Hapus">
-                <i class="fas fa-trash"></i>
-        </button>
 
-        </div>
+        // ==========================
+        // ADMIN SAJA
+        // ==========================
 
-    </td>
+        if (currentRole === "admin") {
 
-</tr>
-`;
-  });
+            tombolAksi += `
+
+                <!-- EDIT -->
+
+                <button
+                    onclick="editBarang(${item.id})"
+                    class="text-blue-500 hover:text-blue-700"
+                    title="Edit">
+
+                    <i class="fas fa-edit"></i>
+
+                </button>
+
+
+                <!-- HAPUS -->
+
+                <button
+                    onclick="hapusBarang(${item.id})"
+                    class="text-red-500 hover:text-red-700"
+                    title="Hapus">
+
+                    <i class="fas fa-trash"></i>
+
+                </button>
+
+            `;
+
+        }
+
+        
+
+
+        // ==========================
+        // RENDER ROW
+        // ==========================
+
+        tbody.innerHTML += `
+
+            <tr class="border-b hover:bg-gray-50">
+
+                <!-- NO -->
+
+                <td class="px-6 py-4">
+                    ${index + 1}
+                </td>
+
+
+                <!-- NAMA -->
+
+                <td class="px-6 py-4 font-medium">
+                    ${item.nama || "-"}
+                </td>
+
+
+                <!-- SPESIFIKASI -->
+
+                <td class="px-6 py-4">
+                    ${item.spesifikasi || "-"}
+                </td>
+
+
+                <!-- LOKASI -->
+
+                <td class="px-6 py-4">
+                    ${item.lokasi || "-"}
+                </td>
+
+
+                <!-- KONDISI -->
+
+                <td class="px-6 py-4">
+                    ${badge}
+                </td>
+
+
+                <!-- JUMLAH -->
+
+                <td class="px-6 py-4">
+                    ${item.jumlah ?? 0}
+                </td>
+
+
+                <!-- JENIS -->
+
+                <td class="px-6 py-4">
+                    ${item.jenis || "-"}
+                </td>
+
+
+                <!-- KETERANGAN -->
+
+                <td class="px-6 py-4">
+                    ${item.keterangan || "-"}
+                </td>
+
+
+                <!-- AKSI -->
+
+                <td class="px-6 py-4">
+
+                    <div class="flex justify-center gap-3">
+
+                        ${tombolAksi}
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+
+    });
+
 }
+
+
+// ==============================
+// DETAIL BARANG
+// ==============================
+
+function detailBarang(id) {
+
+    window.location.href =
+        `detail_barang.html?id=${id}`;
+
+}
+
 
 // ==============================
 // SEARCH
 // ==============================
 
 function searchTable() {
-  const keyword = document.getElementById("searchInput").value.toLowerCase();
 
-  const rows = tbody.querySelectorAll("tr");
-
-  rows.forEach((row) => {
-    row.style.display = row.innerText.toLowerCase().includes(keyword)
-      ? ""
-      : "none";
-  });
-}
-
-function editBarang(id) {
-  window.location.href = `edit_barang.html?id=${id}`;
-}
+    const keyword =
+        document
+            .getElementById("searchInput")
+            .value
+            .toLowerCase();
 
 
-async function hapusBarang(id) {
+    const rows =
+        tbody.querySelectorAll("tr");
 
-    const result = await Swal.fire({
 
-        title: "Hapus Barang?",
-        text: "Data yang dihapus tidak dapat dikembalikan.",
-        icon: "warning",
+    rows.forEach(row => {
 
-        showCancelButton: true,
-
-        confirmButtonColor: "#dc2626",
-        cancelButtonColor: "#6b7280",
-
-        confirmButtonText: "Ya, Hapus",
-        cancelButtonText: "Batal"
+        row.style.display =
+            row.innerText
+                .toLowerCase()
+                .includes(keyword)
+                ? ""
+                : "none";
 
     });
 
-    if (!result.isConfirmed) return;
+}
 
-    const { error } = await supabaseClient
-        .from("barang")
-        .delete()
-        .eq("id", id);
+
+// ==============================
+// EDIT
+// ==============================
+
+function editBarang(id) {
+
+    // ADMIN SAJA
+
+    if (currentRole !== "admin") {
+
+        Swal.fire({
+
+            icon: "warning",
+
+            title: "Akses Ditolak",
+
+            text:
+                "Anda tidak memiliki akses untuk mengedit barang."
+
+        });
+
+        return;
+
+    }
+
+
+    window.location.href =
+        `edit_barang.html?id=${id}`;
+
+}
+
+
+// ==============================
+// HAPUS
+// ==============================
+
+async function hapusBarang(id) {
+
+    // ADMIN SAJA
+
+    if (currentRole !== "admin") {
+
+        Swal.fire({
+
+            icon: "warning",
+
+            title: "Akses Ditolak",
+
+            text:
+                "Anda tidak memiliki akses untuk menghapus barang."
+
+        });
+
+        return;
+
+    }
+
+
+    const result =
+        await Swal.fire({
+
+            title: "Hapus Barang?",
+
+            text:
+                "Data yang dihapus tidak dapat dikembalikan.",
+
+            icon: "warning",
+
+            showCancelButton: true,
+
+            confirmButtonColor: "#dc2626",
+
+            cancelButtonColor: "#6b7280",
+
+            confirmButtonText: "Ya, Hapus",
+
+            cancelButtonText: "Batal"
+
+        });
+
+
+    if (!result.isConfirmed) {
+        return;
+    }
+
+
+    const { error } =
+        await supabaseClient
+
+            .from("barang")
+
+            .delete()
+
+            .eq("id", id);
+
 
     if (error) {
 
         console.error(error);
 
+
         Swal.fire({
+
             icon: "error",
+
             title: "Gagal",
-            text: "Data gagal dihapus."
+
+            text:
+                "Data gagal dihapus."
+
         });
 
         return;
+
     }
 
-    Swal.fire({
+
+    await Swal.fire({
 
         icon: "success",
+
         title: "Berhasil",
-        text: "Data berhasil dihapus.",
+
+        text:
+            "Data berhasil dihapus.",
+
         timer: 1500,
+
         showConfirmButton: false
 
     });
 
-    // tbody.innerHTML = "";
 
     loadBarang();
 

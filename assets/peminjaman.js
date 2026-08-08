@@ -1,31 +1,90 @@
-// ==============================
-// PEMINJAMAN.JS
-// ==============================
+
+/* =========================================================
+   PEMINJAMAN.JS
+
+   ROLE:
+   - ADMIN      : Lihat + Approval + Edit + Hapus
+   - KAJUR      : Lihat + Approval
+   - MAHASISWA  : Lihat saja
+   ========================================================= */
+
+
+// =========================================================
+// ELEMENT
+// =========================================================
 
 const tbody = document.getElementById("dataTable");
 
-// Jalankan saat halaman dibuka
+
+// =========================================================
+// USER LOGIN & ROLE
+// =========================================================
+
+function getCurrentUser() {
+
+    try {
+
+        return JSON.parse(
+            localStorage.getItem("user")
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Gagal membaca user:",
+            error
+        );
+
+        return null;
+    }
+}
+
+
+const currentUser = getCurrentUser();
+
+const currentRole =
+    String(currentUser?.role || "")
+        .trim()
+        .toLowerCase();
+
+
+console.log("USER LOGIN :", currentUser);
+console.log("ROLE LOGIN :", currentRole);
+
+
+// =========================================================
+// LOAD AWAL
+// =========================================================
+
 loadPeminjaman();
 loadStatistik();
 
 
-// ==============================
+// =========================================================
 // LOAD DATA PEMINJAMAN
-// ==============================
+// =========================================================
 
 async function loadPeminjaman() {
 
     tbody.innerHTML = `
         <tr>
             <td colspan="12" class="py-16 text-center text-gray-500">
+
                 <i class="fas fa-spinner fa-spin text-4xl mb-3"></i>
-                <p>Memuat data peminjaman...</p>
+
+                <p>
+                    Memuat data peminjaman...
+                </p>
+
             </td>
         </tr>
     `;
 
 
-    const { data, error } = await supabaseClient
+    const {
+        data,
+        error
+    } = await supabaseClient
 
         .from("peminjaman")
 
@@ -49,13 +108,20 @@ async function loadPeminjaman() {
         });
 
 
-    console.log("DATA PEMINJAMAN:", data);
-    console.log("ERROR:", error);
+    console.log(
+        "DATA PEMINJAMAN:",
+        data
+    );
+
+    console.log(
+        "ERROR:",
+        error
+    );
 
 
-    // ==============================
+    // =====================================================
     // ERROR
-    // ==============================
+    // =====================================================
 
     if (error) {
 
@@ -63,6 +129,7 @@ async function loadPeminjaman() {
 
         tbody.innerHTML = `
             <tr>
+
                 <td colspan="12">
 
                     <div class="flex flex-col items-center py-16">
@@ -88,6 +155,7 @@ async function loadPeminjaman() {
                     </div>
 
                 </td>
+
             </tr>
         `;
 
@@ -95,14 +163,15 @@ async function loadPeminjaman() {
     }
 
 
-    // ==============================
+    // =====================================================
     // DATA KOSONG
-    // ==============================
+    // =====================================================
 
     if (!data || data.length === 0) {
 
         tbody.innerHTML = `
             <tr>
+
                 <td colspan="12">
 
                     <div class="flex flex-col items-center py-20">
@@ -120,6 +189,7 @@ async function loadPeminjaman() {
                     </div>
 
                 </td>
+
             </tr>
         `;
 
@@ -127,21 +197,22 @@ async function loadPeminjaman() {
     }
 
 
-    // ==============================
-    // RENDER DATA
-    // ==============================
+    // =====================================================
+    // RENDER
+    // =====================================================
 
     tbody.innerHTML = "";
 
 
     data.forEach((item, index) => {
 
+
+        // =================================================
+        // STATUS BADGE
+        // =================================================
+
         let statusBadge = "";
 
-
-        // ==========================
-        // STATUS
-        // ==========================
 
         switch (item.status) {
 
@@ -210,9 +281,9 @@ async function loadPeminjaman() {
         }
 
 
-        // ==========================
-        // FORMAT TANGGAL
-        // ==========================
+        // =================================================
+        // TANGGAL
+        // =================================================
 
         const tanggalPinjam =
             item.tanggal_pinjam
@@ -232,17 +303,13 @@ async function loadPeminjaman() {
                 : "-";
 
 
-        // ==========================
-        // BARANG
-        // ==========================
+        // =================================================
+        // DATA RELASI
+        // =================================================
 
         const namaBarang =
             item.barang?.nama || "-";
 
-
-        // ==========================
-        // PEMINJAM
-        // ==========================
 
         const namaPeminjam =
             item.peminjam?.nama || "-";
@@ -252,24 +319,49 @@ async function loadPeminjaman() {
             item.peminjam?.nim || "-";
 
 
-        // ==========================
-        // APPROVER
-        // ==========================
-
         const namaApprover =
             item.approver?.nama || "-";
 
 
-        // ==========================
-        // TOMBOL APPROVAL
-        // ==========================
+        // =================================================
+        // TOMBOL AKSI
+        // =================================================
 
-        let tombolApproval = "";
+        let tombolAksi = "";
 
 
-        if (item.status === "Menunggu") {
+        // -------------------------------------------------
+        // DETAIL → SEMUA ROLE
+        // -------------------------------------------------
 
-            tombolApproval = `
+        tombolAksi += `
+
+            <button
+                onclick="detailPeminjaman(${item.id})"
+                class="text-amber-500 hover:text-amber-700"
+                title="Detail">
+
+                <i class="fas fa-eye"></i>
+
+            </button>
+
+        `;
+
+
+        // -------------------------------------------------
+        // APPROVAL → ADMIN + KAJUR
+        // -------------------------------------------------
+
+        if (
+            (
+                currentRole === "admin" ||
+                currentRole === "kajur" ||
+                currentRole === "ketua jurusan"
+            ) &&
+            item.status === "Menunggu"
+        ) {
+
+            tombolAksi += `
 
                 <button
                     onclick="setujuiPeminjaman(${item.id})"
@@ -294,36 +386,59 @@ async function loadPeminjaman() {
         }
 
 
-        // ==========================
-        // RENDER
-        // ==========================
+        // -------------------------------------------------
+        // EDIT + HAPUS → ADMIN SAJA
+        // -------------------------------------------------
+
+        if (currentRole === "admin") {
+
+            tombolAksi += `
+
+                <button
+                    onclick="editPeminjaman(${item.id})"
+                    class="text-blue-500 hover:text-blue-700"
+                    title="Edit">
+
+                    <i class="fas fa-edit"></i>
+
+                </button>
+
+
+                <button
+                    onclick="hapusPeminjaman(${item.id})"
+                    class="text-red-500 hover:text-red-700"
+                    title="Hapus">
+
+                    <i class="fas fa-trash"></i>
+
+                </button>
+
+            `;
+        }
+
+
+        // =================================================
+        // RENDER ROW
+        // =================================================
 
         tbody.innerHTML += `
 
             <tr class="border-b hover:bg-gray-50">
-
-                <!-- NO -->
 
                 <td class="px-6 py-4">
                     ${index + 1}
                 </td>
 
 
-                <!-- KODE -->
-
                 <td class="px-6 py-4 font-medium">
                     ${item.kode_peminjaman || "-"}
                 </td>
 
 
-                <!-- BARANG -->
-
                 <td class="px-6 py-4">
                     ${namaBarang}
                 </td>
 
-
-                <!-- PEMINJAM -->
 
                 <td class="px-6 py-4">
 
@@ -342,100 +457,46 @@ async function loadPeminjaman() {
                 </td>
 
 
-                <!-- JUMLAH -->
-
                 <td class="px-6 py-4">
-                    ${item.jumlah}
+                    ${item.jumlah ?? 0}
                 </td>
 
-
-                <!-- TANGGAL PINJAM -->
 
                 <td class="px-6 py-4">
                     ${tanggalPinjam}
                 </td>
 
 
-                <!-- BATAS KEMBALI -->
-
                 <td class="px-6 py-4">
                     ${batasKembali}
                 </td>
 
-
-                <!-- TANGGAL KEMBALI -->
 
                 <td class="px-6 py-4">
                     ${tanggalKembali}
                 </td>
 
 
-                <!-- STATUS -->
-
                 <td class="px-6 py-4">
                     ${statusBadge}
                 </td>
 
-
-                <!-- KEPERLUAN -->
 
                 <td class="px-6 py-4">
                     ${item.keperluan || "-"}
                 </td>
 
 
-                <!-- APPROVER -->
-
                 <td class="px-6 py-4">
                     ${namaApprover}
                 </td>
 
 
-                <!-- OPSI -->
-
                 <td class="px-6 py-4">
 
                     <div class="flex justify-center gap-3">
 
-                        <!-- DETAIL -->
-
-                        <button
-                            onclick="detailPeminjaman(${item.id})"
-                            class="text-amber-500 hover:text-amber-700"
-                            title="Detail">
-
-                            <i class="fas fa-eye"></i>
-
-                        </button>
-
-
-                        <!-- APPROVAL -->
-
-                        ${tombolApproval}
-
-
-                        <!-- EDIT -->
-
-                        <button
-                            onclick="editPeminjaman(${item.id})"
-                            class="text-blue-500 hover:text-blue-700"
-                            title="Edit">
-
-                            <i class="fas fa-edit"></i>
-
-                        </button>
-
-
-                        <!-- HAPUS -->
-
-                        <button
-                            onclick="hapusPeminjaman(${item.id})"
-                            class="text-red-500 hover:text-red-700"
-                            title="Hapus">
-
-                            <i class="fas fa-trash"></i>
-
-                        </button>
+                        ${tombolAksi}
 
                     </div>
 
@@ -450,78 +511,85 @@ async function loadPeminjaman() {
 }
 
 
-// ==============================
+// =========================================================
 // FORMAT TANGGAL
-// ==============================
+// =========================================================
 
 function formatTanggal(tanggal) {
 
-    const date = new Date(tanggal);
+    const date =
+        new Date(tanggal);
 
-    return date.toLocaleDateString("id-ID", {
 
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric"
-
-    });
-
+    return date.toLocaleDateString(
+        "id-ID",
+        {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric"
+        }
+    );
 }
 
 
-// ==============================
-// AMBIL USER APPROVER
-// ==============================
-
-function getCurrentUser() {
-
-    try {
-
-        const user =
-            JSON.parse(
-                localStorage.getItem("user")
-            );
-
-        return user;
-
-    } catch (error) {
-
-        console.error(
-            "Gagal membaca user:",
-            error
-        );
-
-        return null;
-    }
-
-}
-
-
-// ==============================
+// =========================================================
 // APPROVAL - SETUJUI
-// ==============================
+// ADMIN + KAJUR
+// =========================================================
 
 async function setujuiPeminjaman(id) {
+
+    // =====================================================
+    // CEK ROLE
+    // =====================================================
+
+    if (
+        currentRole !== "admin" &&
+        currentRole !== "kajur" &&
+        currentRole !== "ketua jurusan"
+    ) {
+
+        Swal.fire({
+
+            icon: "error",
+
+            title: "Akses Ditolak",
+
+            text:
+                "Anda tidak memiliki hak untuk menyetujui peminjaman."
+
+        });
+
+        return;
+    }
+
 
     const result =
         await Swal.fire({
 
-            title: "Setujui Peminjaman?",
+            title:
+                "Setujui Peminjaman?",
 
             text:
                 "Peminjaman akan disetujui dan stok barang akan dikurangi.",
 
-            icon: "question",
+            icon:
+                "question",
 
-            showCancelButton: true,
+            showCancelButton:
+                true,
 
-            confirmButtonColor: "#16a34a",
+            confirmButtonColor:
+                "#16a34a",
 
-            cancelButtonColor: "#6b7280",
+            cancelButtonColor:
+                "#6b7280",
 
-            confirmButtonText: "Ya, Setujui",
+            confirmButtonText:
+                "Ya, Setujui",
 
-            cancelButtonText: "Batal"
+            cancelButtonText:
+                "Batal"
 
         });
 
@@ -531,15 +599,14 @@ async function setujuiPeminjaman(id) {
     }
 
 
-    // ==========================
-    // USER LOGIN
-    // ==========================
-
-    const currentUser =
+    const user =
         getCurrentUser();
 
 
-    if (!currentUser || !currentUser.id) {
+    if (
+        !user ||
+        !user.id
+    ) {
 
         Swal.fire({
 
@@ -556,25 +623,32 @@ async function setujuiPeminjaman(id) {
     }
 
 
-    // ==========================
+    // =====================================================
     // AMBIL PEMINJAMAN
-    // ==========================
+    // =====================================================
 
-    const { data: peminjaman, error: peminjamanError } =
-        await supabaseClient
+    const {
+        data: peminjaman,
+        error: peminjamanError
+    } = await supabaseClient
 
-            .from("peminjaman")
+        .from("peminjaman")
 
-            .select("*")
+        .select("*")
 
-            .eq("id", id)
+        .eq("id", id)
 
-            .single();
+        .single();
 
 
-    if (peminjamanError || !peminjaman) {
+    if (
+        peminjamanError ||
+        !peminjaman
+    ) {
 
-        console.error(peminjamanError);
+        console.error(
+            peminjamanError
+        );
 
         Swal.fire({
 
@@ -591,11 +665,13 @@ async function setujuiPeminjaman(id) {
     }
 
 
-    // ==========================
+    // =====================================================
     // CEK STATUS
-    // ==========================
+    // =====================================================
 
-    if (peminjaman.status !== "Menunggu") {
+    if (
+        peminjaman.status !== "Menunggu"
+    ) {
 
         Swal.fire({
 
@@ -612,25 +688,35 @@ async function setujuiPeminjaman(id) {
     }
 
 
-    // ==========================
-    // AMBIL BARANG TERBARU
-    // ==========================
+    // =====================================================
+    // AMBIL BARANG
+    // =====================================================
 
-    const { data: barang, error: barangError } =
-        await supabaseClient
+    const {
+        data: barang,
+        error: barangError
+    } = await supabaseClient
 
-            .from("barang")
+        .from("barang")
 
-            .select("*")
+        .select("*")
 
-            .eq("id", peminjaman.barang_id)
+        .eq(
+            "id",
+            peminjaman.barang_id
+        )
 
-            .single();
+        .single();
 
 
-    if (barangError || !barang) {
+    if (
+        barangError ||
+        !barang
+    ) {
 
-        console.error(barangError);
+        console.error(
+            barangError
+        );
 
         Swal.fire({
 
@@ -647,11 +733,14 @@ async function setujuiPeminjaman(id) {
     }
 
 
-    // ==========================
+    // =====================================================
     // CEK STOK
-    // ==========================
+    // =====================================================
 
-    if (Number(barang.jumlah) < Number(peminjaman.jumlah)) {
+    if (
+        Number(barang.jumlah) <
+        Number(peminjaman.jumlah)
+    ) {
 
         Swal.fire({
 
@@ -668,32 +757,39 @@ async function setujuiPeminjaman(id) {
     }
 
 
-    // ==========================
-    // UPDATE STOK
-    // ==========================
+    // =====================================================
+    // KURANGI STOK
+    // =====================================================
 
     const stokBaru =
         Number(barang.jumlah) -
         Number(peminjaman.jumlah);
 
 
-    const { error: stokError } =
-        await supabaseClient
+    const {
+        error: stokError
+    } = await supabaseClient
 
-            .from("barang")
+        .from("barang")
 
-            .update({
+        .update({
 
-                jumlah: stokBaru
+            jumlah:
+                stokBaru
 
-            })
+        })
 
-            .eq("id", peminjaman.barang_id);
+        .eq(
+            "id",
+            peminjaman.barang_id
+        );
 
 
     if (stokError) {
 
-        console.error(stokError);
+        console.error(
+            stokError
+        );
 
         Swal.fire({
 
@@ -710,36 +806,42 @@ async function setujuiPeminjaman(id) {
     }
 
 
-    // ==========================
+    // =====================================================
     // UPDATE PEMINJAMAN
-    // ==========================
+    // =====================================================
 
-    const { error: updateError } =
-        await supabaseClient
+    const {
+        error: updateError
+    } = await supabaseClient
 
-            .from("peminjaman")
+        .from("peminjaman")
 
-            .update({
+        .update({
 
-                status: "Disetujui",
+            status:
+                "Disetujui",
 
-                approver_id: currentUser.id
+            approver_id:
+                user.id
 
-            })
+        })
 
-            .eq("id", id);
+        .eq(
+            "id",
+            id
+        );
 
 
-    // ==========================
-    // JIKA UPDATE GAGAL
-    // ==========================
+    // =====================================================
+    // ROLLBACK STOK
+    // =====================================================
 
     if (updateError) {
 
-        console.error(updateError);
+        console.error(
+            updateError
+        );
 
-
-        // KEMBALIKAN STOK
 
         await supabaseClient
 
@@ -747,11 +849,15 @@ async function setujuiPeminjaman(id) {
 
             .update({
 
-                jumlah: barang.jumlah
+                jumlah:
+                    barang.jumlah
 
             })
 
-            .eq("id", peminjaman.barang_id);
+            .eq(
+                "id",
+                peminjaman.barang_id
+            );
 
 
         Swal.fire({
@@ -769,22 +875,25 @@ async function setujuiPeminjaman(id) {
     }
 
 
-    // ==========================
+    // =====================================================
     // BERHASIL
-    // ==========================
+    // =====================================================
 
     await Swal.fire({
 
         icon: "success",
 
-        title: "Peminjaman Disetujui",
+        title:
+            "Peminjaman Disetujui",
 
         text:
             "Peminjaman berhasil disetujui dan stok telah diperbarui.",
 
-        timer: 1800,
+        timer:
+            1800,
 
-        showConfirmButton: false
+        showConfirmButton:
+            false
 
     });
 
@@ -792,24 +901,52 @@ async function setujuiPeminjaman(id) {
     loadPeminjaman();
 
     loadStatistik();
-
 }
 
 
-// ==============================
+// =========================================================
 // APPROVAL - TOLAK
-// ==============================
+// ADMIN + KAJUR
+// =========================================================
 
 async function tolakPeminjaman(id) {
+
+    // =====================================================
+    // CEK ROLE
+    // =====================================================
+
+    if (
+        currentRole !== "admin" &&
+        currentRole !== "kajur" &&
+        currentRole !== "ketua jurusan"
+    ) {
+
+        Swal.fire({
+
+            icon: "error",
+
+            title: "Akses Ditolak",
+
+            text:
+                "Anda tidak memiliki hak untuk menolak peminjaman."
+
+        });
+
+        return;
+    }
+
 
     const result =
         await Swal.fire({
 
-            title: "Tolak Peminjaman?",
+            title:
+                "Tolak Peminjaman?",
 
-            input: "textarea",
+            input:
+                "textarea",
 
-            inputLabel: "Alasan Penolakan",
+            inputLabel:
+                "Alasan Penolakan",
 
             inputPlaceholder:
                 "Masukkan alasan penolakan...",
@@ -821,43 +958,53 @@ async function tolakPeminjaman(id) {
 
             },
 
-            showCancelButton: true,
+            showCancelButton:
+                true,
 
-            confirmButtonColor: "#dc2626",
+            confirmButtonColor:
+                "#dc2626",
 
-            cancelButtonColor: "#6b7280",
+            cancelButtonColor:
+                "#6b7280",
 
-            confirmButtonText: "Tolak Peminjaman",
+            confirmButtonText:
+                "Tolak Peminjaman",
 
-            cancelButtonText: "Batal",
+            cancelButtonText:
+                "Batal",
 
-            inputValidator: (value) => {
+            inputValidator:
+                (value) => {
 
-                if (!value.trim()) {
+                    if (
+                        !value.trim()
+                    ) {
 
-                    return "Alasan penolakan wajib diisi.";
+                        return "Alasan penolakan wajib diisi.";
+
+                    }
 
                 }
-
-            }
 
         });
 
 
-    if (!result.isConfirmed) {
+    if (
+        !result.isConfirmed
+    ) {
+
         return;
     }
 
 
-    // ==========================
-    // USER LOGIN
-    // ==========================
-
-    const currentUser =
+    const user =
         getCurrentUser();
 
 
-    if (!currentUser || !currentUser.id) {
+    if (
+        !user ||
+        !user.id
+    ) {
 
         Swal.fire({
 
@@ -874,28 +1021,33 @@ async function tolakPeminjaman(id) {
     }
 
 
-    // ==========================
-    // UPDATE
-    // ==========================
+    // =====================================================
+    // UPDATE STATUS
+    // =====================================================
 
-    const { error } =
-        await supabaseClient
+    const {
+        error
+    } = await supabaseClient
 
-            .from("peminjaman")
+        .from("peminjaman")
 
-            .update({
+        .update({
 
-                status: "Ditolak",
+            status:
+                "Ditolak",
 
-                approver_id:
-                    currentUser.id,
+            approver_id:
+                user.id,
 
-                catatan_admin:
-                    result.value.trim()
+            catatan_admin:
+                result.value.trim()
 
-            })
+        })
 
-            .eq("id", id);
+        .eq(
+            "id",
+            id
+        );
 
 
     if (error) {
@@ -917,22 +1069,21 @@ async function tolakPeminjaman(id) {
     }
 
 
-    // ==========================
-    // BERHASIL
-    // ==========================
-
     await Swal.fire({
 
         icon: "success",
 
-        title: "Peminjaman Ditolak",
+        title:
+            "Peminjaman Ditolak",
 
         text:
             "Pengajuan peminjaman telah ditolak.",
 
-        timer: 1800,
+        timer:
+            1800,
 
-        showConfirmButton: false
+        showConfirmButton:
+            false
 
     });
 
@@ -940,22 +1091,25 @@ async function tolakPeminjaman(id) {
     loadPeminjaman();
 
     loadStatistik();
-
 }
 
 
-// ==============================
+// =========================================================
 // STATISTIK
-// ==============================
+// =========================================================
 
 async function loadStatistik() {
 
-    const { data, error } =
-        await supabaseClient
+    const {
+        data,
+        error
+    } = await supabaseClient
 
-            .from("peminjaman")
+        .from("peminjaman")
 
-            .select("status, batas_kembali");
+        .select(
+            "status, batas_kembali"
+        );
 
 
     if (error) {
@@ -974,49 +1128,58 @@ async function loadStatistik() {
 
 
     const sedangDipinjam =
-        data.filter(item =>
-            item.status === "Dipinjam"
+        data.filter(
+            item =>
+                item.status === "Dipinjam" ||
+                item.status === "Disetujui"
         ).length;
 
 
     const pending =
-        data.filter(item =>
-            item.status === "Menunggu"
+        data.filter(
+            item =>
+                item.status === "Menunggu"
         ).length;
 
-
-    // ==========================
-    // TERLAMBAT
-    // ==========================
 
     const sekarang =
         new Date();
 
 
     const terlambat =
-        data.filter(item => {
+        data.filter(
+            item => {
 
-            if (!item.batas_kembali) {
-                return false;
+                if (
+                    !item.batas_kembali
+                ) {
+
+                    return false;
+                }
+
+
+                if (
+                    item.status === "Dikembalikan" ||
+                    item.status === "Ditolak"
+                ) {
+
+                    return false;
+                }
+
+
+                return (
+                    new Date(
+                        item.batas_kembali
+                    ) < sekarang
+                );
+
             }
-
-            if (
-                item.status === "Dikembalikan" ||
-                item.status === "Ditolak"
-            ) {
-
-                return false;
-
-            }
-
-            return new Date(item.batas_kembali) < sekarang;
-
-        }).length;
+        ).length;
 
 
-    // ==========================
+    // =====================================================
     // UPDATE CARD
-    // ==========================
+    // =====================================================
 
     const cards =
         document.querySelectorAll(
@@ -1024,46 +1187,28 @@ async function loadStatistik() {
         );
 
 
-    if (cards.length >= 4) {
+    if (
+        cards.length >= 4
+    ) {
 
-        cards[0].textContent = total;
+        cards[0].textContent =
+            total;
 
-        cards[1].textContent = sedangDipinjam;
-
-        cards[2].textContent = pending;
-
-        cards[3].textContent = terlambat;
-
-    }
-
-
-    // ==========================
-    // UPDATE LEGEND
-    // ==========================
-
-    const legendNumbers =
-        document.querySelectorAll(
-            ".bg-green-50 p.font-semibold, .bg-yellow-50 p.font-semibold, .bg-red-50 p.font-semibold"
-        );
-
-
-    if (legendNumbers.length >= 3) {
-
-        legendNumbers[0].textContent =
+        cards[1].textContent =
             sedangDipinjam;
 
-        legendNumbers[1].textContent =
+        cards[2].textContent =
             pending;
 
-        legendNumbers[2].textContent =
+        cards[3].textContent =
             terlambat;
 
     }
 
 
-    // ==========================
-    // UPDATE CHART
-    // ==========================
+    // =====================================================
+    // CHART
+    // =====================================================
 
     updateChart(
         total,
@@ -1071,13 +1216,12 @@ async function loadStatistik() {
         pending,
         terlambat
     );
-
 }
 
 
-// ==============================
+// =========================================================
 // CHART
-// ==============================
+// =========================================================
 
 let borrowingChart = null;
 
@@ -1100,7 +1244,9 @@ function updateChart(
     }
 
 
-    if (borrowingChart) {
+    if (
+        borrowingChart
+    ) {
 
         borrowingChart.destroy();
 
@@ -1108,78 +1254,89 @@ function updateChart(
 
 
     borrowingChart =
-        new Chart(canvas, {
+        new Chart(
+            canvas,
+            {
 
-            type: "bar",
+                type:
+                    "bar",
 
-            data: {
+                data: {
 
-                labels: [
+                    labels: [
 
-                    "Total Peminjaman",
-                    "Sedang Dipinjam",
-                    "Pending Return",
-                    "Terlambat"
-
-                ],
-
-                datasets: [{
-
-                    label: "Jumlah",
-
-                    data: [
-
-                        total,
-                        sedangDipinjam,
-                        pending,
-                        terlambat
+                        "Total Peminjaman",
+                        "Sedang Dipinjam",
+                        "Pending",
+                        "Terlambat"
 
                     ],
 
-                    backgroundColor: [
+                    datasets: [{
 
-                        "#3B82F6",
-                        "#22C55E",
-                        "#F59E0B",
-                        "#EF4444"
+                        label:
+                            "Jumlah",
 
-                    ],
+                        data: [
 
-                    borderWidth: 0,
+                            total,
+                            sedangDipinjam,
+                            pending,
+                            terlambat
 
-                    borderRadius: 6
+                        ],
 
-                }]
+                        backgroundColor: [
 
-            },
+                            "#3B82F6",
+                            "#22C55E",
+                            "#F59E0B",
+                            "#EF4444"
 
+                        ],
 
-            options: {
+                        borderWidth:
+                            0,
 
-                responsive: true,
+                        borderRadius:
+                            6
 
-                maintainAspectRatio: false,
-
-                plugins: {
-
-                    legend: {
-
-                        display: false
-
-                    }
+                    }]
 
                 },
 
+                options: {
 
-                scales: {
+                    responsive:
+                        true,
 
-                    y: {
+                    maintainAspectRatio:
+                        false,
 
-                        beginAtZero: true,
+                    plugins: {
 
-                        ticks: {
+                        legend: {
 
-                            stepSize: 1
+                            display:
+                                false
+
+                        }
+
+                    },
+
+                    scales: {
+
+                        y: {
+
+                            beginAtZero:
+                                true,
+
+                            ticks: {
+
+                                stepSize:
+                                    1
+
+                            }
 
                         }
 
@@ -1188,109 +1345,176 @@ function updateChart(
                 }
 
             }
-
-        });
-
+        );
 }
 
 
-// ==============================
+// =========================================================
 // SEARCH
-// ==============================
+// =========================================================
 
 function searchTable() {
 
+    const input =
+        document.getElementById(
+            "searchInput"
+        );
+
+
+    if (!input) {
+        return;
+    }
+
+
     const keyword =
-        document
-            .getElementById("searchInput")
-            .value
+        input.value
             .toLowerCase();
 
 
     const rows =
-        tbody.querySelectorAll("tr");
+        tbody.querySelectorAll(
+            "tr"
+        );
 
 
-    rows.forEach(row => {
+    rows.forEach(
+        row => {
 
-        row.style.display =
-            row.innerText
-                .toLowerCase()
-                .includes(keyword)
-                ? ""
-                : "none";
+            row.style.display =
+                row.innerText
+                    .toLowerCase()
+                    .includes(keyword)
+                    ? ""
+                    : "none";
 
-    });
-
+        }
+    );
 }
 
 
-// ==============================
+// =========================================================
 // DETAIL
-// ==============================
+// SEMUA ROLE
+// =========================================================
 
 function detailPeminjaman(id) {
 
     window.location.href =
         `detail_peminjaman.html?id=${id}`;
-
 }
 
 
-// ==============================
+// =========================================================
 // EDIT
-// ==============================
+// ADMIN SAJA
+// =========================================================
 
 function editPeminjaman(id) {
 
-    window.location.href =
-        `edit_peminjaman.html?id=${id}`;
+    if (
+        currentRole !== "admin"
+    ) {
 
-}
+        Swal.fire({
 
+            icon:
+                "error",
 
-// ==============================
-// HAPUS
-// ==============================
-
-async function hapusPeminjaman(id) {
-
-    const result =
-        await Swal.fire({
-
-            title: "Hapus Peminjaman?",
+            title:
+                "Akses Ditolak",
 
             text:
-                "Data yang dihapus tidak dapat dikembalikan.",
-
-            icon: "warning",
-
-            showCancelButton: true,
-
-            confirmButtonColor: "#dc2626",
-
-            cancelButtonColor: "#6b7280",
-
-            confirmButtonText: "Ya, Hapus",
-
-            cancelButtonText: "Batal"
+                "Hanya Admin yang dapat mengedit peminjaman."
 
         });
 
-
-    if (!result.isConfirmed) {
         return;
     }
 
 
-    const { error } =
-        await supabaseClient
+    window.location.href =
+        `edit_peminjaman.html?id=${id}`;
+}
 
-            .from("peminjaman")
 
-            .delete()
+// =========================================================
+// HAPUS
+// ADMIN SAJA
+// =========================================================
 
-            .eq("id", id);
+async function hapusPeminjaman(id) {
+
+    if (
+        currentRole !== "admin"
+    ) {
+
+        Swal.fire({
+
+            icon:
+                "error",
+
+            title:
+                "Akses Ditolak",
+
+            text:
+                "Hanya Admin yang dapat menghapus peminjaman."
+
+        });
+
+        return;
+    }
+
+
+    const result =
+        await Swal.fire({
+
+            title:
+                "Hapus Peminjaman?",
+
+            text:
+                "Data yang dihapus tidak dapat dikembalikan.",
+
+            icon:
+                "warning",
+
+            showCancelButton:
+                true,
+
+            confirmButtonColor:
+                "#dc2626",
+
+            cancelButtonColor:
+                "#6b7280",
+
+            confirmButtonText:
+                "Ya, Hapus",
+
+            cancelButtonText:
+                "Batal"
+
+        });
+
+
+    if (
+        !result.isConfirmed
+    ) {
+
+        return;
+    }
+
+
+    const {
+        error
+    } = await supabaseClient
+
+        .from("peminjaman")
+
+        .delete()
+
+        .eq(
+            "id",
+            id
+        );
 
 
     if (error) {
@@ -1299,9 +1523,11 @@ async function hapusPeminjaman(id) {
 
         Swal.fire({
 
-            icon: "error",
+            icon:
+                "error",
 
-            title: "Gagal",
+            title:
+                "Gagal",
 
             text:
                 "Data peminjaman gagal dihapus."
@@ -1314,16 +1540,20 @@ async function hapusPeminjaman(id) {
 
     await Swal.fire({
 
-        icon: "success",
+        icon:
+            "success",
 
-        title: "Berhasil",
+        title:
+            "Berhasil",
 
         text:
             "Data peminjaman berhasil dihapus.",
 
-        timer: 1500,
+        timer:
+            1500,
 
-        showConfirmButton: false
+        showConfirmButton:
+            false
 
     });
 
@@ -1331,5 +1561,5 @@ async function hapusPeminjaman(id) {
     loadPeminjaman();
 
     loadStatistik();
+}
 
-} 

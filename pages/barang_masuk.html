@@ -32,43 +32,102 @@
         </div>
 
         <nav class="flex-1 p-4">
-            <p class="text-xs text-gray-400 px-4 mb-2">MAIN NAVIGATION</p>
+
+            <p class="text-xs text-gray-400 px-4 mb-2">
+                MAIN NAVIGATION
+            </p>
+
             <ul class="space-y-1">
+
+                <!-- DASHBOARD -->
                 <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
                     <i class="fas fa-tachometer-alt"></i>
+
                     <a href="../dashboard.html">
                         DASHBOARD
                     </a>
+
                 </li>
+
+
+                <!-- DATA BARANG -->
                 <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
                     <i class="fas fa-box"></i>
+
                     <a href="../pages/barang.html">
                         DATA BARANG
                     </a>
+
                 </li>
-                <li class="flex items-center gap-3 px-4 py-3 bg-gray-800 rounded-lg text-blue-400">
+
+
+                <!-- DATA USER -->
+                <li id="menuUsers"
+                    class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
                     <i class="fas fa-users"></i>
+
                     <a href="../pages/users.html">
                         DATA USER
                     </a>
+
                 </li>
+
+
+                <!-- PEMINJAMAN -->
                 <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
                     <i class="fas fa-handshake"></i>
-                    <a href="../pages/peminjaman.html">PEMINJAMAN</a>
+
+                    <a href="../pages/peminjaman.html">
+                        PEMINJAMAN
+                    </a>
+
                 </li>
-                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+
+                <!-- BARANG MASUK -->
+                <li id="menuBarangMasuk"
+                    class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
                     <i class="fas fa-arrow-down"></i>
-                    <a href="../pages/barang_masuk.html">BARANG MASUK</a>
+
+                    <a href="../pages/barang_masuk.html">
+                        BARANG MASUK
+                    </a>
+
                 </li>
-                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+
+                <!-- BARANG KELUAR -->
+                <li id="menuBarangKeluar"
+                    class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
                     <i class="fas fa-arrow-up"></i>
-                    <a href="../pages/barang_keluar.html">BARANG KELUAR</a>
+
+                    <a href="../pages/barang_keluar.html">
+                        BARANG KELUAR
+                    </a>
+
                 </li>
-                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+
+                <!-- LAPORAN -->
+                <li id="menuLaporan"
+                    class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
                     <i class="fas fa-chart-bar"></i>
-                    <a href="../laporan.html">LAPORAN</a>
+
+                    <a href="../laporan.html">
+                        LAPORAN
+                    </a>
+
                 </li>
+
             </ul>
+
         </nav>
 
         <div class="p-4 border-t border-gray-800 mt-auto">
@@ -281,6 +340,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="../assets/supabase.js"></script>
+    <script src="../assets/sidebar.js"></script>
     <script src="../assets/barang_masuk.js"></script>
     <script src="../assets/logout.js"></script>
 

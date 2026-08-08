@@ -35,8 +35,8 @@
 
             <div>
 
-                <p class="font-medium">
-                    Raply
+                <p id="sidebarUserName" class="font-medium">
+                    Memuat...
                 </p>
 
                 <p class="text-green-400 text-sm flex items-center gap-1">
@@ -62,12 +62,9 @@
                 MAIN NAVIGATION
             </p>
 
-
             <ul class="space-y-1">
 
-
                 <!-- DASHBOARD -->
-
                 <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
 
                     <i class="fas fa-tachometer-alt"></i>
@@ -80,7 +77,6 @@
 
 
                 <!-- DATA BARANG -->
-
                 <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
 
                     <i class="fas fa-box"></i>
@@ -93,8 +89,8 @@
 
 
                 <!-- DATA USER -->
-
-                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+                <li id="menuUsers"
+                    class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
 
                     <i class="fas fa-users"></i>
 
@@ -105,13 +101,12 @@
                 </li>
 
 
-                <!-- PEMINJAMAN - ACTIVE -->
-
-                <li class="flex items-center gap-3 px-4 py-3 bg-gray-800 rounded-lg text-blue-400">
+                <!-- PEMINJAMAN -->
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
 
                     <i class="fas fa-handshake"></i>
 
-                    <a href="../peminjaman.html">
+                    <a href="../pages/peminjaman.html">
                         PEMINJAMAN
                     </a>
 
@@ -119,8 +114,8 @@
 
 
                 <!-- BARANG MASUK -->
-
-                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+                <li id="menuBarangMasuk"
+                    class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
 
                     <i class="fas fa-arrow-down"></i>
 
@@ -132,8 +127,8 @@
 
 
                 <!-- BARANG KELUAR -->
-
-                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+                <li id="menuBarangKeluar"
+                    class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
 
                     <i class="fas fa-arrow-up"></i>
 
@@ -145,8 +140,8 @@
 
 
                 <!-- LAPORAN -->
-
-                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+                <li id="menuLaporan"
+                    class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
 
                     <i class="fas fa-chart-bar"></i>
 
@@ -242,12 +237,12 @@
 
                     <div>
 
-                        <p class="font-medium text-sm">
-                            Raply
+                        <p id="headerUserName" class="font-medium text-sm">
+                            Memuat...
                         </p>
 
-                        <p class="text-xs text-blue-200">
-                            Admin
+                        <p id="headerUserRole" class="text-xs text-blue-200">
+                            Memuat...
                         </p>
 
                     </div>
@@ -301,12 +296,12 @@
 
                 <!-- TAMBAH PEMINJAMAN -->
 
-                <a href="../pages/tambah_peminjaman.html"
-                    class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl flex items-center gap-2 font-medium">
+                <a id="btnTambahPeminjaman" href="../pages/tambah_peminjaman.html"
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
 
-                    <i class="fas fa-plus"></i>
+                    <i class="fas fa-plus mr-2"></i>
 
-                    Tambah Peminjaman
+                    TAMBAH PEMINJAMAN
 
                 </a>
 
@@ -458,6 +453,9 @@
 ============================== -->
 
     <script src="../assets/supabase.js"></script>
+
+
+    <script src="../assets/sidebar.js"></script>
 
 
     <!-- ==============================
