@@ -3,312 +3,476 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Peminjaman - InventarisLab</title>
+    <title>Data Barang - InventarisLab</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-Zenh87qX5JnK2Jl1vWa+GmZJdKc3kBPb1zW0wLnk1QyYYx3+AMvyTG2xE8u4r1eD" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
     <style>
-        .summary-card {
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            border-radius: 1rem;
-        }
-
-        .summary-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
-        }
-
-        .content-card {
-            border-radius: 1rem;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-        }
-
-        .breadcrumb-item+.breadcrumb-item::before {
-            content: ">";
-        }
-
-        .table-responsive {
-            min-height: 1px;
-        }
-
-        .dataTables_wrapper .dataTables_paginate .paginate_button a {
-            border: none;
-            border-radius: 0.5rem;
-            padding: 0.4rem 0.75rem;
+        .table-row:hover {
+            background-color: #f8fafc;
         }
     </style>
-
 </head>
 
 <body class="bg-gray-100 flex min-h-screen">
 
-    <!-- SIDEBAR -->
+
+    <!-- ==============================
+     SIDEBAR
+============================== -->
+
     <aside class="w-72 bg-gray-900 text-white flex flex-col">
+
         <div class="p-6 border-b border-gray-800">
-            <h1 class="text-2xl font-bold">InventarisLab</h1>
+            <h1 class="text-2xl font-bold">
+                InventarisLab
+            </h1>
         </div>
+
 
         <div class="p-6 flex items-center gap-3 border-b border-gray-800">
+
             <img src="https://i.pravatar.cc/48?u=raply" alt="Raply" class="w-10 h-10 rounded-full">
+
             <div>
-                <p class="font-medium">Raply</p>
-                <p class="text-green-400 text-sm flex items-center gap-1">
-                    <span class="w-2 h-2 bg-green-400 rounded-full inline-block"></span> Online
+
+                <p class="font-medium">
+                    Raply
                 </p>
+
+                <p class="text-green-400 text-sm flex items-center gap-1">
+
+                    <span class="w-2 h-2 bg-green-400 rounded-full inline-block"></span>
+
+                    Online
+
+                </p>
+
             </div>
+
         </div>
+
+
+        <!-- ==============================
+         NAVIGATION
+    ============================== -->
 
         <nav class="flex-1 p-4">
-            <p class="text-xs text-gray-400 px-4 mb-2">MAIN NAVIGATION</p>
+
+            <p class="text-xs text-gray-400 px-4 mb-2">
+                MAIN NAVIGATION
+            </p>
+
+
             <ul class="space-y-1">
+
+
+                <!-- DASHBOARD -->
+
                 <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
                     <i class="fas fa-tachometer-alt"></i>
-                    DASHBOARD
+
+                    <a href="../dashboard.html">
+                        DASHBOARD
+                    </a>
+
                 </li>
+
+
+                <!-- DATA BARANG -->
+
                 <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
                     <i class="fas fa-box"></i>
-                    <a href="../InventarisLabWeb/barang.html">
+
+                    <a href="../pages/barang.html">
                         DATA BARANG
                     </a>
+
                 </li>
+
+
+                <!-- DATA USER -->
+
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+                    <i class="fas fa-users"></i>
+
+                    <a href="../pages/users.html">
+                        DATA USER
+                    </a>
+
+                </li>
+
+
+                <!-- PEMINJAMAN - ACTIVE -->
+
                 <li class="flex items-center gap-3 px-4 py-3 bg-gray-800 rounded-lg text-blue-400">
+
                     <i class="fas fa-handshake"></i>
-                    <a href="../InventarisLabWeb/peminjaman.html">PEMINJAMAN</a>
+
+                    <a href="../peminjaman.html">
+                        PEMINJAMAN
+                    </a>
+
                 </li>
+
+
+                <!-- BARANG MASUK -->
+
                 <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
                     <i class="fas fa-arrow-down"></i>
-                    <a href="../InventarisLabWeb/barang_masuk.html">BARANG MASUK</a>
+
+                    <a href="../pages/barang_masuk.html">
+                        BARANG MASUK
+                    </a>
+
                 </li>
+
+
+                <!-- BARANG KELUAR -->
+
                 <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
                     <i class="fas fa-arrow-up"></i>
-                    <a href="../InventarisLabWeb/barang_keluar.html">BARANG KELUAR</a>
+
+                    <a href="../pages/barang_keluar.html">
+                        BARANG KELUAR
+                    </a>
+
                 </li>
+
+
+                <!-- LAPORAN -->
+
                 <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
                     <i class="fas fa-chart-bar"></i>
-                    <a href="../InventarisLabWeb/laporan.html">LAPORAN</a>
+
+                    <a href="../laporan.html">
+                        LAPORAN
+                    </a>
+
                 </li>
+
             </ul>
+
         </nav>
 
+
+        <!-- ==============================
+         BOTTOM MENU
+    ============================== -->
+
         <div class="p-4 border-t border-gray-800 mt-auto">
+
             <ul class="space-y-1">
+
+
+                <!-- GANTI PASSWORD -->
+
                 <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
-                    <i class="fas fa-key"></i> GANTI PASSWORD
+
+                    <i class="fas fa-key"></i>
+
+                    <a href="../ganti_password.html">
+                        GANTI PASSWORD
+                    </a>
+
                 </li>
+
+
+                <!-- LOGOUT -->
+
                 <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
-                    <i class="fas fa-sign-out-alt"></i> LOGOUT
+
+                    <i class="fas fa-sign-out-alt"></i>
+
+                    <span onclick="logout()">
+                        LOGOUT
+                    </span>
+
                 </li>
+
             </ul>
+
         </div>
+
     </aside>
 
 
 
-    <!-- MAIN CONTENT -->
+    <!-- ==============================
+     MAIN CONTENT
+============================== -->
+
     <div class="flex-1">
+
+
+        <!-- ==============================
+         HEADER
+    ============================== -->
+
         <header class="bg-blue-600 text-white px-8 py-4 flex justify-between items-center">
+
+
             <div class="flex items-center gap-4">
-                <h1 class="text-2xl font-semibold">Peminjaman</h1>
-                <span class="text-blue-200">Data Peminjaman</span>
+
+                <h1 class="text-2xl font-semibold">
+                    Peminjaman
+                </h1>
+
+                <span class="text-blue-200">
+                    Data Peminjaman
+                </span>
+
             </div>
+
+
             <div class="flex items-center gap-6">
+
+
+                <!-- USER -->
+
                 <div class="flex items-center gap-2">
+
                     <img src="https://i.pravatar.cc/32?u=raply" alt="Raply" class="w-8 h-8 rounded-full">
+
+
                     <div>
-                        <p class="font-medium text-sm">Raply</p>
-                        <p class="text-xs text-blue-200">Admin</p>
+
+                        <p class="font-medium text-sm">
+                            Raply
+                        </p>
+
+                        <p class="text-xs text-blue-200">
+                            Admin
+                        </p>
+
                     </div>
+
                 </div>
-                <button onclick="alert('Logout berhasil')"
+
+
+                <!-- LOGOUT -->
+
+                <button onclick="logout()"
                     class="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-sm">
-                    <i class="fas fa-sign-out-alt"></i> LOGOUT
+
+                    <i class="fas fa-sign-out-alt"></i>
+
+                    LOGOUT
+
                 </button>
+
             </div>
+
         </header>
 
+
+
+        <!-- ==============================
+         CONTENT
+    ============================== -->
+
         <main class="p-8">
-            <!-- STATISTIC CARDS -->
-            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
 
-                <!-- Total Peminjaman -->
-                <div class="bg-blue-500 text-white shadow-lg overflow-hidden">
-                    <div class="p-6">
-                        <h3 class="text-5xl font-light">56</h3>
-                        <p class="mt-2 text-lg">Total Peminjaman</p>
-                    </div>
-                    <div class="bg-blue-600 text-center py-2 cursor-pointer hover:bg-blue-700">
-                        More Info <i class="fas fa-arrow-circle-right ml-1"></i>
-                    </div>
+
+            <!-- ==============================
+             TITLE + BUTTON
+        ============================== -->
+
+            <div class="flex justify-between items-center mb-6">
+
+
+                <div>
+
+                    <h2 class="text-2xl font-bold text-gray-800">
+                        Peminjaman
+                    </h2>
+
+                    <p class="text-gray-500 text-sm mt-1">
+                        Kelola data peminjaman barang laboratorium
+                    </p>
+
                 </div>
 
-                <!-- Sedang Dipinjam -->
-                <div class="bg-green-500 text-white shadow-lg overflow-hidden">
-                    <div class="p-6">
-                        <h3 class="text-5xl font-light">39</h3>
-                        <p class="mt-2 text-lg">Sedang Dipinjam</p>
-                    </div>
-                    <div class="bg-green-600 text-center py-2 cursor-pointer hover:bg-green-700">
-                        More Info <i class="fas fa-arrow-circle-right ml-1"></i>
-                    </div>
-                </div>
 
-                <!-- Menunggu Pengembalian -->
-                <div class="bg-yellow-500 text-white shadow-lg overflow-hidden">
-                    <div class="p-6">
-                        <h3 class="text-5xl font-light">14</h3>
-                        <p class="mt-2 text-lg">Pending Return</p>
-                    </div>
-                    <div class="bg-yellow-600 text-center py-2 cursor-pointer hover:bg-yellow-700">
-                        More Info <i class="fas fa-arrow-circle-right ml-1"></i>
-                    </div>
-                </div>
+                <!-- TAMBAH PEMINJAMAN -->
 
-                <!-- Terlambat -->
-                <div class="bg-red-500 text-white shadow-lg overflow-hidden">
-                    <div class="p-6">
-                        <h3 class="text-5xl font-light">3</h3>
-                        <p class="mt-2 text-lg">Overdue</p>
-                    </div>
-                    <div class="bg-red-600 text-center py-2 cursor-pointer hover:bg-red-700">
-                        More Info <i class="fas fa-arrow-circle-right ml-1"></i>
-                    </div>
-                </div>
+                <a href="../pages/tambah_peminjaman.html"
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl flex items-center gap-2 font-medium">
+
+                    <i class="fas fa-plus"></i>
+
+                    Tambah Peminjaman
+
+                </a>
 
             </div>
 
-            <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
 
-                <h3 class="text-xl font-semibold text-gray-800 mb-6">
-                    Grafik Peminjaman
-                </h3>
 
-                <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            <!-- ==============================
+             SEARCH
+        ============================== -->
 
-                    <!-- Chart -->
-                    <div class="lg:col-span-3">
-                        <div class="h-96">
-                            <canvas id="borrowingChart"></canvas>
-                        </div>
-                    </div>
+            <div class="flex justify-end mb-4">
 
-                    <!-- Legend -->
-                    <div class="flex flex-col justify-center gap-4">
+                <div class="relative w-80">
 
-                        <div class="flex items-center gap-3 p-3 bg-green-50 rounded-lg border">
-                            <div class="w-5 h-5 bg-green-500 rounded"></div>
-                            <div>
-                                <p class="font-semibold text-green-700">39</p>
-                                <p class="text-sm text-gray-600">Sedang Dipinjam</p>
-                            </div>
-                        </div>
+                    <input type="text" id="searchInput" placeholder="Cari peminjaman..."
+                        class="w-full border border-gray-300 rounded-xl py-3 px-5 pl-10 focus:outline-none focus:border-blue-500"
+                        onkeyup="searchTable()">
 
-                        <div class="flex items-center gap-3 p-3 bg-yellow-50 rounded-lg border">
-                            <div class="w-5 h-5 bg-yellow-500 rounded"></div>
-                            <div>
-                                <p class="font-semibold text-yellow-700">14</p>
-                                <p class="text-sm text-gray-600">Pending Return</p>
-                            </div>
-                        </div>
 
-                        <div class="flex items-center gap-3 p-3 bg-red-50 rounded-lg border">
-                            <div class="w-5 h-5 bg-red-500 rounded"></div>
-                            <div>
-                                <p class="font-semibold text-red-700">3</p>
-                                <p class="text-sm text-gray-600">Overdue</p>
-                            </div>
-                        </div>
-
-                    </div>
+                    <i class="fas fa-search absolute left-4 top-3.5 text-gray-400"></i>
 
                 </div>
 
             </div>
 
-            <!-- DETAIL LOGIN -->
-            <div class="mt-10 bg-white rounded-2xl shadow p-8">
-                <h2 class="text-xl font-bold text-blue-600 border-b pb-3">Detail Login</h2>
-                <div class="grid grid-cols-2 gap-x-12 gap-y-6 mt-6">
-                    <div>
-                        <p class="text-sm text-gray-600">Nama</p>
-                        <p class="font-medium text-lg">Alex</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600">Nim</p>
-                        <p class="font-medium text-lg">42622000</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600">Hak Akses</p>
-                        <button
-                            class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg text-sm font-medium mt-2">
-                            MANAJEMEN
-                        </button>
-                    </div>
+
+
+            <!-- ==============================
+             TABLE
+        ============================== -->
+
+            <div class="bg-white rounded-2xl shadow overflow-hidden">
+
+                <div class="overflow-x-auto">
+
+                    <table class="w-full min-w-[1400px]">
+
+
+                        <!-- ==============================
+                         TABLE HEADER
+                    ============================== -->
+
+                        <thead class="bg-gray-50">
+
+
+                            <tr>
+
+
+                                <th class="px-6 py-4">
+                                    NO
+                                </th>
+
+
+                                <th class="px-6 py-4">
+                                    KODE
+                                </th>
+
+
+                                <th class="px-6 py-4">
+                                    BARANG
+                                </th>
+
+
+                                <th class="px-6 py-4">
+                                    PEMINJAM
+                                </th>
+
+
+                                <th class="px-6 py-4">
+                                    JUMLAH
+                                </th>
+
+
+                                <th class="px-6 py-4">
+                                    TGL PINJAM
+                                </th>
+
+
+                                <th class="px-6 py-4">
+                                    BATAS KEMBALI
+                                </th>
+
+
+                                <th class="px-6 py-4">
+                                    TGL KEMBALI
+                                </th>
+
+
+                                <th class="px-6 py-4">
+                                    STATUS
+                                </th>
+
+
+                                <th class="px-6 py-4">
+                                    KEPERLUAN
+                                </th>
+
+
+                                <th class="px-6 py-4">
+                                    APPROVER
+                                </th>
+
+
+                                <th class="px-6 py-4 text-center">
+                                    OPSI
+                                </th>
+
+
+                            </tr>
+
+                        </thead>
+
+
+
+                        <!-- ==============================
+                         DATA DARI JS
+                    ============================== -->
+
+                        <tbody id="dataTable" class="divide-y">
+
+                        </tbody>
+
+
+                    </table>
+
                 </div>
+
             </div>
+
         </main>
-
 
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha384-3gJwYp6tE+FNJACbqk0xGmZJdKc3kBPb1zW0wLnk1QyYYx3+AMvyTG2xE8u4r1eD"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-qQGvwz8V7d7dFZ8aVyLPLqD0FhJBBpoR7UtEoEduxZq7QMUhNxB1VQfUZJu8V4LF"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        const ctx = document.getElementById('borrowingChart');
 
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: [
-                    'Total Peminjaman',
-                    'Sedang Dipinjam',
-                    'Pending Return',
-                    'Terlambat'
-                ],
-                datasets: [{
-                    label: 'Jumlah',
-                    data: [56, 39, 14, 3],
-                    backgroundColor: [
-                        '#3B82F6',
-                        '#22C55E',
-                        '#F59E0B',
-                        '#EF4444'
-                    ],
-                    borderWidth: 0,
-                    borderRadius: 6
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
 
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
+    <!-- ==============================
+     LIBRARY
+============================== -->
 
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            stepSize: 5
-                        }
-                    }
-                }
-            }
-        });
-    </script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <!-- ==============================
+     SUPABASE
+============================== -->
+
+    <script src="../assets/supabase.js"></script>
+
+
+    <!-- ==============================
+     PEMINJAMAN JS
+============================== -->
+
+    <script src="../assets/peminjaman.js"></script>
+
+
+    <!-- ==============================
+     LOGOUT
+============================== -->
+
+    <script src="../assets/logout.js"></script>
+
+
 
 </body>
 

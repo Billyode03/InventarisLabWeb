@@ -46,7 +46,7 @@
                         DATA BARANG
                     </a>
                 </li>
-                <li class="flex items-center gap-3 px-4 py-3 bg-gray-800 rounded-lg text-blue-400">
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
                     <i class="fas fa-users"></i>
                     <a href="../pages/users.html">
                         DATA USER
@@ -54,15 +54,17 @@
                 </li>
                 <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
                     <i class="fas fa-handshake"></i>
-                    <a href="../peminjaman.html">PEMINJAMAN</a>
+                    <a href="../pages/peminjaman.html">PEMINJAMAN</a>
                 </li>
                 <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
                     <i class="fas fa-arrow-down"></i>
                     <a href="../pages/barang_masuk.html">BARANG MASUK</a>
                 </li>
-                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+                <li class="flex items-center gap-3 px-4 py-3 bg-gray-800 rounded-lg text-red-400">
                     <i class="fas fa-arrow-up"></i>
-                    <a href="../pages/barang_keluar.html">BARANG KELUAR</a>
+                    <a href="../pages/barang_keluar.html">
+                        BARANG KELUAR
+                    </a>
                 </li>
                 <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
                     <i class="fas fa-chart-bar"></i>
@@ -86,7 +88,7 @@
     <!-- MAIN CONTENT -->
     <div class="flex-1">
         <!-- HEADER -->
-        <header class="bg-blue-600 text-white px-8 py-4 flex justify-between items-center">
+        <header class="bg-red-600 text-white px-8 py-4 flex justify-between items-center">
             <div class="flex items-center gap-4">
                 <h1 class="text-2xl font-semibold">Barang Keluar</h1>
                 <span class="text-blue-200">Manajemen Barang Keluar</span>
@@ -124,7 +126,7 @@
                 </div>
 
                 <a href="../pages/tambah_barangKeluar.html"
-                    class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-xl flex items-center gap-2">
+                    class="bg-red-600 hover:bg-red-700 text-white px-5 py-3 rounded-xl flex items-center gap-2">
 
                     <i class="fas fa-plus"></i>
 
@@ -181,7 +183,7 @@
                         Total Unit Keluar
                     </p>
 
-                    <h3 id="totalUnit" class="text-4xl font-bold mt-2">
+                    <h3 id="totalUnitKeluar" class="text-4xl font-bold mt-2">
                         0
                     </h3>
 
@@ -257,7 +259,7 @@
 
                             <tr>
 
-                                <td colspan="7" class="text-center py-8 text-gray-500">
+                                <td colspan="6" class="text-center py-8 text-gray-500">
 
                                     Belum ada data barang keluar.
 
@@ -281,7 +283,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="../assets/supabase.js"></script>
-    <script src="../assets/barangKeluar.js"></script>
+    <script src="../assets/barang_keluar.js"></script>
     <script src="../assets/logout.js"></script>
 
     <!-- <script>
