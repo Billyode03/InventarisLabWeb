@@ -80,7 +80,9 @@ async function loadPeminjaman() {
                         <button
                             onclick="loadPeminjaman()"
                             class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg">
+
                             Coba Lagi
+
                         </button>
 
                     </div>
@@ -144,51 +146,62 @@ async function loadPeminjaman() {
         switch (item.status) {
 
             case "Menunggu":
+
                 statusBadge = `
                     <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-medium">
                         MENUNGGU
                     </span>
                 `;
+
                 break;
 
 
             case "Disetujui":
+
                 statusBadge = `
                     <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">
                         DISETUJUI
                     </span>
                 `;
+
                 break;
 
 
             case "Ditolak":
+
                 statusBadge = `
                     <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-medium">
                         DITOLAK
                     </span>
                 `;
+
                 break;
 
 
             case "Dipinjam":
+
                 statusBadge = `
                     <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-medium">
                         DIPINJAM
                     </span>
                 `;
+
                 break;
 
 
             case "Dikembalikan":
+
                 statusBadge = `
                     <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">
                         DIKEMBALIKAN
                     </span>
                 `;
+
                 break;
 
 
             default:
+
                 statusBadge = `
                     <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium">
                         ${item.status || "-"}
@@ -220,7 +233,7 @@ async function loadPeminjaman() {
 
 
         // ==========================
-        // NAMA BARANG
+        // BARANG
         // ==========================
 
         const namaBarang =
@@ -228,7 +241,7 @@ async function loadPeminjaman() {
 
 
         // ==========================
-        // NAMA PEMINJAM
+        // PEMINJAM
         // ==========================
 
         const namaPeminjam =
@@ -248,6 +261,40 @@ async function loadPeminjaman() {
 
 
         // ==========================
+        // TOMBOL APPROVAL
+        // ==========================
+
+        let tombolApproval = "";
+
+
+        if (item.status === "Menunggu") {
+
+            tombolApproval = `
+
+                <button
+                    onclick="setujuiPeminjaman(${item.id})"
+                    class="text-green-600 hover:text-green-800"
+                    title="Setujui Peminjaman">
+
+                    <i class="fas fa-check-circle"></i>
+
+                </button>
+
+
+                <button
+                    onclick="tolakPeminjaman(${item.id})"
+                    class="text-red-500 hover:text-red-700"
+                    title="Tolak Peminjaman">
+
+                    <i class="fas fa-times-circle"></i>
+
+                </button>
+
+            `;
+        }
+
+
+        // ==========================
         // RENDER
         // ==========================
 
@@ -256,27 +303,32 @@ async function loadPeminjaman() {
             <tr class="border-b hover:bg-gray-50">
 
                 <!-- NO -->
+
                 <td class="px-6 py-4">
                     ${index + 1}
                 </td>
 
 
                 <!-- KODE -->
+
                 <td class="px-6 py-4 font-medium">
                     ${item.kode_peminjaman || "-"}
                 </td>
 
 
                 <!-- BARANG -->
+
                 <td class="px-6 py-4">
                     ${namaBarang}
                 </td>
 
 
                 <!-- PEMINJAM -->
+
                 <td class="px-6 py-4">
 
                     <div>
+
                         <p class="font-medium">
                             ${namaPeminjam}
                         </p>
@@ -284,57 +336,68 @@ async function loadPeminjaman() {
                         <p class="text-xs text-gray-500">
                             ${nimPeminjam}
                         </p>
+
                     </div>
 
                 </td>
 
 
                 <!-- JUMLAH -->
+
                 <td class="px-6 py-4">
                     ${item.jumlah}
                 </td>
 
 
                 <!-- TANGGAL PINJAM -->
+
                 <td class="px-6 py-4">
                     ${tanggalPinjam}
                 </td>
 
 
                 <!-- BATAS KEMBALI -->
+
                 <td class="px-6 py-4">
                     ${batasKembali}
                 </td>
 
 
                 <!-- TANGGAL KEMBALI -->
+
                 <td class="px-6 py-4">
                     ${tanggalKembali}
                 </td>
 
 
                 <!-- STATUS -->
+
                 <td class="px-6 py-4">
                     ${statusBadge}
                 </td>
 
 
                 <!-- KEPERLUAN -->
+
                 <td class="px-6 py-4">
                     ${item.keperluan || "-"}
                 </td>
 
 
                 <!-- APPROVER -->
+
                 <td class="px-6 py-4">
                     ${namaApprover}
                 </td>
 
 
-                <!-- AKSI -->
+                <!-- OPSI -->
+
                 <td class="px-6 py-4">
 
-                    <div class="flex justify-center gap-2">
+                    <div class="flex justify-center gap-3">
+
+                        <!-- DETAIL -->
 
                         <button
                             onclick="detailPeminjaman(${item.id})"
@@ -346,6 +409,13 @@ async function loadPeminjaman() {
                         </button>
 
 
+                        <!-- APPROVAL -->
+
+                        ${tombolApproval}
+
+
+                        <!-- EDIT -->
+
                         <button
                             onclick="editPeminjaman(${item.id})"
                             class="text-blue-500 hover:text-blue-700"
@@ -355,6 +425,8 @@ async function loadPeminjaman() {
 
                         </button>
 
+
+                        <!-- HAPUS -->
 
                         <button
                             onclick="hapusPeminjaman(${item.id})"
@@ -398,21 +470,500 @@ function formatTanggal(tanggal) {
 
 
 // ==============================
+// AMBIL USER APPROVER
+// ==============================
+
+function getCurrentUser() {
+
+    try {
+
+        const user =
+            JSON.parse(
+                localStorage.getItem("user")
+            );
+
+        return user;
+
+    } catch (error) {
+
+        console.error(
+            "Gagal membaca user:",
+            error
+        );
+
+        return null;
+    }
+
+}
+
+
+// ==============================
+// APPROVAL - SETUJUI
+// ==============================
+
+async function setujuiPeminjaman(id) {
+
+    const result =
+        await Swal.fire({
+
+            title: "Setujui Peminjaman?",
+
+            text:
+                "Peminjaman akan disetujui dan stok barang akan dikurangi.",
+
+            icon: "question",
+
+            showCancelButton: true,
+
+            confirmButtonColor: "#16a34a",
+
+            cancelButtonColor: "#6b7280",
+
+            confirmButtonText: "Ya, Setujui",
+
+            cancelButtonText: "Batal"
+
+        });
+
+
+    if (!result.isConfirmed) {
+        return;
+    }
+
+
+    // ==========================
+    // USER LOGIN
+    // ==========================
+
+    const currentUser =
+        getCurrentUser();
+
+
+    if (!currentUser || !currentUser.id) {
+
+        Swal.fire({
+
+            icon: "error",
+
+            title: "User Tidak Ditemukan",
+
+            text:
+                "Data user yang sedang login tidak ditemukan."
+
+        });
+
+        return;
+    }
+
+
+    // ==========================
+    // AMBIL PEMINJAMAN
+    // ==========================
+
+    const { data: peminjaman, error: peminjamanError } =
+        await supabaseClient
+
+            .from("peminjaman")
+
+            .select("*")
+
+            .eq("id", id)
+
+            .single();
+
+
+    if (peminjamanError || !peminjaman) {
+
+        console.error(peminjamanError);
+
+        Swal.fire({
+
+            icon: "error",
+
+            title: "Gagal",
+
+            text:
+                "Data peminjaman tidak ditemukan."
+
+        });
+
+        return;
+    }
+
+
+    // ==========================
+    // CEK STATUS
+    // ==========================
+
+    if (peminjaman.status !== "Menunggu") {
+
+        Swal.fire({
+
+            icon: "warning",
+
+            title: "Tidak Dapat Diproses",
+
+            text:
+                "Peminjaman ini sudah diproses sebelumnya."
+
+        });
+
+        return;
+    }
+
+
+    // ==========================
+    // AMBIL BARANG TERBARU
+    // ==========================
+
+    const { data: barang, error: barangError } =
+        await supabaseClient
+
+            .from("barang")
+
+            .select("*")
+
+            .eq("id", peminjaman.barang_id)
+
+            .single();
+
+
+    if (barangError || !barang) {
+
+        console.error(barangError);
+
+        Swal.fire({
+
+            icon: "error",
+
+            title: "Barang Tidak Ditemukan",
+
+            text:
+                "Data barang tidak ditemukan."
+
+        });
+
+        return;
+    }
+
+
+    // ==========================
+    // CEK STOK
+    // ==========================
+
+    if (Number(barang.jumlah) < Number(peminjaman.jumlah)) {
+
+        Swal.fire({
+
+            icon: "warning",
+
+            title: "Stok Tidak Cukup",
+
+            text:
+                `Stok tersedia hanya ${barang.jumlah}, sedangkan jumlah yang dipinjam ${peminjaman.jumlah}.`
+
+        });
+
+        return;
+    }
+
+
+    // ==========================
+    // UPDATE STOK
+    // ==========================
+
+    const stokBaru =
+        Number(barang.jumlah) -
+        Number(peminjaman.jumlah);
+
+
+    const { error: stokError } =
+        await supabaseClient
+
+            .from("barang")
+
+            .update({
+
+                jumlah: stokBaru
+
+            })
+
+            .eq("id", peminjaman.barang_id);
+
+
+    if (stokError) {
+
+        console.error(stokError);
+
+        Swal.fire({
+
+            icon: "error",
+
+            title: "Gagal",
+
+            text:
+                "Stok barang gagal diperbarui."
+
+        });
+
+        return;
+    }
+
+
+    // ==========================
+    // UPDATE PEMINJAMAN
+    // ==========================
+
+    const { error: updateError } =
+        await supabaseClient
+
+            .from("peminjaman")
+
+            .update({
+
+                status: "Disetujui",
+
+                approver_id: currentUser.id
+
+            })
+
+            .eq("id", id);
+
+
+    // ==========================
+    // JIKA UPDATE GAGAL
+    // ==========================
+
+    if (updateError) {
+
+        console.error(updateError);
+
+
+        // KEMBALIKAN STOK
+
+        await supabaseClient
+
+            .from("barang")
+
+            .update({
+
+                jumlah: barang.jumlah
+
+            })
+
+            .eq("id", peminjaman.barang_id);
+
+
+        Swal.fire({
+
+            icon: "error",
+
+            title: "Gagal",
+
+            text:
+                "Approval gagal. Perubahan stok dibatalkan."
+
+        });
+
+        return;
+    }
+
+
+    // ==========================
+    // BERHASIL
+    // ==========================
+
+    await Swal.fire({
+
+        icon: "success",
+
+        title: "Peminjaman Disetujui",
+
+        text:
+            "Peminjaman berhasil disetujui dan stok telah diperbarui.",
+
+        timer: 1800,
+
+        showConfirmButton: false
+
+    });
+
+
+    loadPeminjaman();
+
+    loadStatistik();
+
+}
+
+
+// ==============================
+// APPROVAL - TOLAK
+// ==============================
+
+async function tolakPeminjaman(id) {
+
+    const result =
+        await Swal.fire({
+
+            title: "Tolak Peminjaman?",
+
+            input: "textarea",
+
+            inputLabel: "Alasan Penolakan",
+
+            inputPlaceholder:
+                "Masukkan alasan penolakan...",
+
+            inputAttributes: {
+
+                "aria-label":
+                    "Masukkan alasan penolakan"
+
+            },
+
+            showCancelButton: true,
+
+            confirmButtonColor: "#dc2626",
+
+            cancelButtonColor: "#6b7280",
+
+            confirmButtonText: "Tolak Peminjaman",
+
+            cancelButtonText: "Batal",
+
+            inputValidator: (value) => {
+
+                if (!value.trim()) {
+
+                    return "Alasan penolakan wajib diisi.";
+
+                }
+
+            }
+
+        });
+
+
+    if (!result.isConfirmed) {
+        return;
+    }
+
+
+    // ==========================
+    // USER LOGIN
+    // ==========================
+
+    const currentUser =
+        getCurrentUser();
+
+
+    if (!currentUser || !currentUser.id) {
+
+        Swal.fire({
+
+            icon: "error",
+
+            title: "User Tidak Ditemukan",
+
+            text:
+                "Data user yang sedang login tidak ditemukan."
+
+        });
+
+        return;
+    }
+
+
+    // ==========================
+    // UPDATE
+    // ==========================
+
+    const { error } =
+        await supabaseClient
+
+            .from("peminjaman")
+
+            .update({
+
+                status: "Ditolak",
+
+                approver_id:
+                    currentUser.id,
+
+                catatan_admin:
+                    result.value.trim()
+
+            })
+
+            .eq("id", id);
+
+
+    if (error) {
+
+        console.error(error);
+
+        Swal.fire({
+
+            icon: "error",
+
+            title: "Gagal",
+
+            text:
+                error.message
+
+        });
+
+        return;
+    }
+
+
+    // ==========================
+    // BERHASIL
+    // ==========================
+
+    await Swal.fire({
+
+        icon: "success",
+
+        title: "Peminjaman Ditolak",
+
+        text:
+            "Pengajuan peminjaman telah ditolak.",
+
+        timer: 1800,
+
+        showConfirmButton: false
+
+    });
+
+
+    loadPeminjaman();
+
+    loadStatistik();
+
+}
+
+
+// ==============================
 // STATISTIK
 // ==============================
 
 async function loadStatistik() {
 
-    const { data, error } = await supabaseClient
+    const { data, error } =
+        await supabaseClient
 
-        .from("peminjaman")
+            .from("peminjaman")
 
-        .select("status, batas_kembali");
+            .select("status, batas_kembali");
 
 
     if (error) {
 
-        console.error("Gagal mengambil statistik:", error);
+        console.error(
+            "Gagal mengambil statistik:",
+            error
+        );
 
         return;
     }
@@ -438,7 +989,9 @@ async function loadStatistik() {
     // TERLAMBAT
     // ==========================
 
-    const sekarang = new Date();
+    const sekarang =
+        new Date();
+
 
     const terlambat =
         data.filter(item => {
@@ -451,7 +1004,9 @@ async function loadStatistik() {
                 item.status === "Dikembalikan" ||
                 item.status === "Ditolak"
             ) {
+
                 return false;
+
             }
 
             return new Date(item.batas_kembali) < sekarang;
@@ -754,7 +1309,6 @@ async function hapusPeminjaman(id) {
         });
 
         return;
-
     }
 
 
@@ -778,4 +1332,4 @@ async function hapusPeminjaman(id) {
 
     loadStatistik();
 
-}
+} 

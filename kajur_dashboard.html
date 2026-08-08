@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Dashboard Kajur - InventarisLab</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    .card {
+      transition: all 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    }
+
+    .more-info-btn {
+      background-color: rgba(255, 255, 255, 0.25);
+      transition: all 0.2s;
+    }
+
+    .more-info-btn:hover {
+      background-color: rgba(255, 255, 255, 0.35);
+      transform: translateY(-1px);
+    }
+  </style>
+
+</head>
+
+<body class="bg-gray-100 flex min-h-screen">
+
+  <!-- SIDEBAR -->
+
+  <aside class="w-72 bg-gray-900 text-white flex flex-col">
+
+<!-- LOGO -->
+<div class="p-6 border-b border-gray-800">
+  <h1 class="text-2xl font-bold">InventarisLab</h1>
+  <p class="text-xs text-gray-400 mt-1">Panel Ketua Jurusan</p>
+</div>
+
+<!-- USER -->
+<div class="p-6 flex items-center gap-3 border-b border-gray-800">
+
+  <img
+    src="https://i.pravatar.cc/48?u=kajur"
+    alt="Kajur"
+    class="w-10 h-10 rounded-full">
+
+  <div>
+    <p class="font-medium" id="headerNama">Loading...</p>
+
+    <p class="text-green-400 text-sm flex items-center gap-1">
+      <span class="w-2 h-2 bg-green-400 rounded-full inline-block"></span>
+      Online
+    </p>
+  </div>
+
+</div>
+
+<!-- NAVIGATION -->
+<nav class="flex-1 p-4">
+
+  <p class="text-xs text-gray-400 px-4 mb-2">
+    MAIN NAVIGATION
+  </p>
+
+  <ul class="space-y-1">
+
+    <!-- DASHBOARD -->
+    <li class="flex items-center gap-3 px-4 py-3 bg-gray-800 rounded-lg text-blue-400">
+
+      <i class="fas fa-tachometer-alt"></i>
+
+      <a href="kajur_dashboard.html">
+        DASHBOARD
+      </a>
+
+    </li>
+
+    <!-- APPROVAL -->
+    <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+      <i class="fas fa-clipboard-check"></i>
+
+      <a href="approval.html">
+        APPROVAL
+      </a>
+
+      <!-- BADGE -->
+      <span
+        id="approvalBadge"
+        class="ml-auto bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+        0
+      </span>
+
+    </li>
+
+    <!-- PEMINJAMAN -->
+    <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+      <i class="fas fa-handshake"></i>
+
+      <a href="peminjaman.html">
+        PEMINJAMAN
+      </a>
+
+    </li>
+
+    <!-- INVENTARIS -->
+    <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+      <i class="fas fa-boxes-stacked"></i>
+
+      <a href="pages/barang.html">
+        INVENTARIS
+      </a>
+
+    </li>
+
+    <!-- BARANG MASUK -->
+    <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+      <i class="fas fa-arrow-down"></i>
+
+      <a href="barang_masuk.html">
+        BARANG MASUK
+      </a>
+
+    </li>
+
+    <!-- BARANG KELUAR -->
+    <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+      <i class="fas fa-arrow-up"></i>
+
+      <a href="barang_keluar.html">
+        BARANG KELUAR
+      </a>
+
+    </li>
+
+    <!-- LAPORAN -->
+    <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+      <i class="fas fa-chart-bar"></i>
+
+      <a href="laporan.html">
+        LAPORAN
+      </a>
+
+    </li>
+
+  </ul>
+
+</nav>
+
+<!-- BOTTOM MENU -->
+<div class="p-4 border-t border-gray-800 mt-auto">
+
+  <ul class="space-y-1">
+
+    <!-- GANTI PASSWORD -->
+    <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+      <i class="fas fa-key"></i>
+
+      <a href="ganti_password.html">
+        GANTI PASSWORD
+      </a>
+
+    </li>
+
+    <!-- LOGOUT -->
+    <li
+      onclick="logout()"
+      class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+      <i class="fas fa-sign-out-alt"></i>
+
+      LOGOUT
+
+    </li>
+
+  </ul>
+
+</div>
+
+
+  </aside>
+
+  <!-- MAIN CONTENT -->
+
+  <div class="flex-1">
+
+
+<!-- HEADER -->
+<header
+  class="bg-blue-600 text-white px-8 py-4 flex justify-between items-center">
+
+  <div class="flex items-center gap-4">
+
+    <h1 class="text-2xl font-semibold">
+      Dashboard Kajur
+    </h1>
+
+    <span class="text-blue-200">
+      Control Panel
+    </span>
+
+  </div>
+
+
+  <div class="flex items-center gap-6">
+
+    <div class="flex items-center gap-2">
+
+      <img
+        src="https://i.pravatar.cc/32?u=kajur"
+        alt="Kajur"
+        class="w-8 h-8 rounded-full">
+
+      <div>
+
+        <p
+          class="font-medium text-sm"
+          id="sidebarNama">
+          Loading...
+        </p>
+
+        <p
+          class="text-xs text-blue-200"
+          id="headerRole">
+          Kajur
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <button
+      onclick="logout()"
+      class="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-sm">
+
+      <i class="fas fa-sign-out-alt"></i>
+
+      LOGOUT
+
+    </button>
+
+  </div>
+
+</header>
+
+
+<!-- MAIN -->
+<main class="p-8">
+
+  <!-- WELCOME -->
+  <div class="mb-8">
+
+    <h2 class="text-2xl font-bold text-gray-800">
+      Selamat Datang, <span id="welcomeNama">Kajur</span>
+    </h2>
+
+    <p class="text-gray-500 mt-1">
+      Pantau inventaris dan proses persetujuan peminjaman laboratorium.
+    </p>
+
+  </div>
+
+
+  <!-- DASHBOARD CARDS -->
+  <div class="grid grid-cols-4 gap-6">
+
+
+    <!-- CARD 1 -->
+    <div class="bg-blue-600 text-white p-6 rounded-2xl card flex flex-col">
+
+      <div class="flex justify-between">
+
+        <div>
+
+          <p
+            id="totalBarang"
+            class="text-5xl font-bold">
+            0
+          </p>
+
+          <p class="text-lg mt-2">
+            Total Barang
+          </p>
+
+        </div>
+
+        <div class="text-5xl opacity-30">
+          <i class="fas fa-boxes-stacked"></i>
+        </div>
+
+      </div>
+
+      <div class="mt-6">
+
+        <a
+          href="pages/barang.html"
+          class="more-info-btn w-full text-white text-sm font-medium py-3 px-6 rounded-xl flex items-center justify-center gap-2">
+
+          Lihat Inventaris
+
+          <span class="text-lg leading-none">
+            →
+          </span>
+
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <!-- CARD 2 -->
+    <div class="bg-orange-500 text-white p-6 rounded-2xl card flex flex-col">
+
+      <div class="flex justify-between">
+
+        <div>
+
+          <p
+            id="totalPeminjaman"
+            class="text-5xl font-bold">
+            0
+          </p>
+
+          <p class="text-lg mt-2">
+            Peminjaman
+          </p>
+
+        </div>
+
+        <div class="text-5xl opacity-30">
+          <i class="fas fa-handshake"></i>
+        </div>
+
+      </div>
+
+      <div class="mt-6">
+
+        <a
+          href="peminjaman.html"
+          class="more-info-btn w-full text-white text-sm font-medium py-3 px-6 rounded-xl flex items-center justify-center gap-2">
+
+          Lihat Peminjaman
+
+          <span class="text-lg leading-none">
+            →
+          </span>
+
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <!-- CARD 3 - APPROVAL -->
+    <div class="bg-red-500 text-white p-6 rounded-2xl card flex flex-col">
+
+      <div class="flex justify-between">
+
+        <div>
+
+          <p
+            id="menungguApproval"
+            class="text-5xl font-bold">
+            0
+          </p>
+
+          <p class="text-lg mt-2">
+            Menunggu Approval
+          </p>
+
+        </div>
+
+        <div class="text-5xl opacity-30">
+          <i class="fas fa-clipboard-check"></i>
+        </div>
+
+      </div>
+
+      <div class="mt-6">
+
+        <a
+          href="approval.html"
+          class="more-info-btn w-full text-white text-sm font-medium py-3 px-6 rounded-xl flex items-center justify-center gap-2">
+
+          Proses Approval
+
+          <span class="text-lg leading-none">
+            →
+          </span>
+
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <!-- CARD 4 -->
+    <div class="bg-green-500 text-white p-6 rounded-2xl card flex flex-col">
+
+      <div class="flex justify-between">
+
+        <div>
+
+          <p
+            id="disetujui"
+            class="text-5xl font-bold">
+            0
+          </p>
+
+          <p class="text-lg mt-2">
+            Disetujui
+          </p>
+
+        </div>
+
+        <div class="text-5xl opacity-30">
+          <i class="fas fa-circle-check"></i>
+        </div>
+
+      </div>
+
+      <div class="mt-6">
+
+        <a
+          href="approval.html"
+          class="more-info-btn w-full text-white text-sm font-medium py-3 px-6 rounded-xl flex items-center justify-center gap-2">
+
+          Lihat Approval
+
+          <span class="text-lg leading-none">
+            →
+          </span>
+
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <!-- CARD 5 -->
+    <div class="bg-purple-600 text-white p-6 rounded-2xl card flex flex-col">
+
+      <div class="flex justify-between">
+
+        <div>
+
+          <p
+            id="barangMasuk"
+            class="text-5xl font-bold">
+            0
+          </p>
+
+          <p class="text-lg mt-2">
+            Barang Masuk
+          </p>
+
+        </div>
+
+        <div class="text-5xl opacity-30">
+          <i class="fas fa-arrow-down"></i>
+        </div>
+
+      </div>
+
+      <div class="mt-6">
+
+        <a
+          href="barang_masuk.html"
+          class="more-info-btn w-full text-white text-sm font-medium py-3 px-6 rounded-xl flex items-center justify-center gap-2">
+
+          Lihat Data
+
+          <span class="text-lg leading-none">
+            →
+          </span>
+
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <!-- CARD 6 -->
+    <div class="bg-sky-500 text-white p-6 rounded-2xl card flex flex-col">
+
+      <div class="flex justify-between">
+
+        <div>
+
+          <p
+            id="barangKeluar"
+            class="text-5xl font-bold">
+            0
+          </p>
+
+          <p class="text-lg mt-2">
+            Barang Keluar
+          </p>
+
+        </div>
+
+        <div class="text-5xl opacity-30">
+          <i class="fas fa-arrow-up"></i>
+        </div>
+
+      </div>
+
+      <div class="mt-6">
+
+        <a
+          href="barang_keluar.html"
+          class="more-info-btn w-full text-white text-sm font-medium py-3 px-6 rounded-xl flex items-center justify-center gap-2">
+
+          Lihat Data
+
+          <span class="text-lg leading-none">
+            →
+          </span>
+
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <!-- CARD 7 -->
+    <div class="bg-indigo-600 text-white p-6 rounded-2xl card flex flex-col">
+
+      <div class="flex justify-between">
+
+        <div>
+
+          <p
+            id="peminjamanAktif"
+            class="text-5xl font-bold">
+            0
+          </p>
+
+          <p class="text-lg mt-2">
+            Peminjaman Aktif
+          </p>
+
+        </div>
+
+        <div class="text-5xl opacity-30">
+          <i class="fas fa-clock"></i>
+        </div>
+
+      </div>
+
+      <div class="mt-6">
+
+        <a
+          href="peminjaman.html"
+          class="more-info-btn w-full text-white text-sm font-medium py-3 px-6 rounded-xl flex items-center justify-center gap-2">
+
+          Lihat Detail
+
+          <span class="text-lg leading-none">
+            →
+          </span>
+
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <!-- CARD 8 -->
+    <div class="bg-gray-700 text-white p-6 rounded-2xl card flex flex-col">
+
+      <div class="flex justify-between">
+
+        <div>
+
+          <p
+            id="dikembalikan"
+            class="text-5xl font-bold">
+            0
+          </p>
+
+          <p class="text-lg mt-2">
+            Telah Dikembalikan
+          </p>
+
+        </div>
+
+        <div class="text-5xl opacity-30">
+          <i class="fas fa-rotate-left"></i>
+        </div>
+
+      </div>
+
+      <div class="mt-6">
+
+        <a
+          href="peminjaman.html"
+          class="more-info-btn w-full text-white text-sm font-medium py-3 px-6 rounded-xl flex items-center justify-center gap-2">
+
+          Lihat Riwayat
+
+          <span class="text-lg leading-none">
+            →
+          </span>
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- INFORMASI APPROVAL -->
+  <div class="mt-10 bg-white rounded-2xl shadow p-8">
+
+    <div class="flex justify-between items-center border-b pb-4">
+
+      <div>
+
+        <h2 class="text-xl font-bold text-blue-600">
+          Pengajuan Menunggu Persetujuan
+        </h2>
+
+        <p class="text-sm text-gray-500 mt-1">
+          Pengajuan yang membutuhkan tindakan Kajur.
+        </p>
+
+      </div>
+
+      <a
+        href="approval.html"
+        class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg text-sm">
+
+        Lihat Semua
+
+      </a>
+
+    </div>
+
+
+    <!-- EMPTY STATE -->
+    <div
+      id="approvalEmpty"
+      class="py-12 text-center text-gray-400">
+
+      <i class="fas fa-clipboard-check text-5xl mb-4"></i>
+
+      <p class="font-medium">
+        Belum ada pengajuan yang menunggu approval.
+      </p>
+
+      <p class="text-sm mt-1">
+        Data akan muncul ketika mahasiswa mengajukan peminjaman.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- DETAIL LOGIN -->
+  <div class="mt-10 bg-white rounded-2xl shadow p-8">
+
+    <h2 class="text-xl font-bold text-blue-600 border-b pb-3">
+      Detail Login
+    </h2>
+
+    <div class="grid grid-cols-2 gap-x-12 gap-y-6 mt-6">
+
+      <div>
+
+        <p class="text-sm text-gray-600">
+          Nama
+        </p>
+
+        <p
+          class="font-medium text-lg"
+          id="detailNama">
+        </p>
+
+      </div>
+
+
+      <div>
+
+        <p class="text-sm text-gray-600">
+          NIM / NIDN
+        </p>
+
+        <p
+          class="font-medium text-lg"
+          id="detailNim">
+        </p>
+
+      </div>
+
+
+      <div>
+
+        <p class="text-sm text-gray-600">
+          Hak Akses
+        </p>
+
+        <button
+          class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg text-sm font-medium mt-2"
+          id="detailRole">
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+
+  </div>
+
+  <!-- SUPABASE -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- SUPABASE CONFIG -->
+
+  <script src="../assets/supabase.js"></script>
+
+  <!-- DASHBOARD -->
+
+  <script src="../assets/dashboard.js"></script>
+
+  <!-- LOGOUT -->
+
+  <script src="../assets/logout.js"></script>
+
+</body>
+
+</html>

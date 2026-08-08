@@ -108,23 +108,8 @@
             </div>
         </header>
 
+
         <main class="p-8">
-
-            <!-- Breadcrumb
-            <div class="mb-8">
-
-                <h1 class="text-3xl font-bold text-gray-800">
-                    Tambah Barang
-                </h1>
-
-                <p class="text-gray-500 mt-2">
-                    Dashboard /
-                    <span class="text-blue-600">Data Barang</span>
-                    /
-                    Tambah Barang
-                </p>
-
-            </div> -->
 
             <!-- Card -->
             <div class="bg-white rounded-2xl shadow-lg">
@@ -147,9 +132,36 @@
 
                     <div class="grid grid-cols-2 gap-8">
 
+                        <!-- ==========================
+                     DATA PEMINJAM
+                =========================== -->
+
                         <h3 class="col-span-2 text-lg font-semibold text-blue-600">
                             Data Peminjam
                         </h3>
+
+
+                        <!-- PILIH MAHASISWA -->
+
+                        <div class="col-span-2">
+
+                            <label class="font-semibold text-gray-700">
+                                Pilih Mahasiswa
+                            </label>
+
+                            <select id="peminjam" class="w-full border rounded-xl mt-2 px-4 py-3
+                               focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+
+                                <option value="">
+                                    -- Pilih Mahasiswa --
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- NIM -->
 
                         <div>
 
@@ -157,10 +169,13 @@
                                 NIM
                             </label>
 
-                            <input id="nim" type="text" class="w-full border rounded-xl mt-2 px-4 py-3"
-                                placeholder="Masukkan NIM Mahasiswa" required>
+                            <input id="nim" type="text" readonly
+                                class="w-full bg-gray-100 border rounded-xl mt-2 px-4 py-3" placeholder="NIM mahasiswa">
 
                         </div>
+
+
+                        <!-- NAMA -->
 
                         <div>
 
@@ -168,44 +183,47 @@
                                 Nama Mahasiswa
                             </label>
 
-                            <input id="nama_peminjam" type="text" class="w-full border rounded-xl mt-2 px-4 py-3"
-                                placeholder="Masukkan Nama Mahasiswa" required>
+                            <input id="nama_peminjam" type="text" readonly
+                                class="w-full bg-gray-100 border rounded-xl mt-2 px-4 py-3"
+                                placeholder="Nama mahasiswa">
 
                         </div>
 
-                        <div>
 
-                            <label class="font-semibold text-gray-700">
-                                No HP
-                            </label>
+                        <!-- KEPERLUAN -->
 
-                            <input id="no_hp" type="text" class="w-full border rounded-xl mt-2 px-4 py-3"
-                                placeholder="Masukkan Nomor HP Mahasiswa" required>
-
-                        </div>
-
-                        <div>
+                        <div class="col-span-2">
 
                             <label class="font-semibold text-gray-700">
                                 Keperluan
                             </label>
 
-                            <input id="keperluan" type="text" class="w-full border rounded-xl mt-2 px-4 py-3"
-                                placeholder="Contoh : Praktikum Jaringan" required>
+                            <input id="keperluan" type="text" class="w-full border rounded-xl mt-2 px-4 py-3
+                               focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Contoh: Praktikum Jaringan" required>
 
                         </div>
+
+
+                        <!-- ==========================
+                     DATA BARANG
+                =========================== -->
 
                         <h3 class="col-span-2 text-lg font-semibold text-blue-600 mt-6">
                             Data Barang
                         </h3>
 
+
+                        <!-- PILIH BARANG -->
+
                         <div class="col-span-2">
 
-                            <label class="font-semibold">
+                            <label class="font-semibold text-gray-700">
                                 Pilih Barang
                             </label>
 
-                            <select id="barang" class="w-full border rounded-xl mt-2 px-4 py-3" required>
+                            <select id="barang" class="w-full border rounded-xl mt-2 px-4 py-3
+                               focus:outline-none focus:ring-2 focus:ring-blue-500" required>
 
                                 <option value="">
                                     -- Pilih Barang --
@@ -213,87 +231,121 @@
 
                             </select>
 
-
                         </div>
+
+
+                        <!-- KODE BARANG -->
 
                         <div>
 
-                            <label class="font-semibold">
+                            <label class="font-semibold text-gray-700">
                                 Kode Barang
                             </label>
 
-                            <input id="kode_barang" readonly class="w-full bg-gray-100 border rounded-xl mt-2 px-4 py-3"
-                                cursor="not-allowed">
+                            <input id="kode_barang" type="text" readonly
+                                class="w-full bg-gray-100 border rounded-xl mt-2 px-4 py-3" placeholder="-">
 
                         </div>
 
+
+                        <!-- LOKASI -->
+
                         <div>
 
-                            <label class="font-semibold">
+                            <label class="font-semibold text-gray-700">
                                 Lokasi
                             </label>
 
-                            <input id="lokasi" readonly class="w-full bg-gray-100 border rounded-xl mt-2 px-4 py-3">
+                            <input id="lokasi" type="text" readonly
+                                class="w-full bg-gray-100 border rounded-xl mt-2 px-4 py-3" placeholder="-">
 
                         </div>
 
+
+                        <!-- STOK -->
+
                         <div>
 
-                            <label class="font-semibold">
+                            <label class="font-semibold text-gray-700">
                                 Stok Tersedia
                             </label>
 
-                            <input id="stok" readonly class="w-full bg-gray-100 border rounded-xl mt-2 px-4 py-3">
+                            <input id="stok" type="text" readonly
+                                class="w-full bg-gray-100 border rounded-xl mt-2 py-3 px-4" placeholder="0">
 
                         </div>
+
+
+                        <!-- JUMLAH PINJAM -->
 
                         <div>
 
-                            <label class="font-semibold">
+                            <label class="font-semibold text-gray-700">
                                 Jumlah Pinjam
                             </label>
 
-                            <input id="jumlah_pinjam" type="number" min="1"
-                                class="w-full border rounded-xl mt-2 px-4 py-3" placeholder="1" required>
+                            <input id="jumlah_pinjam" type="number" min="1" class="w-full border rounded-xl mt-2 px-4 py-3
+                               focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="1" required>
 
                         </div>
+
+
+                        <!-- ==========================
+                     TANGGAL PEMINJAMAN
+                =========================== -->
 
                         <h3 class="col-span-2 text-lg font-semibold text-blue-600 mt-6">
                             Tanggal Peminjaman
                         </h3>
 
+
+                        <!-- TANGGAL PINJAM -->
+
                         <div>
 
-                            <label class="font-semibold">
+                            <label class="font-semibold text-gray-700">
                                 Tanggal Pinjam
                             </label>
 
-                            <input id="tanggal_pinjam" type="date" class="w-full border rounded-xl mt-2 px-4 py-3"
-                                required>
+                            <input id="tanggal_pinjam" type="date" class="w-full border rounded-xl mt-2 px-4 py-3
+                               focus:outline-none focus:ring-2 focus:ring-blue-500" required>
 
                         </div>
+
+
+                        <!-- BATAS KEMBALI -->
 
                         <div>
 
-                            <label class="font-semibold">
-                                Tanggal Kembali
+                            <label class="font-semibold text-gray-700">
+                                Batas Kembali
                             </label>
 
-                            <input id="tanggal_kembali" type="date" class="w-full border rounded-xl mt-2 px-4 py-3">
+                            <input id="tanggal_kembali" type="date" class="w-full border rounded-xl mt-2 px-4 py-3
+                               focus:outline-none focus:ring-2 focus:ring-blue-500">
 
                         </div>
+
+
+                        <!-- ==========================
+                     CATATAN
+                =========================== -->
 
                         <div class="col-span-2">
 
-                            <!-- Keterangan -->
-                            <div class="mt-8"> <label class="font-semibold text-gray-700"> catatan </label> <textarea
-                                    id="catatan" rows="5" placeholder="Tambahkan catatan jika diperlukan..."
-                                    class="w-full border rounded-xl mt-2 px-4 py-3 resize-none focus:ring-2 focus:ring-blue-500"></textarea>
-                            </div>
+                            <label class="font-semibold text-gray-700">
+                                Catatan
+                            </label>
+
+                            <textarea id="catatan" rows="5" placeholder="Tambahkan catatan jika diperlukan..." class="w-full border rounded-xl mt-2 px-4 py-3 resize-none
+                               focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
 
                         </div>
 
-                        <!-- Button -->
+
+                        <!-- ==========================
+                     BUTTON
+                =========================== -->
 
                         <div class="col-span-2 flex justify-end gap-4 mt-10">
 
@@ -303,6 +355,7 @@
                                 Kembali
 
                             </a>
+
 
                             <button id="btnSimpan" type="submit"
                                 class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold">
@@ -315,14 +368,19 @@
 
                         </div>
 
+                    </div>
+
                 </form>
 
             </div>
 
         </main>
 
+
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../assets/supabase.js"></script>
     <script src="../assets/tambah_peminjaman.js"></script>
     <script src="../assets/logout.js"></script>

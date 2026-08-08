@@ -1,0 +1,500 @@
+<!-- ==============================
+ SIDEBAR KAJUR
+============================== -->
+
+<aside class="w-72 bg-gray-900 text-white flex flex-col">
+
+    <!-- LOGO -->
+
+    <div class="p-6 border-b border-gray-800">
+
+        <h1 class="text-2xl font-bold">
+            InventarisLab
+        </h1>
+
+    </div>
+
+
+    <!-- PROFILE -->
+
+    <div class="p-6 flex items-center gap-3 border-b border-gray-800">
+
+        <img
+            src="https://i.pravatar.cc/48?u=kajur"
+            alt="Kajur"
+            class="w-10 h-10 rounded-full"
+        >
+
+        <div>
+
+            <p class="font-medium">
+                Kajur
+            </p>
+
+            <p class="text-green-400 text-sm flex items-center gap-1">
+
+                <span class="w-2 h-2 bg-green-400 rounded-full inline-block"></span>
+
+                Online
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==============================
+     NAVIGATION
+    ============================== -->
+
+    <nav class="flex-1 p-4">
+
+        <p class="text-xs text-gray-400 px-4 mb-2">
+            MAIN NAVIGATION
+        </p>
+
+
+        <ul class="space-y-1">
+
+
+            <!-- DASHBOARD -->
+
+            <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+                <i class="fas fa-tachometer-alt"></i>
+
+                <a href="../kajur/dashboard.html">
+                    DASHBOARD
+                </a>
+
+            </li>
+
+
+            <!-- PERSETUJUAN PEMINJAMAN - ACTIVE -->
+
+            <li class="flex items-center gap-3 px-4 py-3 bg-gray-800 rounded-lg text-blue-400">
+
+                <i class="fas fa-clipboard-check"></i>
+
+                <a href="../kajur/approval_peminjaman.html">
+                    PERSETUJUAN PEMINJAMAN
+                </a>
+
+            </li>
+
+
+            <!-- RIWAYAT PEMINJAMAN -->
+
+            <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+                <i class="fas fa-history"></i>
+
+                <a href="../kajur/riwayat_peminjaman.html">
+                    RIWAYAT PEMINJAMAN
+                </a>
+
+            </li>
+
+        </ul>
+
+    </nav>
+
+
+    <!-- ==============================
+     BOTTOM MENU
+    ============================== -->
+
+    <div class="p-4 border-t border-gray-800 mt-auto">
+
+        <ul class="space-y-1">
+
+
+            <!-- GANTI PASSWORD -->
+
+            <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+                <i class="fas fa-key"></i>
+
+                <a href="../ganti_password.html">
+                    GANTI PASSWORD
+                </a>
+
+            </li>
+
+
+            <!-- LOGOUT -->
+
+            <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+                <i class="fas fa-sign-out-alt"></i>
+
+                <span onclick="logout()">
+                    LOGOUT
+                </span>
+
+            </li>
+
+        </ul>
+
+    </div>
+
+</aside>
+
+
+
+<!-- ==============================
+ MAIN CONTENT
+============================== -->
+
+<div class="flex-1">
+
+
+    <!-- ==============================
+     HEADER
+    ============================== -->
+
+    <header class="bg-blue-600 text-white px-8 py-4 flex justify-between items-center">
+
+
+        <div class="flex items-center gap-4">
+
+            <h1 class="text-2xl font-semibold">
+                Persetujuan Peminjaman
+            </h1>
+
+            <span class="text-blue-200">
+                Kajur
+            </span>
+
+        </div>
+
+
+        <div class="flex items-center gap-6">
+
+
+            <!-- USER -->
+
+            <div class="flex items-center gap-2">
+
+                <img
+                    src="https://i.pravatar.cc/32?u=kajur"
+                    alt="Kajur"
+                    class="w-8 h-8 rounded-full"
+                >
+
+                <div>
+
+                    <p class="font-medium text-sm">
+                        Kajur
+                    </p>
+
+                    <p class="text-xs text-blue-200">
+                        Ketua Jurusan
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- LOGOUT -->
+
+            <button
+                onclick="logout()"
+                class="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-sm"
+            >
+
+                <i class="fas fa-sign-out-alt"></i>
+
+                LOGOUT
+
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- ==============================
+     CONTENT
+    ============================== -->
+
+    <main class="p-8">
+
+
+        <!-- ==============================
+         TITLE
+        ============================== -->
+
+        <div class="mb-6">
+
+            <h2 class="text-2xl font-bold text-gray-800">
+                Persetujuan Peminjaman
+            </h2>
+
+            <p class="text-gray-500 text-sm mt-1">
+                Kelola dan berikan persetujuan terhadap pengajuan peminjaman barang laboratorium.
+            </p>
+
+        </div>
+
+
+
+        <!-- ==============================
+         STATISTIK
+        ============================== -->
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+
+
+            <!-- MENUNGGU -->
+
+            <div class="bg-yellow-50 border border-yellow-100 rounded-2xl p-6">
+
+                <div class="flex items-center justify-between">
+
+                    <div>
+
+                        <p class="text-sm text-yellow-700 font-medium">
+                            Menunggu Persetujuan
+                        </p>
+
+                        <h3
+                            id="totalMenunggu"
+                            class="text-3xl font-bold text-yellow-800 mt-2"
+                        >
+                            0
+                        </h3>
+
+                    </div>
+
+                    <div class="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center">
+
+                        <i class="fas fa-clock text-yellow-600 text-xl"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- DISETUJUI -->
+
+            <div class="bg-green-50 border border-green-100 rounded-2xl p-6">
+
+                <div class="flex items-center justify-between">
+
+                    <div>
+
+                        <p class="text-sm text-green-700 font-medium">
+                            Disetujui
+                        </p>
+
+                        <h3
+                            id="totalDisetujui"
+                            class="text-3xl font-bold text-green-800 mt-2"
+                        >
+                            0
+                        </h3>
+
+                    </div>
+
+                    <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+
+                        <i class="fas fa-check-circle text-green-600 text-xl"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- DITOLAK -->
+
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+
+                <div class="flex items-center justify-between">
+
+                    <div>
+
+                        <p class="text-sm text-red-700 font-medium">
+                            Ditolak
+                        </p>
+
+                        <h3
+                            id="totalDitolak"
+                            class="text-3xl font-bold text-red-800 mt-2"
+                        >
+                            0
+                        </h3>
+
+                    </div>
+
+                    <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
+
+                        <i class="fas fa-times-circle text-red-600 text-xl"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ==============================
+         SEARCH
+        ============================== -->
+
+        <div class="flex justify-between items-center mb-4">
+
+            <div>
+
+                <h3 class="text-lg font-semibold text-gray-800">
+                    Pengajuan Peminjaman
+                </h3>
+
+                <p class="text-sm text-gray-500">
+                    Daftar peminjaman yang membutuhkan tindakan Kajur.
+                </p>
+
+            </div>
+
+
+            <div class="relative w-80">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Cari peminjaman..."
+                    class="w-full border border-gray-300 rounded-xl py-3 px-5 pl-10 focus:outline-none focus:border-blue-500"
+                    onkeyup="searchTable()"
+                >
+
+                <i class="fas fa-search absolute left-4 top-3.5 text-gray-400"></i>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ==============================
+         TABLE
+        ============================== -->
+
+        <div class="bg-white rounded-2xl shadow overflow-hidden">
+
+            <div class="overflow-x-auto">
+
+                <table class="w-full min-w-[1300px]">
+
+
+                    <!-- HEADER -->
+
+                    <thead class="bg-gray-50">
+
+                        <tr>
+
+                            <th class="px-6 py-4 text-left">
+                                NO
+                            </th>
+
+                            <th class="px-6 py-4 text-left">
+                                KODE
+                            </th>
+
+                            <th class="px-6 py-4 text-left">
+                                PEMINJAM
+                            </th>
+
+                            <th class="px-6 py-4 text-left">
+                                BARANG
+                            </th>
+
+                            <th class="px-6 py-4 text-left">
+                                JUMLAH
+                            </th>
+
+                            <th class="px-6 py-4 text-left">
+                                KEPERLUAN
+                            </th>
+
+                            <th class="px-6 py-4 text-left">
+                                TGL PINJAM
+                            </th>
+
+                            <th class="px-6 py-4 text-left">
+                                BATAS KEMBALI
+                            </th>
+
+                            <th class="px-6 py-4 text-left">
+                                STATUS
+                            </th>
+
+                            <th class="px-6 py-4 text-center">
+                                AKSI
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <!-- DATA DARI JS -->
+
+                    <tbody
+                        id="dataTable"
+                        class="divide-y"
+                    >
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+
+<!-- ==============================
+ LIBRARY
+============================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<!-- ==============================
+ SUPABASE
+============================== -->
+
+<script src="../assets/supabase.js"></script>
+
+
+<!-- ==============================
+ APPROVAL PEMINJAMAN JS
+============================== -->
+
+<script src="../assets/approval_peminjaman.js"></script>
+
+
+<!-- ==============================
+ LOGOUT
+============================== -->
+
+<script src="../assets/logout.js"></script>

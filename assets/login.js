@@ -3,102 +3,257 @@ const errorEl = document.getElementById("error");
 const button = form.querySelector("button");
 
 form.addEventListener("submit", async function (e) {
-  e.preventDefault();
 
-  errorEl.classList.add("hidden");
+e.preventDefault();
 
-  const nim = document.getElementById("nim").value.trim();
-  const password = document.getElementById("password").value.trim();
+errorEl.classList.add("hidden");
 
-  if (!nim || !password) {
-    errorEl.textContent = "NIM dan Password wajib diisi";
+const nim =
+    document.getElementById("nim").value.trim();
+
+const password =
+    document.getElementById("password").value.trim();
+
+
+// ==========================================
+// VALIDASI
+// ==========================================
+
+if (!nim || !password) {
+
+    errorEl.textContent =
+        "NIM dan Password wajib diisi.";
+
     errorEl.classList.remove("hidden");
+
     return;
-  }
+}
 
-  button.disabled = true;
-  button.innerText = "Loading...";
 
-  try {
-    console.log("NIM INPUT :", nim);
+button.disabled = true;
+button.innerText = "Loading...";
 
-    // ==========================
-    // Cari user berdasarkan NIM
-    // ==========================
-    const { data, error } = await supabaseClient
-      .from("users")
-      .select("*")
-      .eq("nim", nim);
+
+try {
+
+    console.log("================================");
+    console.log("LOGIN DIMULAI");
+    console.log("NIM :", nim);
+    console.log("================================");
+
+
+    // ==========================================
+    // CARI USER BERDASARKAN NIM
+    // ==========================================
+
+    const {
+        data,
+        error
+    } = await supabaseClient
+
+        .from("users")
+
+        .select("*")
+
+        .eq("nim", nim)
+
+        .limit(1);
+
 
     console.log("DATA :", data);
     console.log("ERROR :", error);
 
+
     if (error) {
-      throw error;
+        throw error;
     }
 
+
+    // ==========================================
+    // NIM TIDAK DITEMUKAN
+    // ==========================================
+
     if (!data || data.length === 0) {
-      throw new Error("NIM tidak ditemukan");
+
+        throw new Error(
+            "NIM tidak ditemukan."
+        );
     }
+
 
     const user = data[0];
 
+
     console.log("USER :", user);
 
-    // ==========================
-    // Login menggunakan Supabase Auth
-    // ==========================
-    const { error: authError } =
-      await supabaseClient.auth.signInWithPassword({
-        email: user.email,
-        password: password,
-      });
 
-    if (authError) {
-      console.error("AUTH ERROR:", authError);
-      throw new Error(authError.message);
+    // ==========================================
+    // CEK PASSWORD DARI TABLE USERS
+    // ==========================================
+
+    if (
+        String(user.password) !==
+        String(password)
+    ) {
+
+        throw new Error(
+            "Password salah."
+        );
     }
 
-    // ==========================
-    // Pastikan session aktif
-    // ==========================
-    const {
-      data: { session },
-    } = await supabaseClient.auth.getSession();
 
-    console.log("SESSION :", session);
-
-    if (!session) {
-      throw new Error("Session login gagal dibuat");
-    }
-
-    // ==========================
-    // Simpan user ke localStorage
-    // ==========================
-    localStorage.setItem(
-      "user",
-      JSON.stringify({
-        id: user.id,
-        nama: user.nama,
-        nim: user.nim,
-        email: user.email,
-        role: user.role,
-      })
+    console.log(
+        "PASSWORD BENAR"
     );
 
-    window.location.href = "dashboard.html";
 
-  } catch (err) {
-    console.error(err);
+    // ==========================================
+    // NORMALISASI ROLE
+    // ==========================================
 
-    errorEl.textContent = err.message || "Terjadi kesalahan";
-    errorEl.classList.remove("hidden");
+    const role =
+        String(user.role || "")
+            .trim()
+            .toLowerCase();
 
-  } finally {
+
+    console.log(
+        "ROLE LOGIN :",
+        role
+    );
+
+
+    // ==========================================
+    // SIMPAN USER KE LOCAL STORAGE
+    // ==========================================
+
+    localStorage.setItem(
+        "user",
+        JSON.stringify({
+
+            id: user.id,
+
+            nama: user.nama,
+
+            nim: user.nim,
+
+            email: user.email || "",
+
+            role: role
+
+        })
+    );
+
+
+    // ==========================================
+    // FLAG LOGIN
+    // ==========================================
+
+    localStorage.setItem(
+        "isLoggedIn",
+        "true"
+    );
+
+
+    console.log(
+        "USER BERHASIL DISIMPAN"
+    );
+
+
+    // ==========================================
+    // REDIRECT BERDASARKAN ROLE
+    // ==========================================
+
+
+    // ADMIN
+    if (role === "admin") {
+
+        console.log(
+            "REDIRECT → ADMIN"
+        );
+
+        window.location.href =
+            "dashboard.html";
+
+        return;
+    }
+
+
+    // KAJUR
+    if (
+        role === "kajur" ||
+        role === "ketua jurusan"
+    ) {
+
+        console.log(
+            "REDIRECT → KAJUR"
+        );
+
+        window.location.href =
+            "kajur_dashboard.html";
+
+        return;
+    }
+
+
+    // MAHASISWA
+    if (role === "mahasiswa") {
+
+        console.log(
+            "REDIRECT → MAHASISWA"
+        );
+
+        window.location.href =
+            "mahasiswa_dashboard.html";
+
+        return;
+    }
+
+
+    // ==========================================
+    // ROLE TIDAK DIKENAL
+    // ==========================================
+
+    localStorage.removeItem(
+        "user"
+    );
+
+    localStorage.removeItem(
+        "isLoggedIn"
+    );
+
+
+    throw new Error(
+        "Role pengguna tidak dikenali."
+    );
+
+
+} catch (err) {
+
+    console.error(
+        "LOGIN ERROR :",
+        err
+    );
+
+
+    errorEl.textContent =
+        err.message ||
+        "Terjadi kesalahan saat login.";
+
+
+    errorEl.classList.remove(
+        "hidden"
+    );
+
+
+} finally {
+
     button.disabled = false;
-    button.innerText = "Log In";
-  }
+
+    button.innerText =
+        "Log In";
+
+}
+
+
 });
-
-
-
