@@ -30,68 +30,135 @@
 
 <body class="bg-gray-100 flex min-h-screen">
 
-  <!-- SIDEBAR -->
-  <aside class="w-72 bg-gray-900 text-white flex flex-col">
-    <div class="p-6 border-b border-gray-800">
-      <h1 class="text-2xl font-bold">InventarisLab</h1>
-    </div>
+ <!-- SIDEBAR -->
+    <aside class="w-72 bg-gray-900 text-white flex flex-col">
+        <div class="p-6 border-b border-gray-800">
+            <h1 class="text-2xl font-bold">InventarisLab</h1>
+        </div>
 
-    <div class="p-6 flex items-center gap-3 border-b border-gray-800">
-      <img src="https://i.pravatar.cc/48?u=raply" alt="Raply" class="w-10 h-10 rounded-full">
-      <div>
-        <p class="font-medium" id="headerNama"></p>
-        <p class="text-green-400 text-sm flex items-center gap-1">
-          <span class="w-2 h-2 bg-green-400 rounded-full inline-block"></span> Online
-        </p>
-      </div>
-    </div>
+        <div class="p-6 flex items-center gap-3 border-b border-gray-800">
+            <img src="https://i.pravatar.cc/48?u=raply" alt="Raply" class="w-10 h-10 rounded-full">
+            <div>
+                <p class="font-medium" id="sidebarNama">Loading...</p>
+                <p class="text-green-400 text-sm flex items-center gap-1">
+                    <span class="w-2 h-2 bg-green-400 rounded-full inline-block"></span> Online
+                </p>
+            </div>
+        </div>
 
-    <nav class="flex-1 p-4">
-      <p class="text-xs text-gray-400 px-4 mb-2">MAIN NAVIGATION</p>
-      <ul class="space-y-1">
-        <li class="flex items-center gap-3 px-4 py-3 bg-gray-800 rounded-lg text-blue-400">
-          <i class="fas fa-tachometer-alt"></i>
-          <a href="../InventarisLabWeb/dashboard.html">
-            DASHBOARD
-          </a>
-        </li>
-        <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
-          <i class="fas fa-box"></i>
-          <a href="../InventarisLabWeb/pages/barang.html">
-            DATA BARANG
-          </a>
-        </li>
-        <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
-          <i class="fas fa-handshake"></i>
-          <a href="../InventarisLabWeb/peminjaman.html">PEMINJAMAN</a>
-        </li>
-        <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
-          <i class="fas fa-arrow-down"></i>
-          <a href="../InventarisLabWeb/barang_masuk.html">BARANG MASUK</a>
-        </li>
-        <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
-          <i class="fas fa-arrow-up"></i>
-          <a href="../InventarisLabWeb/barang_keluar.html">BARANG KELUAR</a>
-        </li>
-        <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
-          <i class="fas fa-chart-bar"></i>
-          <a href="../InventarisLabWeb/laporan.html">LAPORAN</a>
-        </li>
-      </ul>
-    </nav>
+        <!-- NAVIGATION -->
+        <nav class="flex-1 p-4">
 
-    <div class="p-4 border-t border-gray-800 mt-auto">
-      <ul class="space-y-1">
-        <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
-          <i class="fas fa-key"></i>
-          <a href="../InventarisLabWeb/ganti_password.html">GANTI PASSWORD</a>
-        </li>
-        <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
-          <i class="fas fa-sign-out-alt"></i> LOGOUT
-        </li>
-      </ul>
-    </div>
-  </aside>
+            <p class="text-xs text-gray-400 px-4 mb-2">
+                MAIN NAVIGATION
+            </p>
+
+            <ul class="space-y-1">
+
+                <!-- DASHBOARD -->
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+                    <i class="fas fa-tachometer-alt"></i>
+
+                    <a href="../dashboard.html">
+                        DASHBOARD
+                    </a>
+
+                </li>
+
+
+                <!-- DATA BARANG -->
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+                    <i class="fas fa-box"></i>
+
+                    <a href="../pages/barang.html">
+                        DATA BARANG
+                    </a>
+
+                </li>
+
+
+                <!-- DATA USER -->
+                <li id="menuUsers"
+                    class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+                    <i class="fas fa-users"></i>
+
+                    <a href="../pages/users.html">
+                        DATA USER
+                    </a>
+
+                </li>
+
+
+                <!-- PEMINJAMAN -->
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+                    <i class="fas fa-handshake"></i>
+
+                    <a href="../pages/peminjaman.html">
+                        PEMINJAMAN
+                    </a>
+
+                </li>
+
+
+                <!-- BARANG MASUK -->
+                <li id="menuBarangMasuk"
+                    class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+                    <i class="fas fa-arrow-down"></i>
+
+                    <a href="../pages/barang_masuk.html">
+                        BARANG MASUK
+                    </a>
+
+                </li>
+
+
+                <!-- BARANG KELUAR -->
+                <li id="menuBarangKeluar"
+                    class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+                    <i class="fas fa-arrow-up"></i>
+
+                    <a href="../pages/barang_keluar.html">
+                        BARANG KELUAR
+                    </a>
+
+                </li>
+
+
+                <!-- LAPORAN -->
+                <li id="menuLaporan"
+                    class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+                    <i class="fas fa-chart-bar"></i>
+
+                    <a href="../pages/laporan.html">
+                        LAPORAN
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </nav>
+
+        <div class="p-4 border-t border-gray-800 mt-auto">
+            <ul class="space-y-1">
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+                    <i class="fas fa-key"></i>
+                    <a href="../ganti_password.html">GANTI PASSWORD</a>
+                </li>
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <!-- <a href="../login.html">LOGOUT</a> -->
+                </li>
+            </ul>
+        </div>
+    </aside>
 
   <!-- MAIN CONTENT -->
   <div class="flex-1">
