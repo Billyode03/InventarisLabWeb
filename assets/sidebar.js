@@ -184,6 +184,10 @@ if (
 // KAJUR
 // =========================================================
 
+// =========================================================
+// KAJUR
+// =========================================================
+
 else if (
     sidebarRole === "kajur" ||
     sidebarRole === "ketua jurusan"
@@ -191,6 +195,7 @@ else if (
 
     // -----------------------------------------
     // DATA USER
+    // KAJUR TIDAK BOLEH MELIHAT
     // -----------------------------------------
 
     if (menuUsers) {
@@ -202,7 +207,34 @@ else if (
 
 
     // -----------------------------------------
+    // BARANG MASUK
+    // KAJUR TIDAK BOLEH MELIHAT
+    // -----------------------------------------
+
+    if (menuBarangMasuk) {
+
+        menuBarangMasuk.style.display =
+            "none";
+
+    }
+
+
+    // -----------------------------------------
+    // BARANG KELUAR
+    // KAJUR TIDAK BOLEH MELIHAT
+    // -----------------------------------------
+
+    if (menuBarangKeluar) {
+
+        menuBarangKeluar.style.display =
+            "none";
+
+    }
+
+
+    // -----------------------------------------
     // TAMBAH PEMINJAMAN
+    // KAJUR TIDAK BOLEH MENAMBAH
     // -----------------------------------------
 
     if (btnTambahPeminjaman) {
@@ -213,11 +245,6 @@ else if (
     }
 
 }
-
-
-// =========================================================
-// MAHASISWA
-// =========================================================
 
 else if (
     sidebarRole === "mahasiswa"
@@ -291,5 +318,45 @@ else {
         "Role tidak dikenali:",
         sidebarRole
     );
+
+}
+
+// =========================================================
+// DASHBOARD BERDASARKAN ROLE
+// =========================================================
+
+const dashboardLink =
+    document.getElementById("dashboardLink");
+
+if (dashboardLink) {
+
+    // ADMIN
+    if (sidebarRole === "admin") {
+
+        dashboardLink.href =
+            "../dashboard.html";
+
+    }
+
+    // KAJUR
+    else if (
+        sidebarRole === "kajur" ||
+        sidebarRole === "ketua jurusan"
+    ) {
+
+        dashboardLink.href =
+            "../kajur_dashboard.html";
+
+    }
+
+    // MAHASISWA
+    else if (
+        sidebarRole === "mahasiswa"
+    ) {
+
+        dashboardLink.href =
+            "../mahasiswa_dashboard.html";
+
+    }
 
 }
