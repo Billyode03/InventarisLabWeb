@@ -9,11 +9,19 @@ async function loadUsers() {
     const { data, error } = await supabaseClient
         .from("users")
         .select("*")
+        .neq("role", "admin")
         .order("nama", { ascending: true });
 
     if (error) {
+
         console.error(error);
-        Swal.fire("Error", "Gagal mengambil data user", "error");
+
+        Swal.fire(
+            "Error",
+            "Gagal mengambil data user",
+            "error"
+        );
+
         return;
     }
 
@@ -28,20 +36,20 @@ async function loadUsers() {
 
         tableBody.innerHTML = `
 
-        <tr>
+            <tr>
 
-            <td colspan="6" class="text-center py-8 text-gray-500">
+                <td colspan="6"
+                    class="text-center py-8 text-gray-500">
 
-                Belum ada data user.
+                    Belum ada data user.
 
-            </td>
+                </td>
 
-        </tr>
+            </tr>
 
         `;
 
         return;
-
     }
 
 
@@ -49,75 +57,81 @@ async function loadUsers() {
     // TAMPILKAN DATA
     // ==========================
 
-
     data.forEach((user, index) => {
 
         tableBody.insertAdjacentHTML(
-"beforeend",
-`
+            "beforeend",
+            `
 
-        <tr class="table-row border-b">
+            <tr class="table-row border-b">
 
-            <td class="px-6 py-4 text-center">
-                ${index + 1}
-            </td>
+                <td class="px-6 py-4 text-center">
+                    ${index + 1}
+                </td>
 
-            <td class="px-6 py-4">
-                ${user.nama}
-            </td>
+                <td class="px-6 py-4">
+                    ${user.nama}
+                </td>
 
-            <td class="px-6 py-4">
-                ${user.nim}
-            </td>
+                <td class="px-6 py-4">
+                    ${user.nim}
+                </td>
 
-            <td class="px-6 py-4">
-                ${user.email}
-            </td>
+                <td class="px-6 py-4">
+                    ${user.email}
+                </td>
 
-            <td class="px-6 py-4">
-                <span class="
-                    px-3 py-1 rounded-full text-sm font-medium
-                    ${
-                        user.role === 'admin'
-                            ? 'bg-blue-100 text-blue-700'
-                        : user.role === 'kajur'
-                            ? 'bg-green-100 text-green-700'
-                        : user.role === 'mahasiswa'
-                            ? 'bg-yellow-100 text-yellow-700'
-                        : 'bg-gray-100 text-gray-700'
-                    }
-                ">
-                    ${user.role}
-                </span>
-            </td>
+                <td class="px-6 py-4">
 
-            <td class="px-6 py-4">
+                    <span class="
+                        px-3 py-1 rounded-full text-sm font-medium
 
-                <div class="flex justify-center gap-2">
+                        ${
+                            user.role === "kajur"
+                                ? "bg-green-100 text-green-700"
 
-                    <button
-                        onclick="editUser('${user.id}')"
-                        class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-2 rounded-lg">
+                            : user.role === "mahasiswa"
+                                ? "bg-yellow-100 text-yellow-700"
 
-                        <i class="fas fa-edit"></i>
+                            : "bg-gray-100 text-gray-700"
+                        }
 
-                    </button>
+                    ">
 
-                    <button
-                        onclick="hapusUser('${user.id}')"
-                        class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg">
+                        ${user.role}
 
-                        <i class="fas fa-trash"></i>
+                    </span>
 
-                    </button>
+                </td>
 
-                </div>
+                <td class="px-6 py-4">
 
-            </td>
+                    <div class="flex justify-center gap-2">
 
-        </tr>
+                        <button
+                            onclick="editUser('${user.id}')"
+                            class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-2 rounded-lg">
 
-        `);
+                            <i class="fas fa-edit"></i>
+
+                        </button>
+
+                        <button
+                            onclick="hapusUser('${user.id}')"
+                            class="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg">
+
+                            <i class="fas fa-trash"></i>
+
+                        </button>
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+            `
+        );
 
     });
 

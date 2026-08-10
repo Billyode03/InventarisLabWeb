@@ -334,7 +334,7 @@
 
           <div class="mt-6">
 
-            <a href="peminjaman.html"
+            <a href="pages/peminjaman.html"
               class="more-info-btn w-full text-white text-sm font-medium py-3 px-6 rounded-xl flex items-center justify-center gap-2">
 
               Lihat Peminjaman
@@ -390,88 +390,6 @@
 
         </div>
 
-
-        <!-- CARD 4 -->
-        <div class="bg-green-500 text-white p-6 rounded-2xl card flex flex-col">
-
-          <div class="flex justify-between">
-
-            <div>
-
-              <p id="disetujui" class="text-5xl font-bold">
-                0
-              </p>
-
-              <p class="text-lg mt-2">
-                Disetujui
-              </p>
-
-            </div>
-
-            <div class="text-5xl opacity-30">
-              <i class="fas fa-circle-check"></i>
-            </div>
-
-          </div>
-
-          <div class="mt-6">
-
-            <a href="approval.html"
-              class="more-info-btn w-full text-white text-sm font-medium py-3 px-6 rounded-xl flex items-center justify-center gap-2">
-
-              Lihat Approval
-
-              <span class="text-lg leading-none">
-                →
-              </span>
-
-            </a>
-
-          </div>
-
-        </div>
-
-        <!-- CARD 7 -->
-        <div class="bg-indigo-600 text-white p-6 rounded-2xl card flex flex-col">
-
-          <div class="flex justify-between">
-
-            <div>
-
-              <p id="peminjamanAktif" class="text-5xl font-bold">
-                0
-              </p>
-
-              <p class="text-lg mt-2">
-                Peminjaman Aktif
-              </p>
-
-            </div>
-
-            <div class="text-5xl opacity-30">
-              <i class="fas fa-clock"></i>
-            </div>
-
-          </div>
-
-          <div class="mt-6">
-
-            <a href="peminjaman.html"
-              class="more-info-btn w-full text-white text-sm font-medium py-3 px-6 rounded-xl flex items-center justify-center gap-2">
-
-              Lihat Detail
-
-              <span class="text-lg leading-none">
-                →
-              </span>
-
-            </a>
-
-          </div>
-
-        </div>
-
-
         <!-- CARD 8 -->
         <div class="bg-gray-700 text-white p-6 rounded-2xl card flex flex-col">
 
@@ -497,7 +415,7 @@
 
           <div class="mt-6">
 
-            <a href="peminjaman.html"
+            <a href="pages/pengembalian.html"
               class="more-info-btn w-full text-white text-sm font-medium py-3 px-6 rounded-xl flex items-center justify-center gap-2">
 
               Lihat Riwayat
@@ -514,25 +432,28 @@
 
       </div>
 
+      <!-- ===================================================== PANTAUAN PEMINJAMAN ===================================================== -->
 
-      <!-- INFORMASI APPROVAL -->
-      <div class="mt-10 bg-white rounded-2xl shadow p-8">
+      <div class="mt-10 bg-white rounded-2xl shadow overflow-hidden">
 
-        <div class="flex justify-between items-center border-b pb-4">
+        <!-- HEADER -->
+
+        <div class="p-6 border-b flex justify-between items-center">
 
           <div>
 
             <h2 class="text-xl font-bold text-blue-600">
-              Pengajuan Menunggu Persetujuan
+              Pantauan Peminjaman
             </h2>
 
             <p class="text-sm text-gray-500 mt-1">
-              Pengajuan yang membutuhkan tindakan Kajur.
+              Pantau pengajuan dan aktivitas peminjaman mahasiswa.
             </p>
 
           </div>
 
-          <a href="approval.html" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg text-sm">
+
+          <a href="pages/peminjaman.html" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg text-sm">
 
             Lihat Semua
 
@@ -540,23 +461,85 @@
 
         </div>
 
+        <!-- TABLE -->
 
-        <!-- EMPTY STATE -->
-        <div id="approvalEmpty" class="py-12 text-center text-gray-400">
+        <div class="overflow-x-auto">
 
-          <i class="fas fa-clipboard-check text-5xl mb-4"></i>
+          <table class="w-full min-w-[1100px]">
 
-          <p class="font-medium">
-            Belum ada pengajuan yang menunggu approval.
-          </p>
+            <thead class="bg-gray-50">
 
-          <p class="text-sm mt-1">
-            Data akan muncul ketika mahasiswa mengajukan peminjaman.
-          </p>
+              <tr>
+
+                <th class="px-6 py-4 text-left">
+                  NO
+                </th>
+
+                <th class="px-6 py-4 text-left">
+                  MAHASISWA
+                </th>
+
+                <th class="px-6 py-4 text-left">
+                  NIM
+                </th>
+
+                <th class="px-6 py-4 text-left">
+                  BARANG
+                </th>
+
+                <th class="px-6 py-4 text-left">
+                  JUMLAH
+                </th>
+
+                <th class="px-6 py-4 text-left">
+                  TGL PINJAM
+                </th>
+
+                <th class="px-6 py-4 text-left">
+                  BATAS KEMBALI
+                </th>
+
+                <th class="px-6 py-4 text-left">
+                  STATUS
+                </th>
+
+                <th class="px-6 py-4 text-center">
+                  AKSI
+                </th>
+
+              </tr>
+
+            </thead>
+
+
+            <tbody id="kajurPeminjamanTable" class="divide-y">
+
+              <!-- DATA DARI kajur_dashboard.js -->
+
+              <tr>
+
+                <td colspan="9" class="py-12 text-center text-gray-400">
+
+                  <i class="fas fa-spinner fa-spin text-3xl mb-3"></i>
+
+                  <p>
+                    Memuat data peminjaman...
+                  </p>
+
+                </td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
 
         </div>
 
       </div>
+
+
+
 
 
       <!-- DETAIL LOGIN -->

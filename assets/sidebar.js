@@ -358,5 +358,17 @@ if (dashboardLink) {
             "../mahasiswa_dashboard.html";
 
     }
+    // =========================================================
+    // ROLE TIDAK DIKENAL
+    // =========================================================
+
+    else {
+
+        console.warn(
+            "Role tidak dikenali:",
+            sidebarRole
+        );
+
+    }
 
 }

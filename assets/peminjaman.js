@@ -323,12 +323,11 @@ async function loadPeminjaman() {
             item.approver?.nama || "-";
 
 
-        // =================================================
+       // =================================================
         // TOMBOL AKSI
         // =================================================
 
         let tombolAksi = "";
-
 
         // -------------------------------------------------
         // DETAIL → SEMUA ROLE
@@ -347,17 +346,12 @@ async function loadPeminjaman() {
 
         `;
 
-
         // -------------------------------------------------
-        // APPROVAL → ADMIN + KAJUR
+        // APPROVAL → ADMIN SAJA
         // -------------------------------------------------
 
         if (
-            (
-                currentRole === "admin" ||
-                currentRole === "kajur" ||
-                currentRole === "ketua jurusan"
-            ) &&
+            currentRole === "admin" &&
             item.status === "Menunggu"
         ) {
 
@@ -372,13 +366,41 @@ async function loadPeminjaman() {
 
                 </button>
 
-
                 <button
                     onclick="tolakPeminjaman(${item.id})"
                     class="text-red-500 hover:text-red-700"
                     title="Tolak Peminjaman">
 
                     <i class="fas fa-times-circle"></i>
+
+                </button>
+
+            `;
+        }
+
+        // -------------------------------------------------
+        // EDIT + HAPUS → ADMIN SAJA
+        // -------------------------------------------------
+
+        if (currentRole === "admin") {
+
+            tombolAksi += `
+
+                <button
+                    onclick="editPeminjaman(${item.id})"
+                    class="text-blue-500 hover:text-blue-700"
+                    title="Edit">
+
+                    <i class="fas fa-edit"></i>
+
+                </button>
+
+                <button
+                    onclick="hapusPeminjaman(${item.id})"
+                    class="text-red-500 hover:text-red-700"
+                    title="Hapus">
+
+                    <i class="fas fa-trash"></i>
 
                 </button>
 
