@@ -328,28 +328,6 @@ async function loadPeminjaman() {
 
         let tombolAksi = "";
 
-
-        // -------------------------------------------------
-        // DETAIL → SEMUA ROLE
-        // -------------------------------------------------
-
-        tombolAksi += `
-
-            <button
-                onclick="detailPeminjaman(${item.id})"
-                class="w-8 h-8 flex items-center justify-center rounded-lg
-                       bg-amber-50 text-amber-500
-                       hover:bg-amber-100 hover:text-amber-700
-                       transition"
-                title="Detail">
-
-                <i class="fas fa-eye text-sm"></i>
-
-            </button>
-
-        `;
-
-
         // -------------------------------------------------
         // APPROVAL → ADMIN SAJA
         // -------------------------------------------------

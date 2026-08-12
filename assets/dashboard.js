@@ -495,10 +495,7 @@ async function loadPeminjamanBelumDikembalikan() {
             count: "exact",
             head: true
         })
-        .neq(
-            "status",
-            "dikembalikan"
-        );
+        .eq("status", "Disetujui")
 
 
     if (error) {
