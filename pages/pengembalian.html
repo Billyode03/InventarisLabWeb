@@ -6,428 +6,418 @@
     <meta charset="UTF-8">
     <title>Pengembalian - InventarisLab</title>
 
-<script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
-<link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-<style>
-    .table-row:hover {
-        background-color: #f8fafc;
-    }
-</style>
+    <style>
+        .table-row:hover {
+            background-color: #f8fafc;
+        }
+    </style>
 
 </head>
 
 <body class="bg-gray-100 flex min-h-screen">
 
-<!-- ==============================
+    <!-- ==============================
      SIDEBAR
 ============================== -->
 
-<aside class="w-72 bg-gray-900 text-white flex flex-col">
+    <aside class="w-72 bg-gray-900 text-white flex flex-col">
 
-    <div class="p-6 border-b border-gray-800">
-        <h1 class="text-2xl font-bold">
-            InventarisLab
-        </h1>
-    </div>
+        <div class="p-6 border-b border-gray-800">
+            <h1 class="text-2xl font-bold">
+                InventarisLab
+            </h1>
+        </div>
 
-    <div class="p-6 flex items-center gap-3 border-b border-gray-800">
+        <div class="p-6 flex items-center gap-3 border-b border-gray-800">
 
-        <img src="https://i.pravatar.cc/48?u=raply"
-            alt="User"
-            class="w-10 h-10 rounded-full">
+            <img src="https://i.pravatar.cc/48?u=raply" alt="User" class="w-10 h-10 rounded-full">
 
-        <div>
+            <div>
 
-            <p id="sidebarUserName" class="font-medium">
-                Memuat...
-            </p>
+                <p id="sidebarUserName" class="font-medium">
+                    Memuat...
+                </p>
 
-            <p class="text-green-400 text-sm flex items-center gap-1">
+                <p class="text-green-400 text-sm flex items-center gap-1">
 
-                <span class="w-2 h-2 bg-green-400 rounded-full inline-block"></span>
+                    <span class="w-2 h-2 bg-green-400 rounded-full inline-block"></span>
 
-                Online
+                    Online
 
-            </p>
+                </p>
+
+            </div>
 
         </div>
 
-    </div>
 
-
-    <!-- ==============================
+        <!-- ==============================
          NAVIGATION
     ============================== -->
 
-    <nav class="flex-1 p-4">
+        <nav class="flex-1 p-4">
 
-        <p class="text-xs text-gray-400 px-4 mb-2">
-            MAIN NAVIGATION
-        </p>
+            <p class="text-xs text-gray-400 px-4 mb-2">
+                MAIN NAVIGATION
+            </p>
 
-        <ul class="space-y-1">
+            <ul class="space-y-1">
 
-            <!-- DASHBOARD -->
+                <!-- DASHBOARD -->
 
-            <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
 
-                <i class="fas fa-tachometer-alt"></i>
+                    <i class="fas fa-tachometer-alt"></i>
 
-                <a href="../dashboard.html">
-                    DASHBOARD
-                </a>
+                    <a href="../dashboard.html">
+                        DASHBOARD
+                    </a>
 
-            </li>
-
-
-            <!-- DATA BARANG -->
-
-            <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
-
-                <i class="fas fa-box"></i>
-
-                <a href="../pages/barang.html">
-                    DATA BARANG
-                </a>
-
-            </li>
+                </li>
 
 
-            <!-- DATA USER -->
+                <!-- DATA BARANG -->
 
-            <li id="menuUsers"
-                class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
 
-                <i class="fas fa-users"></i>
+                    <i class="fas fa-box"></i>
 
-                <a href="../pages/users.html">
-                    DATA USER
-                </a>
+                    <a href="../pages/barang.html">
+                        DATA BARANG
+                    </a>
 
-            </li>
-
-
-            <!-- PEMINJAMAN -->
-
-            <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
-
-                <i class="fas fa-handshake"></i>
-
-                <a href="../pages/peminjaman.html">
-                    PEMINJAMAN
-                </a>
-
-            </li>
+                </li>
 
 
-            <!-- PENGEMBALIAN -->
+                <!-- DATA USER -->
 
-            <li class="flex items-center gap-3 px-4 py-3 bg-gray-800 rounded-lg cursor-pointer">
+                <li id="menuUsers"
+                    class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
 
-                <i class="fas fa-rotate-left"></i>
+                    <i class="fas fa-users"></i>
 
-                <a href="../pages/pengembalian.html">
-                    PENGEMBALIAN
-                </a>
+                    <a href="../pages/users.html">
+                        DATA USER
+                    </a>
 
-            </li>
-
-
-            <!-- BARANG MASUK -->
-
-            <li id="menuBarangMasuk"
-                class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
-
-                <i class="fas fa-arrow-down"></i>
-
-                <a href="../pages/barang_masuk.html">
-                    BARANG MASUK
-                </a>
-
-            </li>
+                </li>
 
 
-            <!-- BARANG KELUAR -->
+                <!-- PEMINJAMAN -->
 
-            <li id="menuBarangKeluar"
-                class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
 
-                <i class="fas fa-arrow-up"></i>
+                    <i class="fas fa-handshake"></i>
 
-                <a href="../pages/barang_keluar.html">
-                    BARANG KELUAR
-                </a>
+                    <a href="../pages/peminjaman.html">
+                        PEMINJAMAN
+                    </a>
 
-            </li>
-
-
-            <!-- LAPORAN -->
-
-            <li id="menuLaporan"
-                class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
-
-                <i class="fas fa-chart-bar"></i>
-
-                <a href="../laporan.html">
-                    LAPORAN
-                </a>
-
-            </li>
-
-        </ul>
-
-    </nav>
+                </li>
 
 
-    <!-- ==============================
+                <!-- PENGEMBALIAN -->
+
+                <li class="flex items-center gap-3 px-4 py-3 bg-gray-800 rounded-lg cursor-pointer">
+
+                    <i class="fas fa-rotate-left"></i>
+
+                    <a href="../pages/pengembalian.html">
+                        PENGEMBALIAN
+                    </a>
+
+                </li>
+
+
+                <!-- BARANG MASUK -->
+
+                <li id="menuBarangMasuk"
+                    class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+                    <i class="fas fa-arrow-down"></i>
+
+                    <a href="../pages/barang_masuk.html">
+                        BARANG MASUK
+                    </a>
+
+                </li>
+
+
+                <!-- BARANG KELUAR -->
+
+                <li id="menuBarangKeluar"
+                    class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+                    <i class="fas fa-arrow-up"></i>
+
+                    <a href="../pages/barang_keluar.html">
+                        BARANG KELUAR
+                    </a>
+
+                </li>
+
+
+                <!-- LAPORAN -->
+
+                <li id="menuLaporan"
+                    class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+                    <i class="fas fa-chart-bar"></i>
+
+                    <a href="../laporan.html">
+                        LAPORAN
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </nav>
+
+
+        <!-- ==============================
          BOTTOM MENU
     ============================== -->
 
-    <div class="p-4 border-t border-gray-800 mt-auto">
+        <div class="p-4 border-t border-gray-800 mt-auto">
 
-        <ul class="space-y-1">
+            <ul class="space-y-1">
 
-            <!-- GANTI PASSWORD -->
+                <!-- GANTI PASSWORD -->
 
-            <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
 
-                <i class="fas fa-key"></i>
+                    <i class="fas fa-key"></i>
 
-                <a href="../ganti_password.html">
-                    GANTI PASSWORD
-                </a>
+                    <a href="../ganti_password.html">
+                        GANTI PASSWORD
+                    </a>
 
-            </li>
-
-
-            <!-- LOGOUT -->
-
-            <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
-
-                <i class="fas fa-sign-out-alt"></i>
-
-                <span onclick="logout()">
-                    LOGOUT
-                </span>
-
-            </li>
-
-        </ul>
-
-    </div>
-
-</aside>
+                </li>
 
 
-<!-- ==============================
-     MAIN CONTENT
-============================== -->
+                <!-- LOGOUT -->
 
-<div class="flex-1">
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
 
+                    <i class="fas fa-sign-out-alt"></i>
 
-    <!-- ==============================
-         HEADER
-    ============================== -->
+                    <span onclick="logout()">
+                        LOGOUT
+                    </span>
 
-    <header class="bg-blue-600 text-white px-8 py-4 flex justify-between items-center">
+                </li>
 
-        <div class="flex items-center gap-4">
-
-            <h1 class="text-2xl font-semibold">
-                Pengembalian
-            </h1>
-
-            <span class="text-blue-200">
-                Data Pengembalian Barang
-            </span>
+            </ul>
 
         </div>
 
+    </aside>
 
-        <div class="flex items-center gap-6">
 
-            <!-- USER -->
+    <!-- ==============================
+     MAIN CONTENT
+============================== -->
 
-            <div class="flex items-center gap-2">
+    <div class="flex-1">
 
-                <img src="https://i.pravatar.cc/32?u=raply"
-                    alt="User"
-                    class="w-8 h-8 rounded-full">
 
-                <div>
+        <!-- ==============================
+         HEADER
+    ============================== -->
 
-                    <p id="headerUserName"
-                        class="font-medium text-sm">
-                        Memuat...
-                    </p>
+        <header class="bg-blue-600 text-white px-8 py-4 flex justify-between items-center">
 
-                    <p id="headerUserRole"
-                        class="text-xs text-blue-200">
-                        Memuat...
-                    </p>
+            <div class="flex items-center gap-4">
+
+                <h1 class="text-2xl font-semibold">
+                    Pengembalian
+                </h1>
+
+                <span class="text-blue-200">
+                    Data Pengembalian Barang
+                </span>
+
+            </div>
+
+
+            <div class="flex items-center gap-6">
+
+                <!-- USER -->
+
+                <div class="flex items-center gap-2">
+
+                    <img src="https://i.pravatar.cc/32?u=raply" alt="User" class="w-8 h-8 rounded-full">
+
+                    <div>
+
+                        <p id="headerUserName" class="font-medium text-sm">
+                            Memuat...
+                        </p>
+
+                        <p id="headerUserRole" class="text-xs text-blue-200">
+                            Memuat...
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- LOGOUT -->
+
+                <button onclick="logout()"
+                    class="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-sm">
+
+                    <i class="fas fa-sign-out-alt"></i>
+
+                    LOGOUT
+
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- ==============================
+         CONTENT
+    ============================== -->
+
+        <main class="p-8">
+
+
+            <!-- TITLE -->
+
+            <div class="mb-6">
+
+                <h2 class="text-2xl font-bold text-gray-800">
+                    Pengembalian Barang
+                </h2>
+
+                <p class="text-gray-500 text-sm mt-1">
+                    Kelola pengembalian barang yang sedang dipinjam
+                </p>
+
+            </div>
+
+
+            <!-- SEARCH -->
+
+            <div class="flex justify-end mb-4">
+
+                <div class="relative w-80">
+
+                    <input type="text" id="searchInput" placeholder="Cari pengembalian..."
+                        class="w-full border border-gray-300 rounded-xl py-3 px-5 pl-10 focus:outline-none focus:border-blue-500"
+                        onkeyup="searchTable()">
+
+                    <i class="fas fa-search absolute left-4 top-3.5 text-gray-400"></i>
 
                 </div>
 
             </div>
 
 
-            <!-- LOGOUT -->
+            <!-- TABLE -->
 
-            <button onclick="logout()"
-                class="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-sm">
+            <div class="bg-white rounded-2xl shadow overflow-hidden">
 
-                <i class="fas fa-sign-out-alt"></i>
+                <div class="overflow-x-auto">
 
-                LOGOUT
+                    <table class="w-full min-w-[1300px]">
 
-            </button>
+                        <thead class="bg-gray-50">
 
-        </div>
+                            <tr>
 
-    </header>
+                                <th class="px-6 py-4">
+                                    NO
+                                </th>
+
+                                <th class="px-6 py-4">
+                                    KODE
+                                </th>
+
+                                <th class="px-6 py-4">
+                                    BARANG
+                                </th>
+
+                                <th class="px-6 py-4">
+                                    PEMINJAM
+                                </th>
+
+                                <th class="px-6 py-4">
+                                    JUMLAH
+                                </th>
+
+                                <th class="px-6 py-4">
+                                    TGL PINJAM
+                                </th>
+
+                                <th class="px-6 py-4">
+                                    BATAS KEMBALI
+                                </th>
+
+                                <th class="px-6 py-4">
+                                    STATUS
+                                </th>
+
+                                <th class="px-6 py-4 text-center">
+                                    OPSI
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="dataTable" class="divide-y">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
 
 
     <!-- ==============================
-         CONTENT
-    ============================== -->
-
-    <main class="p-8">
-
-
-        <!-- TITLE -->
-
-        <div class="mb-6">
-
-            <h2 class="text-2xl font-bold text-gray-800">
-                Pengembalian Barang
-            </h2>
-
-            <p class="text-gray-500 text-sm mt-1">
-                Kelola pengembalian barang yang sedang dipinjam
-            </p>
-
-        </div>
-
-
-        <!-- SEARCH -->
-
-        <div class="flex justify-end mb-4">
-
-            <div class="relative w-80">
-
-                <input type="text"
-                    id="searchInput"
-                    placeholder="Cari pengembalian..."
-                    class="w-full border border-gray-300 rounded-xl py-3 px-5 pl-10 focus:outline-none focus:border-blue-500"
-                    onkeyup="searchTable()">
-
-                <i class="fas fa-search absolute left-4 top-3.5 text-gray-400"></i>
-
-            </div>
-
-        </div>
-
-
-        <!-- TABLE -->
-
-        <div class="bg-white rounded-2xl shadow overflow-hidden">
-
-            <div class="overflow-x-auto">
-
-                <table class="w-full min-w-[1300px]">
-
-                    <thead class="bg-gray-50">
-
-                        <tr>
-
-                            <th class="px-6 py-4">
-                                NO
-                            </th>
-
-                            <th class="px-6 py-4">
-                                KODE
-                            </th>
-
-                            <th class="px-6 py-4">
-                                BARANG
-                            </th>
-
-                            <th class="px-6 py-4">
-                                PEMINJAM
-                            </th>
-
-                            <th class="px-6 py-4">
-                                JUMLAH
-                            </th>
-
-                            <th class="px-6 py-4">
-                                TGL PINJAM
-                            </th>
-
-                            <th class="px-6 py-4">
-                                BATAS KEMBALI
-                            </th>
-
-                            <th class="px-6 py-4">
-                                STATUS
-                            </th>
-
-                            <th class="px-6 py-4 text-center">
-                                OPSI
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody id="dataTable"
-                        class="divide-y">
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </div>
-
-    </main>
-
-</div>
-
-
-<!-- ==============================
      LIBRARY
 ============================== -->
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
-<!-- SUPABASE -->
-
-<script src="../assets/supabase.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
-<!-- SIDEBAR -->
+    <!-- SUPABASE -->
 
-<script src="../assets/sidebar.js"></script>
-
-
-<!-- PENGEMBALIAN -->
-
-<script src="../assets/pengembalian.js"></script>
+    <script src="../assets/supabase.js"></script>
 
 
-<!-- LOGOUT -->
+    <!-- SIDEBAR -->
 
-<script src="../assets/logout.js"></script>
+    <script src="../assets/sidebar.js"></script>
+
+
+    <!-- PENGEMBALIAN -->
+
+    <script src="../assets/pengembalian.js"></script>
+
+
+    <!-- LOGOUT -->
+
+    <script src="../assets/logout.js"></script>
 
 </body>
 

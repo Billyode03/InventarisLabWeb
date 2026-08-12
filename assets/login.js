@@ -204,7 +204,7 @@ try {
         );
 
         window.location.href =
-            "mahasiswa_dashboard.html";
+            "dashboard_mahasiswa.html";
 
         return;
     }

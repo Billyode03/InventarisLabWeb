@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Dashboard Mahasiswa - InventarisLab</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        .card {
+            transition: all 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+
+        .more-info-btn {
+            background-color: rgba(255, 255, 255, 0.25);
+            transition: all 0.2s;
+        }
+
+        .more-info-btn:hover {
+            background-color: rgba(255, 255, 255, 0.35);
+            transform: translateY(-1px);
+        }
+    </style>
+
+</head>
+
+
+<body class="bg-gray-100 flex min-h-screen">
+
+
+    <!-- =====================================================
+       SIDEBAR
+  ====================================================== -->
+
+    <aside class="w-72 bg-gray-900 text-white flex flex-col">
+
+        <!-- LOGO -->
+        <div class="p-6 border-b border-gray-800">
+
+            <h1 class="text-2xl font-bold">
+                InventarisLab
+            </h1>
+
+        </div>
+
+
+        <!-- USER -->
+        <div class="p-6 flex items-center gap-3 border-b border-gray-800">
+
+            <img src="https://i.pravatar.cc/48?u=mahasiswa" alt="Mahasiswa" class="w-10 h-10 rounded-full">
+
+            <div>
+
+                <p class="font-medium" id="sidebarNama">
+                    Loading...
+                </p>
+
+                <p class="text-green-400 text-sm flex items-center gap-1">
+
+                    <span class="w-2 h-2 bg-green-400 rounded-full inline-block"></span>
+
+                    Online
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+         NAVIGATION
+    ====================================================== -->
+
+        <nav class="flex-1 p-4">
+
+            <p class="text-xs text-gray-400 px-4 mb-2">
+                MAIN NAVIGATION
+            </p>
+
+
+            <ul class="space-y-1">
+
+
+                <!-- DASHBOARD -->
+
+                <li class="flex items-center gap-3 px-4 py-3 bg-gray-800 rounded-lg cursor-pointer">
+
+                    <i class="fas fa-tachometer-alt"></i>
+
+                    <a href="dashboard_mahasiswa.html">
+                        DASHBOARD
+                    </a>
+
+                </li>
+
+
+                <!-- DATA BARANG -->
+
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+                    <i class="fas fa-box"></i>
+
+                    <a href="pages/barang.html">
+                        DATA BARANG
+                    </a>
+
+                </li>
+
+
+                <!-- PEMINJAMAN -->
+
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+                    <i class="fas fa-handshake"></i>
+
+                    <a href="pages/peminjaman.html">
+                        PEMINJAMAN SAYA
+                    </a>
+
+                </li>
+
+
+                <!-- PENGEMBALIAN -->
+
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+                    <i class="fas fa-rotate-left"></i>
+
+                    <a href="pages/pengembalian.html">
+                        PENGEMBALIAN
+                    </a>
+
+                </li>
+
+
+            </ul>
+
+        </nav>
+
+
+        <!-- =====================================================
+         BOTTOM MENU
+    ====================================================== -->
+
+        <div class="p-4 border-t border-gray-800 mt-auto">
+
+            <ul class="space-y-1">
+
+
+                <!-- GANTI PASSWORD -->
+
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+                    <i class="fas fa-key"></i>
+
+                    <a href="ganti_password.html">
+                        GANTI PASSWORD
+                    </a>
+
+                </li>
+
+
+                <!-- LOGOUT -->
+
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer"
+                    onclick="logout()">
+
+                    <i class="fas fa-sign-out-alt"></i>
+
+                    <span>
+                        LOGOUT
+                    </span>
+
+                </li>
+
+
+            </ul>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+       MAIN CONTENT
+  ====================================================== -->
+
+    <div class="flex-1">
+
+
+        <!-- HEADER -->
+
+        <header class="bg-blue-600 text-white px-8 py-4 flex justify-between items-center">
+
+            <div class="flex items-center gap-4">
+
+                <h1 class="text-2xl font-semibold">
+                    Dashboard
+                </h1>
+
+                <span class="text-blue-200">
+                    Mahasiswa
+                </span>
+
+            </div>
+
+
+            <div class="flex items-center gap-6">
+
+
+                <!-- USER HEADER -->
+
+                <div class="flex items-center gap-2">
+
+                    <img src="https://i.pravatar.cc/32?u=mahasiswa" alt="Mahasiswa" class="w-8 h-8 rounded-full">
+
+                    <div>
+
+                        <p class="font-medium text-sm" id="headerNama">
+                            Loading...
+                        </p>
+
+                        <p class="text-xs text-blue-200" id="headerRole">
+                            Mahasiswa
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- LOGOUT -->
+
+                <button onclick="logout()"
+                    class="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-sm">
+
+                    <i class="fas fa-sign-out-alt"></i>
+
+                    LOGOUT
+
+                </button>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =====================================================
+         CONTENT
+    ====================================================== -->
+
+        <main class="p-8">
+
+
+            <!-- =================================================
+           WELCOME
+      ================================================== -->
+
+            <div class="mb-8">
+
+                <h2 class="text-2xl font-bold text-gray-800">
+
+                    Selamat Datang,
+                    <span id="welcomeNama">
+                        Mahasiswa
+                    </span>
+
+                </h2>
+
+                <p class="text-gray-500 mt-1">
+
+                    Kelola peminjaman dan pengembalian barang laboratorium.
+
+                </p>
+
+            </div>
+
+
+
+            <!-- =================================================
+           CARDS
+      ================================================== -->
+
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+
+
+                <!-- TOTAL PEMINJAMAN -->
+
+                <div class="bg-blue-600 text-white p-6 rounded-2xl card flex flex-col">
+
+                    <div class="flex justify-between">
+
+                        <div>
+
+                            <p class="text-5xl font-bold" id="totalPeminjaman">
+                                0
+                            </p>
+
+                            <p class="text-lg mt-2">
+                                Total Peminjaman
+                            </p>
+
+                        </div>
+
+                        <div class="text-6xl opacity-30">
+
+                            <i class="fas fa-handshake"></i>
+
+                        </div>
+
+                    </div>
+
+                    <div class="mt-auto pt-6">
+
+                        <a href="pages/peminjaman.html"
+                            class="more-info-btn w-full text-white text-sm font-medium py-3 px-6 rounded-xl flex items-center justify-center gap-2">
+
+                            Lihat Peminjaman
+
+                            <span class="text-lg leading-none">
+                                →
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- MENUNGGU -->
+
+                <div class="bg-orange-500 text-white p-6 rounded-2xl card flex flex-col">
+
+                    <div class="flex justify-between">
+
+                        <div>
+
+                            <p class="text-5xl font-bold" id="peminjamanMenunggu">
+                                0
+                            </p>
+
+                            <p class="text-lg mt-2">
+                                Menunggu Persetujuan
+                            </p>
+
+                        </div>
+
+                        <div class="text-6xl opacity-30">
+
+                            <i class="fas fa-clock"></i>
+
+                        </div>
+
+                    </div>
+
+                    <div class="mt-auto pt-6">
+
+                        <a href="pages/peminjaman.html"
+                            class="more-info-btn w-full text-white text-sm font-medium py-3 px-6 rounded-xl flex items-center justify-center gap-2">
+
+                            Lihat Status
+
+                            <span class="text-lg leading-none">
+                                →
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SEDANG DIPINJAM -->
+
+                <div class="bg-green-600 text-white p-6 rounded-2xl card flex flex-col">
+
+                    <div class="flex justify-between">
+
+                        <div>
+
+                            <p class="text-5xl font-bold" id="sedangDipinjam">
+                                0
+                            </p>
+
+                            <p class="text-lg mt-2">
+                                Sedang Dipinjam
+                            </p>
+
+                        </div>
+
+                        <div class="text-6xl opacity-30">
+
+                            <i class="fas fa-box-open"></i>
+
+                        </div>
+
+                    </div>
+
+                    <div class="mt-auto pt-6">
+
+                        <a href="pages/pengembalian.html"
+                            class="more-info-btn w-full text-white text-sm font-medium py-3 px-6 rounded-xl flex items-center justify-center gap-2">
+
+                            Pengembalian
+
+                            <span class="text-lg leading-none">
+                                →
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SUDAH DIKEMBALIKAN -->
+
+                <div class="bg-purple-600 text-white p-6 rounded-2xl card flex flex-col">
+
+                    <div class="flex justify-between">
+
+                        <div>
+
+                            <p class="text-5xl font-bold" id="sudahDikembalikan">
+                                0
+                            </p>
+
+                            <p class="text-lg mt-2">
+                                Sudah Dikembalikan
+                            </p>
+
+                        </div>
+
+                        <div class="text-6xl opacity-30">
+
+                            <i class="fas fa-check-circle"></i>
+
+                        </div>
+
+                    </div>
+
+                    <div class="mt-auto pt-6">
+
+                        <a href="pages/pengembalian.html"
+                            class="more-info-btn w-full text-white text-sm font-medium py-3 px-6 rounded-xl flex items-center justify-center gap-2">
+
+                            Riwayat
+
+                            <span class="text-lg leading-none">
+                                →
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+           INFORMASI PEMINJAMAN AKTIF
+      ================================================== -->
+
+            <div class="mt-8 bg-white rounded-2xl shadow p-8">
+
+                <div class="flex justify-between items-center mb-5">
+
+                    <div>
+
+                        <h2 class="text-xl font-bold text-gray-800">
+                            Peminjaman Saya
+                        </h2>
+
+                        <p class="text-sm text-gray-500 mt-1">
+                            Daftar peminjaman yang sedang berjalan.
+                        </p>
+
+                    </div>
+
+                    <a href="pages/peminjaman.html" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+
+                        Lihat Semua →
+
+                    </a>
+
+                </div>
+
+
+                <div class="overflow-x-auto">
+
+                    <table class="w-full">
+
+                        <thead>
+
+                            <tr class="border-b">
+
+                                <th class="text-left py-3 px-4">
+                                    Kode
+                                </th>
+
+                                <th class="text-left py-3 px-4">
+                                    Barang
+                                </th>
+
+                                <th class="text-left py-3 px-4">
+                                    Jumlah
+                                </th>
+
+                                <th class="text-left py-3 px-4">
+                                    Batas Kembali
+                                </th>
+
+                                <th class="text-left py-3 px-4">
+                                    Status
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="peminjamanAktif">
+
+                            <tr>
+
+                                <td colspan="5" class="text-center py-8 text-gray-500">
+
+                                    Memuat data...
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+           DETAIL LOGIN
+      ================================================== -->
+
+            <div class="mt-8 bg-white rounded-2xl shadow p-8">
+
+                <h2 class="text-xl font-bold text-blue-600 border-b pb-3">
+                    Detail Login
+                </h2>
+
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 mt-6">
+
+                    <div>
+
+                        <p class="text-sm text-gray-600">
+                            Nama
+                        </p>
+
+                        <p class="font-medium text-lg" id="detailNama">
+                            -
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <p class="text-sm text-gray-600">
+                            NIM
+                        </p>
+
+                        <p class="font-medium text-lg" id="detailNim">
+                            -
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <p class="text-sm text-gray-600">
+                            Hak Akses
+                        </p>
+
+                        <span class="inline-block bg-green-500 text-white px-6 py-2 rounded-lg text-sm font-medium mt-2"
+                            id="detailRole">
+                            MAHASISWA
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </main>
+
+    </div>
+
+
+
+    <!-- =====================================================
+       SUPABASE
+  ====================================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="assets/supabase.js"></script>
+
+
+    <!-- =====================================================
+       DASHBOARD MAHASISWA
+  ====================================================== -->
+
+    <script src="assets/dashboard_mahasiswa.js"></script>
+
+
+    <!-- =====================================================
+       LOGOUT
+  ====================================================== -->
+
+    <script src="assets/logout.js"></script>
+
+
+</body>
+
+</html>

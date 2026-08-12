@@ -1,11 +1,10 @@
-
 /* =========================================================
    PEMINJAMAN.JS
 
    ROLE:
    - ADMIN      : Lihat + Approval + Edit + Hapus
-   - KAJUR      : Lihat + Approval
-   - MAHASISWA  : Lihat saja
+   - KAJUR      : Lihat
+   - MAHASISWA  : Lihat
    ========================================================= */
 
 
@@ -323,11 +322,12 @@ async function loadPeminjaman() {
             item.approver?.nama || "-";
 
 
-       // =================================================
+        // =================================================
         // TOMBOL AKSI
         // =================================================
 
         let tombolAksi = "";
+
 
         // -------------------------------------------------
         // DETAIL → SEMUA ROLE
@@ -337,14 +337,18 @@ async function loadPeminjaman() {
 
             <button
                 onclick="detailPeminjaman(${item.id})"
-                class="text-amber-500 hover:text-amber-700"
+                class="w-8 h-8 flex items-center justify-center rounded-lg
+                       bg-amber-50 text-amber-500
+                       hover:bg-amber-100 hover:text-amber-700
+                       transition"
                 title="Detail">
 
-                <i class="fas fa-eye"></i>
+                <i class="fas fa-eye text-sm"></i>
 
             </button>
 
         `;
+
 
         // -------------------------------------------------
         // APPROVAL → ADMIN SAJA
@@ -359,48 +363,26 @@ async function loadPeminjaman() {
 
                 <button
                     onclick="setujuiPeminjaman(${item.id})"
-                    class="text-green-600 hover:text-green-800"
+                    class="w-8 h-8 flex items-center justify-center rounded-lg
+                           bg-green-50 text-green-600
+                           hover:bg-green-100 hover:text-green-700
+                           transition"
                     title="Setujui Peminjaman">
 
-                    <i class="fas fa-check-circle"></i>
+                    <i class="fas fa-check text-sm"></i>
 
                 </button>
+
 
                 <button
                     onclick="tolakPeminjaman(${item.id})"
-                    class="text-red-500 hover:text-red-700"
+                    class="w-8 h-8 flex items-center justify-center rounded-lg
+                           bg-red-50 text-red-500
+                           hover:bg-red-100 hover:text-red-700
+                           transition"
                     title="Tolak Peminjaman">
 
-                    <i class="fas fa-times-circle"></i>
-
-                </button>
-
-            `;
-        }
-
-        // -------------------------------------------------
-        // EDIT + HAPUS → ADMIN SAJA
-        // -------------------------------------------------
-
-        if (currentRole === "admin") {
-
-            tombolAksi += `
-
-                <button
-                    onclick="editPeminjaman(${item.id})"
-                    class="text-blue-500 hover:text-blue-700"
-                    title="Edit">
-
-                    <i class="fas fa-edit"></i>
-
-                </button>
-
-                <button
-                    onclick="hapusPeminjaman(${item.id})"
-                    class="text-red-500 hover:text-red-700"
-                    title="Hapus">
-
-                    <i class="fas fa-trash"></i>
+                    <i class="fas fa-times text-sm"></i>
 
                 </button>
 
@@ -418,20 +400,26 @@ async function loadPeminjaman() {
 
                 <button
                     onclick="editPeminjaman(${item.id})"
-                    class="text-blue-500 hover:text-blue-700"
+                    class="w-8 h-8 flex items-center justify-center rounded-lg
+                           bg-blue-50 text-blue-500
+                           hover:bg-blue-100 hover:text-blue-700
+                           transition"
                     title="Edit">
 
-                    <i class="fas fa-edit"></i>
+                    <i class="fas fa-edit text-sm"></i>
 
                 </button>
 
 
                 <button
                     onclick="hapusPeminjaman(${item.id})"
-                    class="text-red-500 hover:text-red-700"
+                    class="w-8 h-8 flex items-center justify-center rounded-lg
+                           bg-red-50 text-red-500
+                           hover:bg-red-100 hover:text-red-700
+                           transition"
                     title="Hapus">
 
-                    <i class="fas fa-trash"></i>
+                    <i class="fas fa-trash text-sm"></i>
 
                 </button>
 
@@ -516,7 +504,7 @@ async function loadPeminjaman() {
 
                 <td class="px-6 py-4">
 
-                    <div class="flex justify-center gap-3">
+                    <div class="flex items-center justify-center gap-2">
 
                         ${tombolAksi}
 
@@ -556,7 +544,7 @@ function formatTanggal(tanggal) {
 
 // =========================================================
 // APPROVAL - SETUJUI
-// ADMIN + KAJUR
+// ADMIN SAJA
 // =========================================================
 
 async function setujuiPeminjaman(id) {
@@ -565,11 +553,7 @@ async function setujuiPeminjaman(id) {
     // CEK ROLE
     // =====================================================
 
-    if (
-        currentRole !== "admin" &&
-        currentRole !== "kajur" &&
-        currentRole !== "ketua jurusan"
-    ) {
+    if (currentRole !== "admin") {
 
         Swal.fire({
 
@@ -578,7 +562,7 @@ async function setujuiPeminjaman(id) {
             title: "Akses Ditolak",
 
             text:
-                "Anda tidak memiliki hak untuk menyetujui peminjaman."
+                "Hanya Admin yang dapat menyetujui peminjaman."
 
         });
 
@@ -783,8 +767,12 @@ async function setujuiPeminjaman(id) {
     // KURANGI STOK
     // =====================================================
 
+    const stokLama =
+        Number(barang.jumlah);
+
+
     const stokBaru =
-        Number(barang.jumlah) -
+        stokLama -
         Number(peminjaman.jumlah);
 
 
@@ -872,7 +860,7 @@ async function setujuiPeminjaman(id) {
             .update({
 
                 jumlah:
-                    barang.jumlah
+                    stokLama
 
             })
 
@@ -928,7 +916,7 @@ async function setujuiPeminjaman(id) {
 
 // =========================================================
 // APPROVAL - TOLAK
-// ADMIN + KAJUR
+// ADMIN SAJA
 // =========================================================
 
 async function tolakPeminjaman(id) {
@@ -937,11 +925,7 @@ async function tolakPeminjaman(id) {
     // CEK ROLE
     // =====================================================
 
-    if (
-        currentRole !== "admin" &&
-        currentRole !== "kajur" &&
-        currentRole !== "ketua jurusan"
-    ) {
+    if (currentRole !== "admin") {
 
         Swal.fire({
 
@@ -950,7 +934,7 @@ async function tolakPeminjaman(id) {
             title: "Akses Ditolak",
 
             text:
-                "Anda tidak memiliki hak untuk menolak peminjaman."
+                "Hanya Admin yang dapat menolak peminjaman."
 
         });
 
@@ -999,6 +983,7 @@ async function tolakPeminjaman(id) {
                 (value) => {
 
                     if (
+                        !value ||
                         !value.trim()
                     ) {
 
@@ -1078,9 +1063,11 @@ async function tolakPeminjaman(id) {
 
         Swal.fire({
 
-            icon: "error",
+            icon:
+                "error",
 
-            title: "Gagal",
+            title:
+                "Gagal",
 
             text:
                 error.message
@@ -1093,7 +1080,8 @@ async function tolakPeminjaman(id) {
 
     await Swal.fire({
 
-        icon: "success",
+        icon:
+            "success",
 
         title:
             "Peminjaman Ditolak",
@@ -1584,4 +1572,3 @@ async function hapusPeminjaman(id) {
 
     loadStatistik();
 }
-

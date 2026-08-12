@@ -355,7 +355,7 @@ if (dashboardLink) {
     ) {
 
         dashboardLink.href =
-            "../mahasiswa_dashboard.html";
+            "../dashboard_mahasiswa.html";
 
     }
     // =========================================================
