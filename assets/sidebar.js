@@ -154,8 +154,13 @@ const menuBarangKeluar =
         "menuBarangKeluar"
     );
 
+    const menuAudit =
+    document.getElementById(
+        "menuAudit"
+    );
 
-const menuLaporan =
+
+    const menuLaporan =
     document.getElementById(
         "menuLaporan"
     );
@@ -231,6 +236,18 @@ else if (
 
     }
 
+    // -----------------------------------------
+    // AUDIT INVENTORI
+    // KAJUR TIDAK BOLEH MELIHAT
+    // -----------------------------------------
+
+    if (menuAudit) {
+
+        menuAudit.style.display =
+            "none";
+
+    }
+
 
     // -----------------------------------------
     // TAMBAH PEMINJAMAN
@@ -284,6 +301,18 @@ else if (
             "none";
 
     }
+
+    // -----------------------------------------
+// AUDIT INVENTORI
+// MAHASISWA TIDAK BOLEH MELIHAT
+// -----------------------------------------
+
+if (menuAudit) {
+
+    menuAudit.style.display =
+        "none";
+
+}
 
 
     // -----------------------------------------
