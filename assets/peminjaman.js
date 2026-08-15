@@ -80,31 +80,83 @@ async function loadPeminjaman() {
     `;
 
 
-    const {
-        data,
-        error
-    } = await supabaseClient
+    // =====================================================
+// QUERY PEMINJAMAN
+// =====================================================
 
-        .from("peminjaman")
+let query = supabaseClient
 
-        .select(`
-            *,
-            barang (
-                nama
-            ),
-            peminjam:users!peminjam_id (
-                nama,
-                nim
-            ),
-            approver:users!approver_id (
-                nama,
-                nim
-            )
-        `)
+    .from("peminjaman")
 
-        .order("created_at", {
-            ascending: false
-        });
+    .select(`
+        *,
+        barang (
+            nama
+        ),
+        peminjam:users!peminjam_id (
+            nama,
+            nim
+        ),
+        approver:users!approver_id (
+            nama,
+            nim
+        )
+    `)
+
+    .order("created_at", {
+        ascending: false
+    });
+
+
+// =====================================================
+// FILTER BERDASARKAN ROLE
+// =====================================================
+
+// ADMIN & KAJUR
+// → Bisa melihat semua peminjaman
+
+if (
+    currentRole === "mahasiswa"
+) {
+
+    // MAHASISWA
+    // → Hanya melihat peminjaman miliknya sendiri
+
+    if (
+        !currentUser ||
+        !currentUser.id
+    ) {
+
+        console.error(
+            "USER LOGIN TIDAK DITEMUKAN"
+        );
+
+        return;
+    }
+
+
+    console.log(
+        "FILTER PEMINJAMAN MAHASISWA:",
+        currentUser.id
+    );
+
+
+    query = query.eq(
+        "peminjam_id",
+        currentUser.id
+    );
+}
+
+
+// =====================================================
+// EKSEKUSI QUERY
+// =====================================================
+
+const {
+    data,
+    error
+} = await query;
+        
 
 
     console.log(

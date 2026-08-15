@@ -1,31 +1,76 @@
+// =========================================================
+// LOGOUT
+// =========================================================
+
 async function logout() {
 
-    const yakin = confirm("Yakin ingin logout?");
+    const yakin = confirm(
+        "Yakin ingin logout?"
+    );
 
-    if (!yakin) return;
+    if (!yakin) {
+        return;
+    }
+
 
     try {
 
-        // Logout dari Supabase Auth
-        await supabaseClient.auth.signOut();
+        // =================================================
+        // HAPUS SESSION LOCAL
+        // =================================================
 
-        // Hapus data user yang tersimpan
         localStorage.removeItem("user");
 
-        // Bersihkan session tambahan kalau ada
-        localStorage.removeItem("supabase.auth.token");
+        localStorage.removeItem("isLoggedIn");
 
-        // Kembali ke halaman login
-        window.location.href = "login.html";
+
+        // =================================================
+        // HAPUS SESSION SUPABASE JIKA ADA
+        // =================================================
+
+        try {
+
+            await supabaseClient.auth.signOut();
+
+        } catch (error) {
+
+            console.warn(
+                "Supabase Auth tidak aktif:",
+                error
+            );
+
+        }
+
+
+        // =================================================
+        // CEGAH HALAMAN LAMA DARI CACHE
+        // =================================================
+
+        window.location.replace(
+            "../login.html"
+        );
+
 
     } catch (error) {
 
-        console.error("Logout error:", error);
+        console.error(
+            "Logout error:",
+            error
+        );
 
-        // Tetap hapus user lokal
+
+        // =================================================
+        // PASTIKAN SESSION TETAP DIHAPUS
+        // =================================================
+
         localStorage.removeItem("user");
 
-        window.location.href = "../login.html";
+        localStorage.removeItem("isLoggedIn");
+
+
+        window.location.replace(
+            "login.html"
+        );
 
     }
 

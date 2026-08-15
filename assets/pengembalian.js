@@ -2,21 +2,34 @@
 // PENGEMBALIAN.JS
 // PENGELOLAAN PENGEMBALIAN BARANG
 //
-// ALUR STATUS:
+// FLOW:
 //
-// Menunggu
-//     ↓
-// Disetujui  ← Admin
-//     ↓
-// Sedang dipinjam
-//     ↓
-// Dikembalikan
+// PEMINJAMAN DISETUJUI ADMIN
+//          ↓
+//      status = Dipinjam
+//          ↓
+// MAHASISWA AJUKAN PENGEMBALIAN
+//          ↓
+// status = Menunggu Pengembalian
+//          ↓
+// ADMIN KONFIRMASI
+//          ↓
+// status = Dikembalikan
+//          ↓
+// STOK BARANG + JUMLAH
 //
-// CATATAN:
-// Status "Disetujui" dianggap sebagai barang sedang dipinjam.
-// Saat Admin memproses pengembalian:
-// - status → "Dikembalikan"
-// - stok barang → bertambah
+// ROLE:
+//
+// ADMIN
+// - Lihat semua
+// - Konfirmasi pengembalian
+//
+// KAJUR
+// - Lihat semua
+//
+// MAHASISWA
+// - Lihat peminjaman sendiri
+// - Ajukan pengembalian
 // =========================================================
 
 
@@ -76,7 +89,21 @@ console.log(
 
 
 // =========================================================
-// LOAD DATA PEMINJAMAN
+// LOAD AWAL
+// =========================================================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        loadPengembalian();
+
+    }
+);
+
+
+// =========================================================
+// LOAD DATA PENGEMBALIAN
 // =========================================================
 
 async function loadPengembalian() {
@@ -108,9 +135,11 @@ async function loadPengembalian() {
 
             <td
                 colspan="9"
-                class="text-center py-8 text-gray-500">
+                class="text-center py-10 text-gray-500">
 
-                <i class="fas fa-spinner fa-spin text-3xl mb-3"></i>
+                <i
+                    class="fas fa-spinner fa-spin text-3xl mb-3">
+                </i>
 
                 <p>
                     Memuat data pengembalian...
@@ -124,9 +153,97 @@ async function loadPengembalian() {
 
 
     // =====================================================
-    // AMBIL DATA PEMINJAMAN
-    //
-    // Disetujui = sedang dipinjam
+    // QUERY
+    // =====================================================
+
+    let query =
+        supabaseClient
+
+            .from("peminjaman")
+
+            .select(`
+                *,
+                barang (
+                    id,
+                    nama
+                ),
+                peminjam:users!peminjaman_peminjam_id_fkey (
+                    id,
+                    nama,
+                    nim
+                )
+            `)
+
+            .in(
+                "status",
+                [
+                    "Dipinjam",
+                    "Menunggu Pengembalian"
+                ]
+            )
+
+            .order(
+                "batas_kembali",
+                {
+                    ascending: true
+                }
+            );
+
+
+    // =====================================================
+    // FILTER MAHASISWA
+    // =====================================================
+
+    if (
+        currentRole === "mahasiswa"
+    ) {
+
+        if (
+            !currentUser ||
+            !currentUser.id
+        ) {
+
+            console.error(
+                "USER MAHASISWA TIDAK DITEMUKAN"
+            );
+
+            table.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="9"
+                        class="text-center py-10 text-red-500">
+
+                        User login tidak ditemukan.
+
+                    </td>
+
+                </tr>
+
+            `;
+
+            return;
+        }
+
+
+        console.log(
+            "FILTER PENGEMBALIAN MAHASISWA:",
+            currentUser.id
+        );
+
+
+        query =
+            query.eq(
+                "peminjam_id",
+                currentUser.id
+            );
+
+    }
+
+
+    // =====================================================
+    // EKSEKUSI QUERY
     // =====================================================
 
     const {
@@ -134,43 +251,16 @@ async function loadPengembalian() {
         data,
         error
 
-    } = await supabaseClient
-
-        .from("peminjaman")
-
-            .select(`
-            *,
-            barang (
-                id,
-                nama
-            ),
-            peminjam:users!peminjaman_peminjam_id_fkey (
-                id,
-                nama,
-                nim
-            )
-        `)
-
-        .eq(
-            "status",
-            "Disetujui"
-        )
-
-        .order(
-            "batas_kembali",
-            {
-                ascending: true
-            }
-        );
+    } = await query;
 
 
     console.log(
-        "DATA PENGEMBALIAN :",
+        "DATA PENGEMBALIAN:",
         data
     );
 
     console.log(
-        "ERROR PENGEMBALIAN :",
+        "ERROR PENGEMBALIAN:",
         error
     );
 
@@ -182,7 +272,7 @@ async function loadPengembalian() {
     if (error) {
 
         console.error(
-            "Gagal mengambil data pengembalian:",
+            "Gagal mengambil data:",
             error
         );
 
@@ -195,7 +285,8 @@ async function loadPengembalian() {
                     colspan="9"
                     class="text-center py-10">
 
-                    <div class="flex flex-col items-center">
+                    <div
+                        class="flex flex-col items-center">
 
                         <i
                             class="fas fa-triangle-exclamation
@@ -216,7 +307,7 @@ async function loadPengembalian() {
 
                         <p class="text-gray-500 mb-4">
 
-                            ${error.message || "Terjadi kesalahan."}
+                            ${error.message}
 
                         </p>
 
@@ -304,13 +395,13 @@ function renderTable(data) {
                                font-semibold
                                text-gray-700">
 
-                        Tidak ada barang yang sedang dipinjam.
+                        Tidak ada data pengembalian.
 
                     </h2>
 
                     <p class="mt-2">
 
-                        Semua barang sudah dikembalikan.
+                        Belum ada barang yang perlu dikembalikan.
 
                     </p>
 
@@ -341,7 +432,7 @@ function renderTable(data) {
 
 
             // =================================================
-            // STATUS
+            // STATUS BADGE
             // =================================================
 
             const statusBadge =
@@ -357,43 +448,150 @@ function renderTable(data) {
             let tombolAksi = "";
 
 
-            // -------------------------------------------------
-            // ADMIN
-            // -------------------------------------------------
+            // =================================================
+            // MAHASISWA
+            // =================================================
 
             if (
-                currentRole === "admin"
+                currentRole === "mahasiswa"
             ) {
 
-                tombolAksi = `
 
-                    <button
-                        onclick="prosesPengembalian('${item.id}')"
-                        class="bg-green-600
-                               hover:bg-green-700
-                               text-white
-                               px-4
-                               py-2
-                               rounded-lg
-                               text-sm
-                               transition">
+                // ---------------------------------------------
+                // BISA AJUKAN
+                // ---------------------------------------------
 
-                        <i
-                            class="fas fa-rotate-left mr-1">
-                        </i>
+                if (
+                    item.status === "Dipinjam"
+                ) {
 
-                        KEMBALIKAN
+                    tombolAksi = `
 
-                    </button>
+                        <button
+                            onclick="ajukanPengembalian('${item.id}')"
+                            class="bg-green-600
+                                   hover:bg-green-700
+                                   text-white
+                                   px-4
+                                   py-2
+                                   rounded-lg
+                                   text-sm
+                                   transition">
 
-                `;
+                            <i
+                                class="fas fa-rotate-left mr-1">
+                            </i>
+
+                            AJUKAN PENGEMBALIAN
+
+                        </button>
+
+                    `;
+
+                }
+
+
+                // ---------------------------------------------
+                // SUDAH DIAJUKAN
+                // ---------------------------------------------
+
+                else if (
+                    item.status ===
+                    "Menunggu Pengembalian"
+                ) {
+
+                    tombolAksi = `
+
+                        <span
+                            class="text-yellow-600
+                                   text-sm
+                                   font-medium">
+
+                            <i
+                                class="fas fa-clock mr-1">
+                            </i>
+
+                            Menunggu Admin
+
+                        </span>
+
+                    `;
+
+                }
 
             }
 
 
-            // -------------------------------------------------
-            // KAJUR / MAHASISWA
-            // -------------------------------------------------
+            // =================================================
+            // ADMIN
+            // =================================================
+
+            else if (
+                currentRole === "admin"
+            ) {
+
+
+                // ---------------------------------------------
+                // ADA PENGAJUAN
+                // ---------------------------------------------
+
+                if (
+                    item.status ===
+                    "Menunggu Pengembalian"
+                ) {
+
+                    tombolAksi = `
+
+                        <button
+                            onclick="prosesPengembalian('${item.id}')"
+                            class="bg-green-600
+                                   hover:bg-green-700
+                                   text-white
+                                   px-4
+                                   py-2
+                                   rounded-lg
+                                   text-sm
+                                   transition">
+
+                            <i
+                                class="fas fa-check mr-1">
+                            </i>
+
+                            KONFIRMASI
+
+                        </button>
+
+                    `;
+
+                }
+
+
+                // ---------------------------------------------
+                // BELUM DIAJUKAN
+                // ---------------------------------------------
+
+                else {
+
+                    tombolAksi = `
+
+                        <span
+                            class="text-gray-400
+                                   text-sm">
+
+                            Menunggu Pengajuan
+
+                        </span>
+
+                    `;
+
+                }
+
+            }
+
+
+            // =================================================
+            // KAJUR
+            // =================================================
 
             else {
 
@@ -403,7 +601,7 @@ function renderTable(data) {
                         class="text-gray-400
                                text-sm">
 
-                        Menunggu Admin
+                        Hanya Melihat
 
                     </span>
 
@@ -439,12 +637,12 @@ function renderTable(data) {
                     <td
                         class="px-6 py-4">
 
-                        ${barang.id || "-"}
+                        ${item.kode_peminjaman || "-"}
 
                     </td>
 
 
-                    <!-- NAMA BARANG -->
+                    <!-- BARANG -->
 
                     <td
                         class="px-6 py-4 font-medium">
@@ -524,7 +722,7 @@ function renderTable(data) {
                     </td>
 
 
-                    <!-- AKSI -->
+                    <!-- OPSI -->
 
                     <td
                         class="px-6 py-4 text-center">
@@ -551,6 +749,39 @@ function renderTable(data) {
 function getStatusBadge(item) {
 
 
+    // =====================================================
+    // MENUNGGU PENGEMBALIAN
+    // =====================================================
+
+    if (
+        item.status ===
+        "Menunggu Pengembalian"
+    ) {
+
+        return `
+
+            <span
+                class="bg-yellow-100
+                       text-yellow-700
+                       px-3
+                       py-1
+                       rounded-full
+                       text-xs
+                       font-semibold">
+
+                MENUNGGU PENGEMBALIAN
+
+            </span>
+
+        `;
+
+    }
+
+
+    // =====================================================
+    // TERLAMBAT
+    // =====================================================
+
     const batas =
         item.batas_kembali
             ? new Date(
@@ -562,10 +793,6 @@ function getStatusBadge(item) {
     const sekarang =
         new Date();
 
-
-    // =====================================================
-    // TERLAMBAT
-    // =====================================================
 
     if (
         batas &&
@@ -593,7 +820,7 @@ function getStatusBadge(item) {
 
 
     // =====================================================
-    // DISETUJUI / SEDANG DIPINJAM
+    // DIPINJAM
     // =====================================================
 
     return `
@@ -617,8 +844,360 @@ function getStatusBadge(item) {
 
 
 // =========================================================
-// PROSES PENGEMBALIAN
-// ADMIN SAJA
+// MAHASISWA
+// AJUKAN PENGEMBALIAN
+// =========================================================
+
+async function ajukanPengembalian(id) {
+
+
+    // =====================================================
+    // CEK ROLE
+    // =====================================================
+
+    if (
+        currentRole !== "mahasiswa"
+    ) {
+
+        Swal.fire({
+
+            icon:
+                "error",
+
+            title:
+                "Akses Ditolak",
+
+            text:
+                "Hanya mahasiswa yang dapat mengajukan pengembalian."
+
+        });
+
+        return;
+    }
+
+
+    // =====================================================
+    // CEK USER
+    // =====================================================
+
+    if (
+        !currentUser ||
+        !currentUser.id
+    ) {
+
+        Swal.fire({
+
+            icon:
+                "error",
+
+            title:
+                "User Tidak Ditemukan",
+
+            text:
+                "Data user yang sedang login tidak ditemukan."
+
+        });
+
+        return;
+    }
+
+
+    // =====================================================
+    // AMBIL DATA PEMINJAMAN
+    // =====================================================
+
+    const {
+
+        data: peminjaman,
+
+        error
+
+    } = await supabaseClient
+
+        .from("peminjaman")
+
+        .select(`
+            *,
+            barang (
+                id,
+                nama
+            )
+        `)
+
+        .eq(
+            "id",
+            id
+        )
+
+        .eq(
+            "peminjam_id",
+            currentUser.id
+        )
+
+        .single();
+
+
+    // =====================================================
+    // ERROR
+    // =====================================================
+
+    if (
+        error ||
+        !peminjaman
+    ) {
+
+        console.error(
+            error
+        );
+
+        Swal.fire({
+
+            icon:
+                "error",
+
+            title:
+                "Gagal",
+
+            text:
+                "Data peminjaman tidak ditemukan."
+
+        });
+
+        return;
+    }
+
+
+    // =====================================================
+    // CEK STATUS
+    // =====================================================
+
+    if (
+        peminjaman.status !==
+        "Dipinjam"
+    ) {
+
+        Swal.fire({
+
+            icon:
+                "warning",
+
+            title:
+                "Tidak Dapat Diproses",
+
+            text:
+                "Peminjaman ini sudah diajukan atau sudah dikembalikan."
+
+        });
+
+        return;
+    }
+
+
+    // =====================================================
+    // KONFIRMASI
+    // =====================================================
+
+    const result =
+        await Swal.fire({
+
+            icon:
+                "question",
+
+            title:
+                "Ajukan Pengembalian?",
+
+            html: `
+
+                <div class="text-left">
+
+                    <p class="mb-2">
+
+                        <strong>Barang:</strong>
+                        ${peminjaman.barang?.nama || "-"}
+
+                    </p>
+
+                    <p class="mb-2">
+
+                        <strong>Jumlah:</strong>
+                        ${peminjaman.jumlah || 0}
+
+                    </p>
+
+                    <p>
+
+                        Setelah diajukan,
+                        pengembalian akan menunggu
+                        konfirmasi Admin.
+
+                    </p>
+
+                </div>
+
+            `,
+
+            showCancelButton:
+                true,
+
+            confirmButtonColor:
+                "#16a34a",
+
+            cancelButtonColor:
+                "#6b7280",
+
+            confirmButtonText:
+                "Ya, Ajukan",
+
+            cancelButtonText:
+                "Batal"
+
+        });
+
+
+    if (
+        !result.isConfirmed
+    ) {
+
+        return;
+    }
+
+
+    // =====================================================
+    // UPDATE STATUS
+    // =====================================================
+
+    const {
+
+        error: updateError
+
+    } = await supabaseClient
+
+        .from("peminjaman")
+
+        .update({
+
+            status:
+                "Menunggu Pengembalian"
+
+        })
+
+        .eq(
+            "id",
+            id
+        )
+
+        .eq(
+            "peminjam_id",
+            currentUser.id
+        );
+
+
+    // =====================================================
+    // ERROR UPDATE
+    // =====================================================
+
+    if (
+        updateError
+    ) {
+
+        console.error(
+            updateError
+        );
+
+        Swal.fire({
+
+            icon:
+                "error",
+
+            title:
+                "Gagal",
+
+            text:
+                updateError.message
+
+        });
+
+        return;
+    }
+
+
+    // =====================================================
+    // AUDIT
+    // =====================================================
+
+    const {
+
+        error: auditError
+
+    } = await supabaseClient
+
+        .from("audit_inventori")
+
+        .insert({
+
+            barang_id:
+                peminjaman.barang_id,
+
+            user_id:
+                currentUser.id,
+
+            aktivitas:
+                "PENGEMBALIAN_DIAJUKAN",
+
+            deskripsi:
+                `Peminjaman ${peminjaman.kode_peminjaman} diajukan untuk pengembalian oleh ${currentUser.nama}.`
+
+        });
+
+
+    if (
+        auditError
+    ) {
+
+        console.error(
+            "ERROR AUDIT PENGEMBALIAN:",
+            auditError
+        );
+
+    }
+
+
+    // =====================================================
+    // SUCCESS
+    // =====================================================
+
+    await Swal.fire({
+
+        icon:
+            "success",
+
+        title:
+            "Pengembalian Diajukan",
+
+        text:
+            "Pengajuan pengembalian berhasil dikirim ke Admin.",
+
+        timer:
+            1800,
+
+        showConfirmButton:
+            false
+
+    });
+
+
+    // =====================================================
+    // RELOAD
+    // =====================================================
+
+    loadPengembalian();
+
+}
+
+
+// =========================================================
+// ADMIN
+// KONFIRMASI PENGEMBALIAN
 // =========================================================
 
 async function prosesPengembalian(id) {
@@ -642,6 +1221,32 @@ async function prosesPengembalian(id) {
 
             text:
                 "Hanya Admin yang dapat memproses pengembalian."
+
+        });
+
+        return;
+    }
+
+
+    // =====================================================
+    // CEK USER
+    // =====================================================
+
+    if (
+        !currentUser ||
+        !currentUser.id
+    ) {
+
+        Swal.fire({
+
+            icon:
+                "error",
+
+            title:
+                "User Tidak Ditemukan",
+
+            text:
+                "Data Admin yang sedang login tidak ditemukan."
 
         });
 
@@ -697,16 +1302,18 @@ async function prosesPengembalian(id) {
             errorPinjam
         );
 
+        Swal.fire({
 
-        Swal.fire(
+            icon:
+                "error",
 
-            "Error",
+            title:
+                "Gagal",
 
-            "Data peminjaman tidak ditemukan.",
+            text:
+                "Data peminjaman tidak ditemukan."
 
-            "error"
-
-        );
+        });
 
         return;
     }
@@ -717,7 +1324,8 @@ async function prosesPengembalian(id) {
     // =====================================================
 
     if (
-        peminjaman.status !== "Disetujui"
+        peminjaman.status !==
+        "Menunggu Pengembalian"
     ) {
 
         Swal.fire({
@@ -729,7 +1337,7 @@ async function prosesPengembalian(id) {
                 "Tidak Dapat Diproses",
 
             text:
-                "Peminjaman ini sudah tidak berada dalam status sedang dipinjam."
+                "Peminjaman ini belum mengajukan pengembalian atau sudah diproses."
 
         });
 
@@ -738,14 +1346,14 @@ async function prosesPengembalian(id) {
 
 
     // =====================================================
-    // FORM PENGEMBALIAN
+    // FORM KONFIRMASI
     // =====================================================
 
     const result =
         await Swal.fire({
 
             title:
-                "Pengembalian Barang",
+                "Konfirmasi Pengembalian",
 
             width:
                 "600px",
@@ -832,7 +1440,7 @@ async function prosesPengembalian(id) {
                                    text-gray-700
                                    mb-1">
 
-                            Jumlah
+                            Jumlah Dikembalikan
 
                         </label>
 
@@ -983,7 +1591,7 @@ async function prosesPengembalian(id) {
 
 
             // =================================================
-            // AMBIL DATA FORM
+            // VALIDASI FORM
             // =================================================
 
             preConfirm: () => {
@@ -1112,7 +1720,6 @@ async function prosesPengembalian(id) {
             errorBarang
         );
 
-
         Swal.fire({
 
             icon:
@@ -1152,40 +1759,49 @@ async function prosesPengembalian(id) {
 
 
     console.log(
-        "STOK LAMA :",
+        "STOK LAMA:",
         stokLama
     );
 
     console.log(
-        "JUMLAH KEMBALI :",
+        "JUMLAH KEMBALI:",
         jumlahKembali
     );
 
     console.log(
-        "STOK BARU :",
+        "STOK BARU:",
         stokBaru
     );
 
 
     // =====================================================
-    // UPDATE STATUS PEMINJAMAN
+    // UPDATE PEMINJAMAN
     // =====================================================
 
     const {
+
         error: updatePeminjamanError
+
     } = await supabaseClient
 
         .from("peminjaman")
 
         .update({
 
-            status: "Dikembalikan",
+            status:
+                "Dikembalikan",
 
-            tanggal_kembali: tanggal,
+            tanggal_kembali:
+                tanggal,
 
-            kondisi_kembali: kondisi,
+            kondisi_kembali:
+                kondisi,
 
-            catatan_kembali: catatan
+            catatan_kembali:
+                catatan,
+
+            approver_id:
+                currentUser.id
 
         })
 
@@ -1199,20 +1815,24 @@ async function prosesPengembalian(id) {
     // ERROR UPDATE PEMINJAMAN
     // =====================================================
 
-    if (updatePeminjamanError) {
+    if (
+        updatePeminjamanError
+    ) {
 
         console.error(
-            "ERROR UPDATE PEMINJAMAN :",
             updatePeminjamanError
         );
 
         Swal.fire({
 
-            icon: "error",
+            icon:
+                "error",
 
-            title: "Gagal",
+            title:
+                "Gagal",
 
-            text: "Status pengembalian gagal diperbarui."
+            text:
+                "Data pengembalian gagal diperbarui."
 
         });
 
@@ -1246,7 +1866,7 @@ async function prosesPengembalian(id) {
 
 
     // =====================================================
-    // ROLLBACK STATUS JIKA STOK GAGAL
+    // ROLLBACK STATUS
     // =====================================================
 
     if (
@@ -1258,10 +1878,6 @@ async function prosesPengembalian(id) {
         );
 
 
-        // -----------------------------------------------
-        // Kembalikan status peminjaman
-        // -----------------------------------------------
-
         await supabaseClient
 
             .from("peminjaman")
@@ -1269,7 +1885,7 @@ async function prosesPengembalian(id) {
             .update({
 
                 status:
-                    "Disetujui",
+                    "Menunggu Pengembalian",
 
                 tanggal_kembali:
                     null,
@@ -1306,6 +1922,58 @@ async function prosesPengembalian(id) {
 
 
     // =====================================================
+    // AUDIT INVENTORI
+    // =====================================================
+
+    console.log(
+        "MENYIMPAN AUDIT PENGEMBALIAN..."
+    );
+
+
+    const {
+
+        error: auditError
+
+    } = await supabaseClient
+
+        .from("audit_inventori")
+
+        .insert({
+
+            barang_id:
+                peminjaman.barang_id,
+
+            user_id:
+                currentUser.id,
+
+            aktivitas:
+                "PEMINJAMAN_DIKEMBALIKAN",
+
+            deskripsi:
+                `Peminjaman ${peminjaman.kode_peminjaman} sebanyak ${peminjaman.jumlah} unit dikembalikan oleh ${peminjaman.peminjam?.nama || "mahasiswa"} dan dikonfirmasi oleh ${currentUser.nama}. Kondisi: ${kondisi}.`
+
+        });
+
+
+    if (
+        auditError
+    ) {
+
+        console.error(
+            "ERROR AUDIT PENGEMBALIAN:",
+            auditError
+        );
+
+    } else {
+
+        console.log(
+            "AUDIT PENGEMBALIAN BERHASIL."
+        );
+
+    }
+
+
+    // =====================================================
     // SUCCESS
     // =====================================================
 
@@ -1315,13 +1983,16 @@ async function prosesPengembalian(id) {
             "success",
 
         title:
-            "Berhasil",
+            "Pengembalian Berhasil",
 
         text:
             "Barang berhasil dikembalikan dan stok telah diperbarui.",
 
-        confirmButtonColor:
-            "#2563eb"
+        timer:
+            1800,
+
+        showConfirmButton:
+            false
 
     });
 
@@ -1428,17 +2099,3 @@ function searchTable() {
     );
 
 }
-
-
-// =========================================================
-// INIT
-// =========================================================
-
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-
-        loadPengembalian();
-
-    }
-);
