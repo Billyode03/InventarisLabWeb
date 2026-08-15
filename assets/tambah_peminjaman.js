@@ -1,4 +1,3 @@
-
 // ==========================================
 // TAMBAH PEMINJAMAN
 // ==========================================
@@ -7,7 +6,8 @@
 // ELEMENT
 // ==========================
 
-const form = document.getElementById("formPeminjaman");
+const form =
+    document.getElementById("formPeminjaman");
 
 const peminjamSelect =
     document.getElementById("peminjam");
@@ -84,7 +84,7 @@ async function loadMahasiswa() {
                 role
             `)
 
-            .eq("role", "Mahasiswa")
+            .eq("role", "mahasiswa")
 
             .order("nama");
 
@@ -117,6 +117,8 @@ async function loadMahasiswa() {
 
     daftarMahasiswa = data || [];
 
+    console.log("DATA MAHASISWA:", daftarMahasiswa);
+
 
     peminjamSelect.innerHTML = `
         <option value="">
@@ -126,6 +128,7 @@ async function loadMahasiswa() {
 
 
     daftarMahasiswa.forEach(user => {
+        console.log("USER:", user);
 
         peminjamSelect.innerHTML += `
             <option value="${user.id}">
@@ -134,6 +137,8 @@ async function loadMahasiswa() {
         `;
 
     });
+
+    
 
 }
 
@@ -201,7 +206,6 @@ peminjamSelect.addEventListener(
 
         nimInput.value =
             user.nim || "-";
-
 
         namaInput.value =
             user.nama || "-";
@@ -333,10 +337,8 @@ barangSelect.addEventListener(
         kodeBarangInput.value =
             barang.kode_barang || "-";
 
-
         lokasiInput.value =
             barang.lokasi || "-";
-
 
         stokInput.value =
             barang.jumlah ?? 0;
@@ -359,16 +361,13 @@ barangSelect.addEventListener(
 const hariIni =
     new Date();
 
-
 const tahun =
     hariIni.getFullYear();
-
 
 const bulan =
     String(
         hariIni.getMonth() + 1
     ).padStart(2, "0");
-
 
 const tanggal =
     String(
@@ -496,6 +495,7 @@ form.addEventListener(
         ) {
 
             console.error(
+                "ERROR LOAD BARANG:",
                 barangError
             );
 
@@ -538,6 +538,16 @@ form.addEventListener(
         // CEK TANGGAL
         // ==========================
 
+        if (!tanggalKembali) {
+
+            Swal.fire(
+                "Tanggal Kembali",
+                "Silakan tentukan batas tanggal pengembalian.",
+                "warning"
+            );
+
+            return;
+        }
         if (
             tanggalKembali &&
             tanggalKembali <
@@ -595,7 +605,6 @@ form.addEventListener(
         // ==========================
 
         const {
-            data,
             error
         } = await supabaseClient
 
@@ -636,11 +645,7 @@ form.addEventListener(
                 catatan_admin:
                     catatan || null
 
-            })
-
-            .select()
-
-            .single();
+            });
 
 
         // ==========================
@@ -678,6 +683,43 @@ form.addEventListener(
 
 
             return;
+        }
+
+
+        // ==========================================
+        // AUDIT INVENTORI
+        // ==========================================
+
+        const {
+            error: auditError
+        } = await supabaseClient
+
+            .from("audit_inventori")
+
+            .insert({
+
+                barang_id:
+                    barangId,
+
+                user_id:
+                    userPeminjam.id,
+
+                aktivitas:
+                    "PENGAJUAN_PEMINJAMAN",
+
+                deskripsi:
+                    `Pengajuan peminjaman ${barang.nama} sebanyak ${jumlah} unit oleh ${userPeminjam.nama}.`
+
+            });
+
+
+        if (auditError) {
+
+            console.error(
+                "ERROR AUDIT PEMINJAMAN:",
+                auditError
+            );
+
         }
 
 

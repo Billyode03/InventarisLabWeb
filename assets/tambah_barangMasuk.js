@@ -175,6 +175,40 @@ form.addEventListener("submit", async function (e) {
 
     }
 
+    // ==========================
+        // SIMPAN AUDIT INVENTORI
+        // ==========================
+
+        const currentUser =
+            JSON.parse(
+                localStorage.getItem("user")
+            );
+
+        const { error: auditError } =
+            await supabaseClient
+                .from("audit_inventori")
+                .insert([{
+
+                    barang_id: barang_id,
+
+                    user_id: currentUser?.id || null,
+
+                    aktivitas: "Barang Masuk",
+
+                    deskripsi:
+                        `Menambahkan ${jumlah} unit barang masuk. ${keterangan || ""}`
+
+                }]);
+
+        if (auditError) {
+
+            console.error(
+                "Gagal menyimpan audit:",
+                auditError
+            );
+
+        }
+
 
     // ==========================
     // SUCCESS

@@ -31,6 +31,10 @@
             </div>
         </div>
 
+        <!-- ==============================
+ NAVIGATION
+============================== -->
+
         <nav class="flex-1 p-4">
 
             <p class="text-xs text-gray-400 px-4 mb-2">
@@ -39,13 +43,14 @@
 
             <ul class="space-y-1">
 
+
                 <!-- DASHBOARD -->
 
                 <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
 
                     <i class="fas fa-tachometer-alt"></i>
 
-                    <a id="dashboardLink" href="../dashboard.html">
+                    <a id="dashboardLink" href="dashboard.html">
                         DASHBOARD
                     </a>
 
@@ -94,7 +99,7 @@
 
                 <!-- PENGEMBALIAN -->
 
-                <li class="flex items-center gap-3 px-4 py-3 bg-gray-800 rounded-lg cursor-pointer">
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
 
                     <i class="fas fa-rotate-left"></i>
 
@@ -132,6 +137,7 @@
 
                 </li>
 
+
                 <!-- AUDIT INVENTORI -->
 
                 <li id="menuAudit"
@@ -153,28 +159,49 @@
 
                     <i class="fas fa-chart-bar"></i>
 
-                    <a href="../laporan.html">
+                    <a href="../pages/laporan.html">
                         LAPORAN
                     </a>
 
                 </li>
 
+
             </ul>
 
         </nav>
 
-
         <div class="p-4 border-t border-gray-800 mt-auto">
+
             <ul class="space-y-1">
+
+                <!-- GANTI PASSWORD -->
+
                 <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
                     <i class="fas fa-key"></i>
-                    <a href="../ganti_password.html">GANTI PASSWORD</a>
+
+                    <a href="../ganti_password.html">
+                        GANTI PASSWORD
+                    </a>
+
                 </li>
-                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+
+                <!-- LOGOUT -->
+
+                <li onclick="logout()"
+                    class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
                     <i class="fas fa-sign-out-alt"></i>
-                    <!-- <a href="../login.html">LOGOUT</a> -->
+
+                    <span>
+                        LOGOUT
+                    </span>
+
                 </li>
+
             </ul>
+
         </div>
     </aside>
 
@@ -201,11 +228,10 @@
                     </div>
                 </div>
 
-                <button id="logoutBtn"
+                <button onclick="logout()"
                     class="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-sm">
 
                     <i class="fas fa-sign-out-alt"></i>
-
                     LOGOUT
 
                 </button>

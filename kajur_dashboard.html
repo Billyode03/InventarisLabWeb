@@ -63,7 +63,10 @@
 
     </div>
 
-    <!-- NAVIGATION -->
+    <!-- ==============================
+NAVIGATION
+============================== -->
+
     <nav class="flex-1 p-4">
 
       <p class="text-xs text-gray-400 px-4 mb-2">
@@ -73,11 +76,12 @@
       <ul class="space-y-1">
 
         <!-- DASHBOARD -->
-        <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+
+        <li class="flex items-center gap-3 px-4 py-3 bg-gray-800 rounded-lg cursor-pointer">
 
           <i class="fas fa-tachometer-alt"></i>
 
-          <a href="../InventarisLabWeb/kajur_dashboard.html">
+          <a id="dashboardLink" href="kajur_dashboard.html">
             DASHBOARD
           </a>
 
@@ -85,71 +89,51 @@
 
 
         <!-- DATA BARANG -->
+
         <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
 
           <i class="fas fa-box"></i>
 
-          <a href="../InventarisLabWeb/pages/barang.html">
+          <a href="pages/barang.html">
             DATA BARANG
           </a>
 
         </li>
 
 
-        <!-- DATA USER -->
-        <li id="menuUsers" class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
-
-          <i class="fas fa-users"></i>
-
-          <a href="../InventarisLabWeb/pages/users.html">
-            DATA USER
-          </a>
-
-        </li>
-
-
         <!-- PEMINJAMAN -->
+
         <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
 
           <i class="fas fa-handshake"></i>
 
-          <a href="../InventarisLabWeb/pages/peminjaman.html">
+          <a href="pages/peminjaman.html">
             PEMINJAMAN
           </a>
 
         </li>
 
 
-        <!-- BARANG MASUK -->
-        <li id="menuBarangMasuk" class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
+        <!-- PENGEMBALIAN -->
 
-          <i class="fas fa-arrow-down"></i>
+        <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
 
-          <a href="../InventarisLabWeb/pages/barang_masuk.html">
-            BARANG MASUK
-          </a>
+          <i class="fas fa-rotate-left"></i>
 
-        </li>
-
-
-        <!-- BARANG KELUAR -->
-        <li id="menuBarangKeluar" class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
-
-          <i class="fas fa-arrow-up"></i>
-
-          <a href="../InventarisLabWeb/pages/barang_keluar.html">
-            BARANG KELUAR
+          <a href="pages/pengembalian.html">
+            PENGEMBALIAN
           </a>
 
         </li>
 
 
         <!-- LAPORAN -->
+
         <li id="menuLaporan" class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
 
           <i class="fas fa-chart-bar"></i>
 
-          <a href="../laporan.html">
+          <a href="laporan.html">
             LAPORAN
           </a>
 
@@ -373,20 +357,7 @@
 
           </div>
 
-          <div class="mt-6">
 
-            <a href="approval.html"
-              class="more-info-btn w-full text-white text-sm font-medium py-3 px-6 rounded-xl flex items-center justify-center gap-2">
-
-              Proses Approval
-
-              <span class="text-lg leading-none">
-                →
-              </span>
-
-            </a>
-
-          </div>
 
         </div>
 

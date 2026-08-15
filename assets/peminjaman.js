@@ -806,11 +806,9 @@ async function setujuiPeminjaman(id) {
 
         .update({
 
-            status:
-                "Disetujui",
+            status: "Dipinjam",
 
-            approver_id:
-                user.id
+            approver_id: user.id
 
         })
 
@@ -861,6 +859,53 @@ async function setujuiPeminjaman(id) {
 
         return;
     }
+
+        // =====================================================
+        // AUDIT INVENTORI
+        // PEMINJAMAN DISETUJUI
+        // =====================================================
+
+        console.log(
+            "MENYIMPAN AUDIT PEMINJAMAN..."
+        );
+
+    const {
+    error: auditError
+} = await supabaseClient
+    .from("audit_inventori")
+    .insert({
+
+        barang_id:
+            peminjaman.barang_id,
+
+        user_id:
+            user.id,
+
+        aktivitas:
+            "PEMINJAMAN_DISETUJUI",
+
+        deskripsi:
+            `Peminjaman ${peminjaman.kode_peminjaman} sebanyak ${peminjaman.jumlah} unit disetujui oleh ${user.nama}.`
+
+    });
+
+
+        if (auditError) {
+
+            console.error(
+                "ERROR AUDIT PEMINJAMAN:",
+                auditError
+            );
+
+        } else {
+
+            console.log(
+                "AUDIT PEMINJAMAN BERHASIL."
+            );
+
+        }
+
+    
 
 
     // =====================================================
@@ -1115,12 +1160,11 @@ async function loadStatistik() {
         data.length;
 
 
-    const sedangDipinjam =
-        data.filter(
-            item =>
-                item.status === "Dipinjam" ||
-                item.status === "Disetujui"
-        ).length;
+   const sedangDipinjam =
+    data.filter(
+        item =>
+            item.status === "Dipinjam"
+    ).length;
 
 
     const pending =

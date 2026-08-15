@@ -135,15 +135,30 @@ async function loadAuditInventori() {
         );
 
 
-    console.log(
-        "DATA AUDIT INVENTORI :",
-        data
-    );
+        console.log(
+            "DATA AUDIT INVENTORI :",
+            data
+        );
 
-    console.log(
-        "ERROR AUDIT INVENTORI :",
-        error
-    );
+        console.log(
+            "AUDIT PERTAMA :",
+            data?.[0]
+        );
+
+        console.log(
+            "BARANG AUDIT PERTAMA :",
+            data?.[0]?.barang
+        );
+
+        console.log(
+            "USER AUDIT PERTAMA :",
+            data?.[0]?.user
+        );
+
+        console.log(
+            "ERROR AUDIT INVENTORI :",
+            error
+        );
 
 
     // =====================================================
@@ -242,6 +257,12 @@ function renderTable(data) {
             "dataTable"
         );
 
+            console.log("=================================");
+            console.log("RENDER AUDIT INVENTORI");
+            console.log("JUMLAH DATA:", data.length);
+            console.log("DATA YANG DIRENDER:", data);
+            console.log("TABLE:", table);
+            console.log("=================================");
 
     if (!table) {
         return;
@@ -309,7 +330,6 @@ function renderTable(data) {
 
             const barang =
                 item.barang || {};
-
 
             const user =
                 item.user || {};
@@ -436,15 +456,16 @@ function renderTable(data) {
                     <!-- DESKRIPSI -->
 
                     <td
-                        class="px-6 py-4
-                               text-gray-600
-                               max-w-xl">
+                        class="px-6 py-4 text-gray-600 max-w-xl">
 
                         <p class="whitespace-normal">
 
                             ${
-                                item.deskripsi ||
-                                "-"
+                                item.jenis_aktivitas === "PENGAJUAN_PEMINJAMAN"
+                                    ? `Pengajuan peminjaman sebanyak ${item.jumlah || 0} unit`
+                                    : item.jenis_aktivitas === "PEMINJAMAN_DISSETUJUI"
+                                        ? `Peminjaman disetujui sebanyak ${item.jumlah || 0} unit`
+                                        : item.deskripsi || "-"
                             }
 
                         </p>
