@@ -93,11 +93,11 @@
 
                 <!-- DASHBOARD -->
 
-                <li class="flex items-center gap-3 px-4 py-3 bg-gray-800 rounded-lg cursor-pointer">
+                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg cursor-pointer">
 
                     <i class="fas fa-tachometer-alt"></i>
 
-                    <a href="dashboard_mahasiswa.html">
+                    <a id="dashboardLink" href="dashboard.html">
                         DASHBOARD
                     </a>
 
@@ -162,7 +162,7 @@
 
                     <i class="fas fa-key"></i>
 
-                    <a href="../ganti_password.html">
+                    <a href="ganti_password.html">
                         GANTI PASSWORD
                     </a>
 
@@ -629,8 +629,10 @@
 
     <script src="assets/supabase.js"></script>
     <!-- AUTH -->
-    <script src="../assets/auth.js"></script>
+    <script src="assets/auth.js"></script>
 
+    <!-- SIDEBAR -->
+    <script src="../InventarisLabWeb/assets/sidebar.js"></script>
 
 
     <!-- =====================================================
@@ -638,7 +640,6 @@
   ====================================================== -->
 
     <script src="assets/dashboard_mahasiswa.js"></script>
-
 
     <!-- =====================================================
        LOGOUT

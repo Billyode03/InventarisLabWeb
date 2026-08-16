@@ -248,6 +248,18 @@ else if (
 
     }
 
+    // -----------------------------------------
+    // LAPORAN
+    // KAJUR TIDAK BOLEH MELIHAT
+    // -----------------------------------------
+
+    if (menuLaporan) {
+
+        menuLaporan.style.display =
+            "none";
+
+    }
+
 
     // -----------------------------------------
     // TAMBAH PEMINJAMAN
@@ -357,39 +369,71 @@ else {
 const dashboardLink =
     document.getElementById("dashboardLink");
 
+
 if (dashboardLink) {
 
+    // =====================================================
+    // CEK POSISI HALAMAN
+    // =====================================================
+
+    const isPages =
+        window.location.pathname.includes("/pages/");
+
+
+    // =====================================================
+    // PREFIX PATH
+    // =====================================================
+
+    const prefix =
+        isPages ? "../" : "";
+
+
+    // =====================================================
     // ADMIN
-    if (sidebarRole === "admin") {
+    // =====================================================
+
+    if (
+        sidebarRole === "admin"
+    ) {
 
         dashboardLink.href =
-            "../dashboard.html";
+            prefix + "dashboard.html";
 
     }
 
+
+    // =====================================================
     // KAJUR
+    // =====================================================
+
     else if (
         sidebarRole === "kajur" ||
         sidebarRole === "ketua jurusan"
     ) {
 
         dashboardLink.href =
-            "../kajur_dashboard.html";
+            prefix + "kajur_dashboard.html";
 
     }
 
+
+    // =====================================================
     // MAHASISWA
+    // =====================================================
+
     else if (
         sidebarRole === "mahasiswa"
     ) {
 
         dashboardLink.href =
-            "../dashboard_mahasiswa.html";
+            prefix + "dashboard_mahasiswa.html";
 
     }
-    // =========================================================
+
+
+    // =====================================================
     // ROLE TIDAK DIKENAL
-    // =========================================================
+    // =====================================================
 
     else {
 

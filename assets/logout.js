@@ -4,14 +4,11 @@
 
 async function logout() {
 
-    const yakin = confirm(
-        "Yakin ingin logout?"
-    );
+    const yakin = confirm("Yakin ingin logout?");
 
     if (!yakin) {
         return;
     }
-
 
     try {
 
@@ -20,35 +17,53 @@ async function logout() {
         // =================================================
 
         localStorage.removeItem("user");
-
         localStorage.removeItem("isLoggedIn");
 
 
         // =================================================
-        // HAPUS SESSION SUPABASE JIKA ADA
+        // SUPABASE AUTH JIKA ADA
         // =================================================
 
-        try {
+        if (
+            typeof supabaseClient !== "undefined" &&
+            supabaseClient?.auth
+        ) {
 
-            await supabaseClient.auth.signOut();
+            try {
 
-        } catch (error) {
+                await supabaseClient.auth.signOut();
 
-            console.warn(
-                "Supabase Auth tidak aktif:",
-                error
-            );
+            } catch (error) {
+
+                console.warn(
+                    "Supabase Auth tidak aktif:",
+                    error
+                );
+
+            }
 
         }
 
 
         // =================================================
-        // CEGAH HALAMAN LAMA DARI CACHE
+        // REDIRECT KE LOGIN
         // =================================================
 
-        window.location.replace(
-            "../login.html"
-        );
+        if (
+            window.location.pathname.includes("/pages/")
+        ) {
+
+            // Jika sedang berada di folder pages
+            window.location.href =
+                "../login.html";
+
+        } else {
+
+            // Jika sedang berada di root
+            window.location.href =
+                "login.html";
+
+        }
 
 
     } catch (error) {
@@ -60,17 +75,30 @@ async function logout() {
 
 
         // =================================================
-        // PASTIKAN SESSION TETAP DIHAPUS
+        // PASTIKAN SESSION DIHAPUS
         // =================================================
 
         localStorage.removeItem("user");
-
         localStorage.removeItem("isLoggedIn");
 
 
-        window.location.replace(
-            "login.html"
-        );
+        // =================================================
+        // REDIRECT
+        // =================================================
+
+        if (
+            window.location.pathname.includes("/pages/")
+        ) {
+
+            window.location.href =
+                "../login.html";
+
+        } else {
+
+            window.location.href =
+                "login.html";
+
+        }
 
     }
 

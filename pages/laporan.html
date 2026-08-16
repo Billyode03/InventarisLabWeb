@@ -18,14 +18,10 @@
 
     <!-- FONT AWESOME -->
 
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 
     <style>
-
         .table-row:hover {
             background-color: #f8fafc;
         }
@@ -53,7 +49,6 @@
             }
 
         }
-
     </style>
 
 </head>
@@ -84,18 +79,11 @@
 
         <div class="p-6 flex items-center gap-3 border-b border-gray-800">
 
-            <img
-                src="https://i.pravatar.cc/48?u=raply"
-                class="w-10 h-10 rounded-full"
-                alt="User"
-            >
+            <img src="https://i.pravatar.cc/48?u=raply" class="w-10 h-10 rounded-full" alt="User">
 
             <div>
 
-                <p
-                    id="sidebarUserName"
-                    class="font-medium"
-                >
+                <p id="sidebarUserName" class="font-medium">
                     Memuat...
                 </p>
 
@@ -126,18 +114,15 @@
             <ul class="space-y-1">
 
 
-                <!-- DASHBOARD -->
-
-                <li class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg">
+                <li class="flex items-center gap-3 px-4 py-3 bg-gray-800 rounded-lg cursor-pointer">
 
                     <i class="fas fa-tachometer-alt"></i>
 
-                    <a href="dashboard.html">
+                    <a id="dashboardLink" href="dashboard.html">
                         DASHBOARD
                     </a>
 
                 </li>
-
 
                 <!-- DATA BARANG -->
 
@@ -154,10 +139,7 @@
 
                 <!-- DATA USER -->
 
-                <li
-                    id="menuUsers"
-                    class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg"
-                >
+                <li id="menuUsers" class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg">
 
                     <i class="fas fa-users"></i>
 
@@ -196,10 +178,7 @@
 
                 <!-- BARANG MASUK -->
 
-                <li
-                    id="menuBarangMasuk"
-                    class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg"
-                >
+                <li id="menuBarangMasuk" class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg">
 
                     <i class="fas fa-arrow-down"></i>
 
@@ -212,10 +191,7 @@
 
                 <!-- BARANG KELUAR -->
 
-                <li
-                    id="menuBarangKeluar"
-                    class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg"
-                >
+                <li id="menuBarangKeluar" class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg">
 
                     <i class="fas fa-arrow-up"></i>
 
@@ -228,10 +204,7 @@
 
                 <!-- AUDIT -->
 
-                <li
-                    id="menuAudit"
-                    class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg"
-                >
+                <li id="menuAudit" class="flex items-center gap-3 px-4 py-3 hover:bg-gray-800 rounded-lg">
 
                     <i class="fas fa-clock-rotate-left"></i>
 
@@ -244,10 +217,7 @@
 
                 <!-- LAPORAN -->
 
-                <li
-                    id="menuLaporan"
-                    class="flex items-center gap-3 px-4 py-3 bg-blue-600 rounded-lg"
-                >
+                <li id="menuLaporan" class="flex items-center gap-3 px-4 py-3 bg-blue-600 rounded-lg">
 
                     <i class="fas fa-chart-bar"></i>
 
@@ -315,9 +285,7 @@
              HEADER
         ================================================== -->
 
-        <header
-            class="bg-blue-600 text-white px-8 py-4 flex justify-between items-center"
-        >
+        <header class="bg-blue-600 text-white px-8 py-4 flex justify-between items-center">
 
             <div>
 
@@ -339,25 +307,15 @@
 
                 <div class="flex items-center gap-2">
 
-                    <img
-                        src="https://i.pravatar.cc/32?u=raply"
-                        class="w-8 h-8 rounded-full"
-                        alt="User"
-                    >
+                    <img src="https://i.pravatar.cc/32?u=raply" class="w-8 h-8 rounded-full" alt="User">
 
                     <div>
 
-                        <p
-                            id="headerUserName"
-                            class="font-medium text-sm"
-                        >
+                        <p id="headerUserName" class="font-medium text-sm">
                             Memuat...
                         </p>
 
-                        <p
-                            id="headerUserRole"
-                            class="text-xs text-blue-200"
-                        >
+                        <p id="headerUserRole" class="text-xs text-blue-200">
                             Memuat...
                         </p>
 
@@ -368,10 +326,8 @@
 
                 <!-- LOGOUT -->
 
-                <button
-                    onclick="logout()"
-                    class="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-sm"
-                >
+                <button onclick="logout()"
+                    class="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-sm">
 
                     <i class="fas fa-sign-out-alt"></i>
 
@@ -426,10 +382,8 @@
 
                         </label>
 
-                        <select
-                            id="jenisLaporan"
-                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-blue-500"
-                        >
+                        <select id="jenisLaporan"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-blue-500">
 
                             <option value="semua">
                                 Semua Aktivitas
@@ -466,11 +420,8 @@
 
                         </label>
 
-                        <input
-                            type="date"
-                            id="tanggalMulai"
-                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-blue-500"
-                        >
+                        <input type="date" id="tanggalMulai"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-blue-500">
 
                     </div>
 
@@ -485,11 +436,8 @@
 
                         </label>
 
-                        <input
-                            type="date"
-                            id="tanggalAkhir"
-                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-blue-500"
-                        >
+                        <input type="date" id="tanggalAkhir"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-blue-500">
 
                     </div>
 
@@ -498,10 +446,8 @@
 
                     <div class="flex items-end gap-2">
 
-                        <button
-                            onclick="loadLaporan()"
-                            class="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg"
-                        >
+                        <button onclick="loadLaporan()"
+                            class="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg">
 
                             <i class="fas fa-filter mr-1"></i>
 
@@ -510,11 +456,8 @@
                         </button>
 
 
-                        <button
-                            onclick="window.print()"
-                            class="bg-gray-700 hover:bg-gray-800 text-white px-4 py-2.5 rounded-lg"
-                            title="Cetak"
-                        >
+                        <button onclick="window.print()"
+                            class="bg-gray-700 hover:bg-gray-800 text-white px-4 py-2.5 rounded-lg" title="Cetak">
 
                             <i class="fas fa-print"></i>
 
@@ -531,10 +474,7 @@
                  SUMMARY
             ================================================== -->
 
-            <div
-                class="grid grid-cols-1 md:grid-cols-4 gap-5 mb-6"
-                id="summaryContainer"
-            >
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-5 mb-6" id="summaryContainer">
 
                 <!-- Akan diisi JS -->
 
@@ -560,10 +500,7 @@
                                 Rekap Aktivitas
                             </h3>
 
-                            <p
-                                id="periodeLaporan"
-                                class="text-sm text-gray-500 mt-1"
-                            >
+                            <p id="periodeLaporan" class="text-sm text-gray-500 mt-1">
                                 Semua periode
                             </p>
 
@@ -572,17 +509,10 @@
 
                         <div class="relative w-72 no-print">
 
-                            <input
-                                type="text"
-                                id="searchInput"
-                                placeholder="Cari laporan..."
-                                onkeyup="searchTable()"
-                                class="w-full border border-gray-300 rounded-lg py-2 px-4 pl-10"
-                            >
+                            <input type="text" id="searchInput" placeholder="Cari laporan..." onkeyup="searchTable()"
+                                class="w-full border border-gray-300 rounded-lg py-2 px-4 pl-10">
 
-                            <i
-                                class="fas fa-search absolute left-3 top-2.5 text-gray-400"
-                            ></i>
+                            <i class="fas fa-search absolute left-3 top-2.5 text-gray-400"></i>
 
                         </div>
 
@@ -639,10 +569,7 @@
                         </thead>
 
 
-                        <tbody
-                            id="dataTable"
-                            class="divide-y"
-                        >
+                        <tbody id="dataTable" class="divide-y">
 
                         </tbody>
 

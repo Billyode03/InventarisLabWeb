@@ -334,20 +334,7 @@ async function loadBarang() {
         // TOMBOL AKSI
         // ==========================
 
-        let tombolAksi = `
-
-            <!-- DETAIL -->
-
-            <button
-                onclick="detailBarang(${item.id})"
-                class="text-amber-500 hover:text-amber-700"
-                title="Detail">
-
-                <i class="fas fa-eye"></i>
-
-            </button>
-
-        `;
+        let tombolAksi = "";
 
 
         // ==========================

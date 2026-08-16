@@ -81,7 +81,7 @@ NAVIGATION
 
           <i class="fas fa-tachometer-alt"></i>
 
-          <a id="dashboardLink" href="kajur_dashboard.html">
+          <a id="dashboardLink" href="dashboard.html">
             DASHBOARD
           </a>
 
@@ -133,7 +133,7 @@ NAVIGATION
 
           <i class="fas fa-chart-bar"></i>
 
-          <a href="laporan.html">
+          <a href="pages/laporan.html">
             LAPORAN
           </a>
 
@@ -156,6 +156,7 @@ NAVIGATION
           <a href="ganti_password.html">
             GANTI PASSWORD
           </a>
+
 
         </li>
 
@@ -333,38 +334,13 @@ NAVIGATION
 
         </div>
 
+        <!-- CARD PENGEMBALIAN -->
 
-        <!-- CARD 3 - APPROVAL -->
-        <div class="bg-red-500 text-white p-6 rounded-2xl card flex flex-col">
-
-          <div class="flex justify-between">
-
-            <div>
-
-              <p id="menungguApproval" class="text-5xl font-bold">
-                0
-              </p>
-
-              <p class="text-lg mt-2">
-                Menunggu Approval
-              </p>
-
-            </div>
-
-            <div class="text-5xl opacity-30">
-              <i class="fas fa-clipboard-check"></i>
-            </div>
-
-          </div>
-
-
-
-        </div>
-
-        <!-- CARD 8 -->
         <div class="bg-gray-700 text-white p-6 rounded-2xl card flex flex-col">
 
-          <div class="flex justify-between">
+          <!-- BAGIAN ATAS -->
+
+          <div class="flex justify-between items-start">
 
             <div>
 
@@ -376,20 +352,30 @@ NAVIGATION
                 Telah Dikembalikan
               </p>
 
+              <p class="text-sm text-gray-300 mt-1">
+                Total barang yang sudah dikembalikan
+              </p>
+
             </div>
 
+
+            <!-- ICON -->
+
             <div class="text-5xl opacity-30">
-              <i class="fas fa-rotate-left"></i>
+              <i class="fas fa-box-open"></i>
             </div>
 
           </div>
+
+
+          <!-- BUTTON -->
 
           <div class="mt-6">
 
             <a href="pages/pengembalian.html"
               class="more-info-btn w-full text-white text-sm font-medium py-3 px-6 rounded-xl flex items-center justify-center gap-2">
 
-              Lihat Riwayat
+              Lihat Pengembalian
 
               <span class="text-lg leading-none">
                 →
@@ -400,6 +386,8 @@ NAVIGATION
           </div>
 
         </div>
+
+
 
       </div>
 
@@ -513,53 +501,25 @@ NAVIGATION
 
 
 
-      <!-- DETAIL LOGIN -->
+       <!-- DETAIL LOGIN -->
       <div class="mt-10 bg-white rounded-2xl shadow p-8">
-
-        <h2 class="text-xl font-bold text-blue-600 border-b pb-3">
-          Detail Login
-        </h2>
-
+        <h2 class="text-xl font-bold text-blue-600 border-b pb-3">Detail Login</h2>
         <div class="grid grid-cols-2 gap-x-12 gap-y-6 mt-6">
-
           <div>
-
-            <p class="text-sm text-gray-600">
-              Nama
-            </p>
-
-            <p class="font-medium text-lg" id="detailNama">
-            </p>
-
+            <p class="text-sm text-gray-600">Nama</p>
+            <p class="font-medium text-lg" id="detailNama"></p>
           </div>
-
-
           <div>
-
-            <p class="text-sm text-gray-600">
-              NIM / NIDN
-            </p>
-
-            <p class="font-medium text-lg" id="detailNim">
-            </p>
-
+            <p class="text-sm text-gray-600">Nim/NIDN</p>
+            <p class="font-medium text-lg" id="detailNim"></p>
           </div>
-
-
           <div>
-
-            <p class="text-sm text-gray-600">
-              Hak Akses
-            </p>
-
-            <button class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg text-sm font-medium mt-2"
+            <p class="text-sm text-gray-600">Hak Akses</p>
+            <button class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg text-sm font-medium mt-2"
               id="detailRole">
             </button>
-
           </div>
-
         </div>
-
       </div>
 
     </main>
@@ -572,21 +532,21 @@ NAVIGATION
 
   <!-- SUPABASE CONFIG -->
 
-  <script src="../InventarisLabWeb/assets/supabase.js"></script>
+  <script src="assets/supabase.js"></script>
   <!-- AUTH -->
-  <script src="../assets/auth.js"></script>
+  <script src="assets/auth.js"></script>
 
 
   <!-- SIDEBAR -->
-  <script src="../InventarisLabWeb/assets/sidebar.js"></script>
+  <script src="assets/sidebar.js"></script>
 
   <!-- DASHBOARD -->
 
-  <script src="../InventarisLabWeb/assets/kajur_dashboard.js"></script>
+  <script src="assets/kajur_dashboard.js"></script>
 
   <!-- LOGOUT -->
 
-  <script src="../InventarisLabWeb/assets/logout.js"></script>
+  <script src="assets/logout.js"></script>
 
 </body>
 
